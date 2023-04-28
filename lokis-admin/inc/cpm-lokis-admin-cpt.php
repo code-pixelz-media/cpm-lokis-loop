@@ -73,7 +73,7 @@ if (!defined('ABSPATH')) {
 
          <div class="metabox-group">
              URL of the Game:
-             <input type='text' name='lokis_loop_game_url' value="<?php echo $game_url; ?>" />
+             <textarea type='text' name='lokis_loop_game_url' value="<?php echo $game_url; ?>"></textarea>
          </div>
 
          <div class="metabox-group">
