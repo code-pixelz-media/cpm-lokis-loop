@@ -25,7 +25,7 @@ function lokis_loop_single_post_template($single_template) {
     global $post;
 
     if ($post->post_type == 'games') {
-        $single_template = plugin_dir_path(__FILE__) . 'single-games.php';
+        $single_template = plugin_dir_path(__FILE__) . '/lokis-public/inc/single-games.php';
     }
 
     return $single_template;
