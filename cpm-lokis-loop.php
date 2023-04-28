@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 define('CPM_LOKIS_VERSION', '1.0.0');
 
 
-//Loads admin main loader file
+//Loads admin main loader file for pluigin
 require_once('lokis-admin/lokis-admin-loader.php');
 //Loads public main loader file
 require_once('lokis-public/lokis-public-loader.php');
