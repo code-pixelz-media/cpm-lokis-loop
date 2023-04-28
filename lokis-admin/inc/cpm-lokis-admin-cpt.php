@@ -19,14 +19,14 @@ if (!defined('ABSPATH')) {
      //call functions
      public function __construct()
      {
-         add_action('init', array($this, 'create_post_type'));
-         add_action('add_meta_boxes', array($this, 'game_info_metabox'));
-         add_action('save_post', array($this, 'save_game_info'));
+         add_action('init', array($this, 'lokis_loop_create_post_type'));
+         add_action('add_meta_boxes', array($this, 'lokis_loop_game_info_metabox'));
+         add_action('save_post', array($this, 'lokis_loop_save_game_info'));
 
      }
 
      //Creating Games Post Type
-     public function create_post_type()
+     public function lokis_loop_create_post_type()
      {
 
          $args = array(
@@ -58,33 +58,39 @@ if (!defined('ABSPATH')) {
 
 
      // creating custom metabox field for custom post Games
-     public function game_info_metabox()
+     public function lokis_loop_game_info_metabox()
      {
-         add_meta_box("game_info_metabox", "Game Info", array($this, "game_info_field"), null, "side");
+         add_meta_box("lokis_loop_game_info_metabox", "Loki's Loop Game Info", array($this, "lokis_loop_game_info_field"), null, "side");
      }
 
      //custom metabox field for custom post Games
-     public function game_info_field()
+     public function lokis_loop_game_info_field()
      {
          $game_url = get_post_meta(get_the_ID(), 'lokis_loop_game_url', true);
          $correct_answer = get_post_meta(get_the_ID(), 'lokis_loop_correct_answer', true);
          $redirect_uri = get_post_meta(get_the_ID(), 'lokis_loop_redirect_uri', true);
          ?>
 
-         URL of the Game:
-         <input type='text' name='lokis_loop_game_url' value="<?php echo $game_url; ?>" />
+         <div class="metabox-group">
+             URL of the Game:
+             <input type='text' name='lokis_loop_game_url' value="<?php echo $game_url; ?>" />
+         </div>
 
-         Correct Answer:
-         <input type='text' name='lokis_loop_correct_answer' value='<?php echo $correct_answer; ?>' />
+         <div class="metabox-group">
+             Correct Answer:
+             <input type='text' name='lokis_loop_correct_answer' value='<?php echo $correct_answer; ?>' />
+         </div>
 
-         Re-Direct URI:
-         <input type='text' name='lokis_loop_redirect_uri' value='<?php echo $redirect_uri; ?>' />
+         <div class="metabox-group">
+             Re-Direct URI:
+             <input type='text' name='lokis_loop_redirect_uri' value='<?php echo $redirect_uri; ?>' />
+         </div>
 
          <?php
      }
 
      //updating or saving data from Games Custom Post to Post Meta
-     public function save_game_info()
+     public function lokis_loop_save_game_info()
      {
 
          global $post;
