@@ -16,3 +16,4 @@ add_action('admin_enqueue_scripts', 'cpm_lokis_admin_scripts');
 
 //Loads admin files
 require_once('inc/cpm-lokis-admin-cpt.php');
+require_once('inc/cpm-lokis-loop-custom-shortcodes.php');

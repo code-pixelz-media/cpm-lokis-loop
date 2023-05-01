@@ -56,4 +56,4 @@ function lokis_loop_register_form()
         <?php
         return ob_get_clean();
 }
-add_shortcode('lokis_loop_registerform', 'lokis_loop_register_form');
+add_shortcode('lokis_loop_register_form', 'lokis_loop_register_form');
