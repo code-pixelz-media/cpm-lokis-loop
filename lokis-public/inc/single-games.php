@@ -3,12 +3,18 @@ get_header();
 ?>
 
 <div class="container">
+
+    <!-- creating lokis-loop paragraph-content -->
+
     <div class="lokis-paragraph-content">
         <P> Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, aliquam. Modi a totam, enim eum
             asperiores,
             iste esse, at odit labore corrupti blanditiis consectetur autem mollitia debitis officia sit architecto!
         </P>
     </div>
+
+    <!-- creating lokis-loop ifarme -->
+
     <div class="lokis-iframe">
         <iframe
             src="https://games.gdevelop-app.com/game-e80a4ac5-b828-4a36-8e0f-73f85fad831d/index.html?userSlug=antonretro&amp;gameSlug=paintra"
@@ -17,6 +23,9 @@ get_header();
             scrolling="no" allowfullscreen="" style="width:100%;height:100%">
         </iframe>
     </div>
+
+    <!-- creating lokis-loop post-form -->
+
     <div class="lokis-post-form">
         <form action="" method="post">
             <label for="answer">Answer:</label>
@@ -28,4 +37,3 @@ get_header();
 
 <?php
 get_footer();
-?>
