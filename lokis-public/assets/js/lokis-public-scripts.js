@@ -1,3 +1,37 @@
+//sending ajax post to wordpress to check answer from given data
+jQuery(document).ready(function ($) {
+  $("#submit").click(function (event) {
+    event.preventDefault();
+    var answer = $("#answer").val();
+    console.log(answer);
+    var post_id = $("#loki-post-id").val();
+    console.log(post_id);
+    $.ajax({
+      type: "POST",
+      url: gamesajax.ajaxurl,
+      data: {
+        action: "lokis_check_answer",
+        post_id: post_id,
+        answer: answer,
+      },
+      success: function (response) {
+        if (response.message == "correct") {
+          $("#lokis-feedback").html(
+            '<p class="lokis-loop-correct">Answer is correct</p>'
+          );
+          setTimeout(function () {
+            window.location.href = response.redirect;
+          }, 1000);
+        } else {
+          $("#lokis-feedback").html(
+            '<p class="lokis-loop-incorrect">Incorrect answer</p>'
+          );
+        }
+      },
+    });
+  });
+});
+
 // creating js for game host application form
 let email_regex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
