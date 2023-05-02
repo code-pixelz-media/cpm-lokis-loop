@@ -8,62 +8,75 @@ function lokis_loop_register_form()
 
     <!-- creating game host application form -->
 
-    <div class="container">
+    <div class="gamehost-application-container">
 
         <form action="" method="post">
-            <div class="mb-3">
-                <label for="name" class="form control">Name <span class="req-field">*</span></label><br>
-                <input type="text" class="form control" id="name" name="name" value="name"><br><br>
-            </div>
-            <div class="mb-3">
-                <label for="Email">Email <span class="req-field">*</span></label><br>
-                <input type="email" id="email" name="email" value="email"><br><br>
-            </div>
-            <div class="mb-3">
-                <label for="organization">Organization Name <span class="req-field">*</span></label><br>
-                <input type="text" id="organization" name="organization" value="organization"><br><br>
-            </div>
-            <div class="mb-3">
-                <label for="organization_name" class="form control">What best describes your organization <span
+            <div class="question-item">
+                <label for="name" class="form_control"><span class="question-order">1.</span>Name <span
                         class="req-field">*</span></label><br>
-                <input type="radio" id="organization_name" name="organtization_name" value="organization_name">
-
-                <label for="public library" class="form control">public library</label><br>
-                <input type="radio" id="library" name="public_library" value="public library">
-
-                <label for="university" class="form control">University/college</label><br>
-                <input type="radio" id="university" name="university" value="University/college">
-
-                <label for="school" class="form control">k-12 school</label><br>
-                <input type="radio" id="school" name="school" value="k-12 school">
-
-                <label for="meseum" class="form control">Meseum</label><br>
-                <input type="radio" id="meseum" name="meseum" value="Meseum">
-
-                <label for="non-profit" class="form control">Non-profit</label><br>
-                <input type="radio" id="non-profit" name="non-profit" value="Non-profit">
-
-                <label for="other-organization" class="form control">Other Organization (non-library)</label><br><br>
+                <input aria label="single line text" maxlength="4000" class="form-control"
+                    placeholder="Enter your answer"><br><br>
             </div>
-            <div class="mb-3">
-                <label for="country-name">Country <span class="req-field">*</span></label><br>
-                <input type="text" id="country-name" name="country-name" value="Country"><br><br>
+            <div class="question-item">
+                <label for="Email" class="form_control"><span class="question-order">2.</span>Email <span
+                        class="req-field">*</span></label><br>
+                <input aria label="single line text" maxlength="4000" class="form-control"
+                    placeholder="Enter your answer"><br><br>
             </div>
-            <div class="mb-3">
+            <div class="question-item">
+                <label for="organization" class="form_control"><span class="question-order">3.</span>Organization Name
+                    <span class="req-field">*</span></label><br>
+                <input aria label="single line text" maxlength="4000" class="form-control"
+                    placeholder="Enter your answer"><br><br>
+            </div>
 
-                <label for="role" class="form control">Role <span class="req-field">*</span></label><br>
+
+            <div class="question-item">
+                <label for="organizational_name" class="form_control"><span class="question-order">4.</span>What best
+                    describes your organization <span class="req-field">*</span></label><br>
+                <input type="radio" id="organization_name" name="organization_name" value="ORGANIZATION-NAME">
+
+                <label for="public_library" class="form_control">public library</label><br>
+                <input type="radio" id="library" name="organization_name" value="PUBLIC-LIBRARY">
+
+                <label for="university" class="form_control">University/college</label><br>
+                <input type="radio" id="university/college" name="organization_name" value="UNIVERSITY/COLLEGE">
+
+                <label for="school" class="form_control">k-12 school</label><br>
+                <input type="radio" id="school" name="organization_name" value="k-12 school">
+
+                <label for="meseum" class="form_control">Meseum</label><br>
+                <input type="radio" id="meseum" name="organization_name" value="Meseum">
+
+                <label for="non-profit" class="form_control">Non-profit</label><br>
+                <input type="radio" id="non-profit" name="organization_name" value="Non-profit">
+
+                <label for="other-organization" class="form_control">Other Organization (non-library)</label><br><br>
+            </div>
+            <div class="question-item">
+                <label for="country-name" class="form_control"><span class="question-order">5.</span>Country <span
+                        class="req-field">*</span></label><br>
+                <input aria label="single line text" maxlength="4000" class="form-control"
+                    placeholder="Enter your answer"><br><br>
+            </div>
+            <div class="question-item">
+
+                <label for="role" class="form_control"><span class="question-order">6.</span>Role <span
+                        class="req-field">*</span></label><br>
                 <input type="radio" id="role" name="role" value="Role">
                 <label for="host">Host</label><br>
-                <input type="radio" id="player" name="player">
+                <input type="radio" id="player" name="role" value="player">
                 <label for="player">Player</label><br><br>
+
             </div>
-            <div class="mb-3">
-                <label for="zipcode">Zipcode (US and Canada only) </label><br>
-                <input type="number" id="zipcode" name="zipcode" value="Zipcode"><br><br>
+            <div class="question-item">
+                <label for="zipcode" class="form control"><span class="question-order">7.</span>Zipcode (US and Canada
+                    only) <span class="req-field">*</span> </label><br>
+                <input aria label="single line text" maxlength="4000" class="form-control"
+                    placeholder="Enter your answer"><br><br>
             </div>
-            <div class="mb-3">
-                <input type="submit" id="Submit-button">
-            </div>
+            <input type="submit" class="Submit-button" id="Submit-button">
+
     </div>
     <?php
     return ob_get_clean();
