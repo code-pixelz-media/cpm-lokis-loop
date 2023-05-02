@@ -3,6 +3,7 @@ get_header();
 ?>
 
 <?php
+//Check if it is the user that is accessing the page
 if (is_user_logged_in()) {
     ?>
 
@@ -20,7 +21,6 @@ if (is_user_logged_in()) {
         <!-- creating lokis-loop ifarme -->
 
         <div class="iframe-container">
-
             <div class="lokis-iframe">
                 <iframe
                     src="https://games.gdevelop-app.com/game-e80a4ac5-b828-4a36-8e0f-73f85fad831d/index.html?userSlug=antonretro&amp;gameSlug=paintra"

@@ -32,34 +32,66 @@ jQuery(document).ready(function ($) {
   });
 });
 
-// creating js for game host application form
-let email_regex =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+//Form validation to check input and email format
+jQuery(document).ready(function ($) {
+  $("#Submit-button").click(function () {
+    var name = $("#loki-name").val();
+    var email = $("#loki-email").val();
+    var organization = $("#loki-organization").val();
+    var organization_name = $(
+      "input[name=loki_organization_name]:checked"
+    ).val();
+    var country_name = $("#loki-country").val();
+    var role = $("input[name=role]:checked").val();
+    var zipcode = $("#loki-zipcode").val();
 
-function validate() {
-  let u_name = document.getElementById("name").value;
-  let u_email = document.getElementById("email").value;
-  let u_organization = document.getElementById("organization").value;
-  let u_country = document.getElementById("country-name").value;
-  let u_role = document.getElementById("role").value;
-  let u_zipcode = document.getElementById("zipcode").value;
-}
+    var errors = [];
 
-//validate email address usign regex
-if (u_email.match(email_regex)) {
-  //check for valid url
-  try {
-    let u_url = new URL(u_website);
-    document.getElementById("Submit-button").classList.remove("disabled"); //button enabled
-    document.getElementById("err_msg").classList.remove("text-danger");
-    document.getElementById("err_msg").classList.add("text-success");
-    err_msg.innerHTML = "Form ready for submission!!";
-  } catch (error) {
-    document.getElementById("Submit-button").classList.add("disabled");
-    err_msg.innerHTML = err_prefix + "Invalid email!!";
-  }
-} else {
-  document.getElementById("Submit-button").classList.add("disabled");
-  err_msg.innerHTML = err_prefix + "All fields must be filled !!";
-}
-// }
+    if (name == "") {
+      errors.push("Name is required.");
+    }
+
+    // Validate email format
+    var email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email == "") {
+      errors.push("Email is required.");
+    } else if (!email_pattern.test(email)) {
+      errors.push("Please enter a valid email address.");
+    }
+
+    if (organization == "") {
+      errors.push("Organization name is required.");
+    }
+
+    if (organization_name == undefined) {
+      errors.push("Please select your organization type.");
+    }
+
+    if (country_name == "") {
+      errors.push("Country is required.");
+    }
+
+    if (role == undefined) {
+      errors.push("Please select your role.");
+    }
+
+    if (zipcode == "") {
+      errors.push("Zipcode is required.");
+    }
+
+    if (errors.length > 0) {
+      // Display error messages
+      var error_message = "Please correct the following errors:<br><ul>";
+      for (var i = 0; i < errors.length; i++) {
+        error_message += "<li>" + errors[i] + "</li>";
+      }
+      error_message += "</ul>";
+      $("#error-message").html(error_message);
+      $("#error-message").show();
+
+      // Scroll to the top of the page
+      $("html, body").animate({ scrollTop: 0 }, "fast");
+      return false;
+    }
+  });
+});
