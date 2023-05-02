@@ -49,6 +49,7 @@ class lokis_loop_game_info
                 'custom-fields',
                 'post-formats'
             ),
+            'menu_icon'   => 'dashicons-games',
             'show_in_rest' => true,
             'rewrite' => array('slug' => 'games')
         );
