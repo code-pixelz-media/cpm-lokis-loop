@@ -23,10 +23,10 @@ if (is_user_logged_in()) {
         <div class="iframe-container">
             <div class="lokis-iframe">
                 <iframe
-                    src="https://games.gdevelop-app.com/game-e80a4ac5-b828-4a36-8e0f-73f85fad831d/index.html?userSlug=antonretro&amp;gameSlug=paintra"
+                    src="<?php echo get_post_meta(get_the_ID(), 'lokis_loop_game_url', true);?>"
                     allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; keyboard-map *; focus-without-user-activation *; screen-wake-lock; clipboard-read; clipboard-write"
                     sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-same-origin allow-popups-to-escape-sandbox allow-downloads"
-                    scrolling="no" allowfullscreen="" style="width:100%;height:100%">
+                    scrolling="no" allowfullscreen="" style="width:100%;height:400px">
                 </iframe>
             </div>
         </div>
