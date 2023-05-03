@@ -11,8 +11,9 @@ function lokis_loop_register_form()
     <div class="gamehost-application-container">
         <div id='error-message'></div>
         <form action="" method="post">
+            <div id="lokis-feedback"></div>
             <div class="question-item">
-                <label for="name" class="form_control">
+                <label for="loki-name" class="form_control">
                     <span class="question-order">1.</span>Name <span class="req-field">*</span>
                 </label><br>
                 <input aria label="single line text" maxlength="4000" class="form-control" id='loki-name'
@@ -20,7 +21,7 @@ function lokis_loop_register_form()
             </div>
 
             <div class="question-item">
-                <label for="Email" class="form_control">
+                <label for="loki-email" class="form_control">
                     <span class="question-order">2.</span>Email <span class="req-field">*</span>
                 </label><br>
                 <input aria label="single line text" maxlength="4000" class="form-control" id='loki-email'
@@ -28,10 +29,10 @@ function lokis_loop_register_form()
             </div>
 
             <div class="question-item">
-                <label for="organization" class="form_control">
+                <label for="loki-organization" class="form_control">
                     <span class="question-order">3.</span>Organization Name <span class="req-field">*</span>
                 </label><br>
-                <input aria label="single line text" maxlength="4000" class="form-control" id='loki-organization'
+                <input aria label="single line text" maxlength="4000" class="form-control" name=''id='loki-organization'
                     placeholder="Enter your answer"><br><br>
             </div>
 
@@ -41,27 +42,27 @@ function lokis_loop_register_form()
                         4.</span>What best describes your organization <span class="req-field">*</span>
                 </label><br>
 
-                <input type="radio" id="library" name="loki_organization_name" value="ORGANIZATION-NAME">
+                <input type="radio" id="library" name="loki_organization_type" value="Public-Library">
                 <label for="library" class="form_control">Public library</label><br>
 
-                <input type="radio" id="university/college" name="loki_organization_name" value="PUBLIC-LIBRARY">
+                <input type="radio" id="university/college" name="loki_organization_type" value="University/College">
                 <label for="university/college" class="form_control">University/College</label><br>
 
-                <input type="radio" id="school" name="loki_organization_name" value="UNIVERSITY/COLLEGE">
+                <input type="radio" id="school" name="loki_organization_type" value="K-12 School">
                 <label for="school" class="form_control">K-12 school</label><br>
 
-                <input type="radio" id="museum" name="loki_organization_name" value="k-12 school">
+                <input type="radio" id="museum" name="loki_organization_type" value="Museum">
                 <label for="museum" class="form_control">Museum</label><br>
 
-                <input type="radio" id="non-profit" name="loki_organization_name" value="Meseum">
+                <input type="radio" id="non-profit" name="loki_organization_type" value="Other Organization">
                 <label for="non-profit" class="form_control">Non-profit</label><br>
 
-                <input type="radio" id="other-organization" name="loki_organization_name" value="Non-profit">
+                <input type="radio" id="other-organization" name="loki_organization_type" value="Non-profit">
                 <label for="other-organization" class="form_control">Other Organization (non-library)</label><br><br>
 
             </div>
             <div class="question-item">
-                <label for="country-name" class="form_control"><span class="question-order">5.</span>Country <span
+                <label for="loki-country" class="form_control"><span class="question-order">5.</span>Country <span
                         class="req-field">*</span></label><br>
                 <input aria label="single line text" maxlength="4000" class="form-control" id='loki-country'
                     placeholder="Enter your answer"><br><br>
@@ -70,14 +71,14 @@ function lokis_loop_register_form()
 
                 <label for="role" class="form_control"><span class="question-order">6.</span>Role <span
                         class="req-field">*</span></label><br>
-                <input type="radio" id="host" name="role" value="Role">
+                <input type="radio" id="host" name="role" value="author">
                 <label for="host">Host</label><br>
-                <input type="radio" id="player" name="role" value="player">
+                <input type="radio" id="player" name="role" value="subscriber">
                 <label for="player">Player</label><br><br>
 
             </div>
             <div class="question-item">
-                <label for="zipcode" class="form control"><span class="question-order">7.</span>Zipcode (US and Canada
+                <label for="loki-zipcode" class="form control"><span class="question-order">7.</span>Zipcode (US and Canada
                     only) <span class="req-field">*</span> </label><br>
                 <input type='number' class="form-control" id='loki-zipcode'
                     placeholder="Enter your Zipcode"><br><br>

@@ -17,14 +17,14 @@ jQuery(document).ready(function ($) {
       success: function (response) {
         if (response.message == "correct") {
           $("#lokis-feedback").html(
-            '<p class="lokis-loop-correct">Answer is correct</p>'
+            '<div class="lokis-loop-correct">Answer is correct</div>'
           );
           setTimeout(function () {
             window.location.href = response.redirect;
           }, 1000);
         } else {
           $("#lokis-feedback").html(
-            '<p class="lokis-loop-incorrect">Incorrect answer</p>'
+            '<div class="lokis-loop-incorrect">Incorrect answer</div>'
           );
         }
       },
@@ -34,12 +34,12 @@ jQuery(document).ready(function ($) {
 
 //Form validation to check input and email format
 jQuery(document).ready(function ($) {
-  $("#Submit-button").click(function () {
+  $("#Submit-button").click(function (event) {
     var name = $("#loki-name").val();
     var email = $("#loki-email").val();
-    var organization = $("#loki-organization").val();
-    var organization_name = $(
-      "input[name=loki_organization_name]:checked"
+    var organization_name = $("#loki-organization").val();
+    var organization_type = $(
+      "input[name=loki_organization_type]:checked"
     ).val();
     var country_name = $("#loki-country").val();
     var role = $("input[name=role]:checked").val();
@@ -59,11 +59,11 @@ jQuery(document).ready(function ($) {
       errors.push("Please enter a valid email address.");
     }
 
-    if (organization == "") {
+    if (organization_name == "") {
       errors.push("Organization name is required.");
     }
 
-    if (organization_name == undefined) {
+    if (organization_type == undefined) {
       errors.push("Please select your organization type.");
     }
 
@@ -92,6 +92,38 @@ jQuery(document).ready(function ($) {
       // Scroll to the top of the page
       $("html, body").animate({ scrollTop: 0 }, "fast");
       return false;
+    }
+    else {
+      event.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: gamesajax.ajaxurl,
+        data: {
+          action: "loki_user_registration",
+          name: name,
+          email: email,
+          organization_name: organization_name,
+          organization_type: organization_type,
+          country_name: country_name,
+          role: role,
+          zipcode: zipcode,
+        },
+        success: function (response) {
+          if (response.status === "success") {
+            $("#lokis-feedback").html(
+              "<div class='lokis-loop-correct'>"+response.message+"</div>"
+            );
+            $("#lokis-feedback").show();
+          } else {
+            $("#lokis-feedback").html(
+              "<div class='lokis-loop-incorrect'>" + response.message + "</div>"
+            );
+            $("#lokis-feedback").show();
+          }
+        },
+      });
+      // Scroll to the top of the page
+      $("html, body").animate({ scrollTop: 0 }, "fast");
     }
   });
 });

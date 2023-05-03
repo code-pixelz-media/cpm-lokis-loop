@@ -34,10 +34,12 @@ if (!function_exists('lokis_loop_single_post_template')) {
 if (!function_exists('lokis_check_answer')) {
     function lokis_check_answer()
     {
+        //Pulling data from Ajax and post meta table
         $post_id = $_POST['post_id'];
         $answer = strtolower($_POST['answer']);
         $correct_answer = strtolower(get_post_meta($post_id, 'lokis_loop_correct_answer', true));
         $redirect_uri = get_post_meta($post_id, 'lokis_loop_redirect_uri', true);
+
         if ($answer == $correct_answer) {
             $response = array(
                 'status' => 'success',
@@ -59,13 +61,103 @@ if (!function_exists('lokis_check_answer')) {
 }
 ;
 
+/*Function to register user*/
+if (!function_exists('loki_user_registration')) {
+    function loki_user_registration()
+    {
+        /*Pulling data from registration form*/
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $organization_name = $_POST['organization_name'];
+        $organization_type = $_POST['organization_type'];
+        $country = $_POST['country_name'];
+        $role = $_POST['role'];
+        $zipcode = $_POST['zipcode'];
+
+        /*Creating username by removing spaces from name*/
+        $username = str_replace(' ', '', $name);
+
+        /* Check if the username and email address are unique */
+        if (username_exists($username)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'The username ' . $name . ' already exists.'
+            ];
+            wp_send_json($response);
+        }
+
+        if (email_exists($email)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'The email address ' . $email . ' already exists.'
+            ];
+            wp_send_json($response);
+        }
+
+        /* Check if the username and email address meet formatting requirements */
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'The username ' . $name . ' is not valid.'
+            ];
+            wp_send_json($response);
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'The email address ' . $email . ' is not valid.'
+            ];
+            wp_send_json($response);
+        }
+
+
+        /*Creating new user*/
+        $user_id = register_new_user($username, $email);
+
+        /*Check for errors when creating new user*/
+        if (empty($user_id)) {
+            $response = [
+                'status' => 'error',
+                'message' => 'Sorry, user cannot be created.',
+            ];
+            wp_send_json($response);
+        } else {
+
+            /*Adding data to user meta*/
+            update_user_meta($user_id, 'loki_fullname', $name);
+            update_user_meta($user_id, 'loki_organization', $organization_name);
+            update_user_meta($user_id, 'loki_organization_type', $organization_type);
+            update_user_meta($user_id, 'loki_country', $country);
+            update_user_meta($user_id, 'loki_zipcode', $zipcode);
+
+            $user = new WP_User($user_id);
+
+            // Remove role
+            $user->remove_role('subscriber');
+
+            // Add role
+            $user->add_role($role);
+
+            $response = [
+                'status' => 'success',
+                'message' => 'User has been created',
+            ];
+            wp_send_json($response);
+        }
+    }
+    add_action('wp_ajax_loki_user_registration', 'loki_user_registration');
+    add_action('wp_ajax_nopriv_loki_user_registration', 'loki_user_registration');
+}
+;
+
 /*displays shortcode on selected page*/
 if (!function_exists('lokis_shortcode_display')) {
     function lokis_shortcode_display($content)
     {
         $register = (get_option('lokis_setting'))['register'];
         if (get_the_ID() === (int) $register) {
-                $content .= do_shortcode('[lokis_loop_register_form]');
+            $content .= do_shortcode('[lokis_loop_register_form]');
         }
         return $content;
     }
