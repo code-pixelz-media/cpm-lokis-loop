@@ -1,6 +1,7 @@
 /* CSS for lokis-games-settings.php */
 
 .lokis-game-wrap {
+  margin: 100px;
   height: 50vh;
   display: grid !important;
   justify-content: center;
@@ -12,4 +13,26 @@
 }
 .lokis-game-setting {
   display: contents;
+}
+fieldset {
+  display: grid;
+  border: 1px solid;
+  margin: 10px;
+  padding: 10px;
+}
+legend {
+  padding: 10px;
+}
+.register-page {
+  margin-top: 20px;
+}
+.submit {
+  position: relative;
+}
+.button {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
