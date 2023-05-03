@@ -27,9 +27,9 @@ function lokis_settings_callback()
 
     settings_fields('lokis_settings_group');
     ?>
-    <div class="wrap">
+    <div class="lokis-game-wrap">
         <h1>Loki Loops Game Settings</h1>
-        <form method="post" action="options.php">
+        <form method="post" action="options.php" class="lokis-game-setting">
             <?php
             settings_fields('lokis_settings_group');
             do_settings_sections('lokis_settings'); ?>

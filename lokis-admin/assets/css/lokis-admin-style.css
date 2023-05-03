@@ -1,0 +1,15 @@
+/* CSS for lokis-games-settings.php */
+
+.lokis-game-wrap {
+  height: 50vh;
+  display: grid !important;
+  justify-content: center;
+  align-items: center;
+}
+.lokis-game-wrap h1 {
+  display: flex;
+  align-items: center;
+}
+.lokis-game-setting {
+  display: contents;
+}
