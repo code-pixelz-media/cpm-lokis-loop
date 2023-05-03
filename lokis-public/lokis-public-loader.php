@@ -63,13 +63,9 @@ if (!function_exists('lokis_check_answer')) {
 if (!function_exists('lokis_shortcode_display')) {
     function lokis_shortcode_display($content)
     {
-        $pages = get_pages();
         $register = (get_option('lokis_setting'))['register'];
-
-        foreach ($pages as $page) {
-            if ($page->ID === (int) $register) {
+        if (get_the_ID() === (int) $register) {
                 $content .= do_shortcode('[lokis_loop_register_form]');
-            }
         }
         return $content;
     }
