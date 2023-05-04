@@ -14,6 +14,10 @@ function cpm_lokis_public_scripts()
 }
 add_action('wp_enqueue_scripts', 'cpm_lokis_public_scripts');
 
+/*Loads public files*/
+require_once('inc/lokis-user-dashboard.php');
+
+
 /*Loads single post template for custom post type of games*/
 if (!function_exists('lokis_loop_single_post_template')) {
     function lokis_loop_single_post_template($single_template)
