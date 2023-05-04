@@ -168,3 +168,42 @@ if (!function_exists('lokis_shortcode_display')) {
     add_action('the_content', 'lokis_shortcode_display');
 }
 ;
+
+/*updates user meta 'visited_pages'*/
+if (!function_exists('lokis_visited_pages')) {
+    function lokis_visited_pages()
+    {
+        $post_id = get_the_ID();
+        $user_id = get_current_user_id();
+
+        $visited_pages = get_user_meta($user_id, 'visited_pages', true);
+        if (!is_array($visited_pages)) {
+            $visited_pages = array();
+        }
+
+        if ($post_id && get_post_type($post_id) === 'games') {
+
+            if (!in_array($post_id, $visited_pages)) {
+                $visited_pages[] = $post_id;
+            }
+            update_user_meta($user_id, 'visited_pages', $visited_pages);
+        }
+    }
+    add_action('wp_head', 'lokis_visited_pages');
+}
+;
+
+/*updates user meta 'visited_pages'*/
+if (!function_exists('lokis_restrict_access')) {
+    function lokis_restrict_access()
+    {
+        // Check if the user is not an administrator or author
+        if (!current_user_can('administrator') && (is_admin())) {
+            // Redirect them to the homepage or any other page
+            wp_redirect(home_url());
+            exit;
+        }
+    }
+    add_action('admin_init', 'lokis_restrict_access');
+}
+;
