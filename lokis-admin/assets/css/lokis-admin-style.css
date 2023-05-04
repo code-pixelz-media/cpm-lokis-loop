@@ -29,7 +29,7 @@ legend {
 .submit {
   position: relative;
 }
-.button {
+#loki-submit {
   margin: 0;
   position: absolute;
   top: 50%;
