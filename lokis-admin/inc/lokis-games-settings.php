@@ -71,6 +71,24 @@ function lokis_settings_callback()
                     }
                     ?>
                 </select>
+                <div class="dashboard-page">
+                    <label for="dashboard-url">Select Dashboard Page</label>
+                </div>
+                <select name="lokis_setting[dashboard]">
+                    <option value="">Select a page</option>
+
+                    <?php
+                    $pages = get_pages();
+                    foreach ($pages as $page) {
+                        $option = '<option value="' . $page->ID . '"';
+                        if (isset($games_setting_data['dashboard']) && $games_setting_data['dashboard'] == $page->ID) {
+                            $option .= ' selected="selected"';
+                        }
+                        $option .= '>' . $page->post_title . '</option>';
+                        echo $option;
+                    }
+                    ?>
+                </select>
                 <?php
                 submit_button(null, 'primary', 'loki-submit');
                 settings_errors();
