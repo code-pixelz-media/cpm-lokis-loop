@@ -31,8 +31,8 @@ class lokis_loop_game_info
 
         $args = array(
             'labels' => array(
-                'name' => __('Games'),
-                'singular_name' => __('Games')
+                'name' => __('Game Stages'),
+                'singular_name' => __('Game Stages')
             ),
             'public' => true,
             'has_archive' => false,
