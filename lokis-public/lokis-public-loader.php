@@ -38,7 +38,7 @@ if (!function_exists('lokis_loop_single_post_template')) {
 if (!function_exists('lokis_check_answer')) {
     function lokis_check_answer()
     {
-        //Pulling data from Ajax and post meta table
+        /* Pulling data from Ajax and post meta table */
         $post_id = $_POST['post_id'];
         $answer = strtolower($_POST['answer']);
         $correct_answer = strtolower(get_post_meta($post_id, 'lokis_loop_correct_answer', true));
@@ -137,10 +137,10 @@ if (!function_exists('loki_user_registration')) {
 
             $user = new WP_User($user_id);
 
-            // Remove role
+            /* Remove role */
             $user->remove_role('subscriber');
 
-            // Add role
+            /* Add role */
             $user->add_role($role);
 
             $response = [
@@ -169,37 +169,29 @@ if (!function_exists('lokis_shortcode_display')) {
 }
 ;
 
-/*updates user meta 'visited_pages'*/
-if (!function_exists('lokis_visited_pages')) {
-    function lokis_visited_pages()
+/*updates user meta 'last_visited'*/
+if (!function_exists('lokis_last_visited')) {
+    function lokis_last_visited()
     {
         $post_id = get_the_ID();
         $user_id = get_current_user_id();
-
-        $visited_pages = get_user_meta($user_id, 'visited_pages', true);
-        if (!is_array($visited_pages)) {
-            $visited_pages = array();
-        }
+        $last_visited = get_user_meta($user_id, 'last_visited', true);
 
         if ($post_id && get_post_type($post_id) === 'games') {
-
-            if (!in_array($post_id, $visited_pages)) {
-                $visited_pages[] = $post_id;
-            }
-            update_user_meta($user_id, 'visited_pages', $visited_pages);
+            update_user_meta($user_id, 'last_visited',$post_id, $last_visited);
         }
     }
-    add_action('wp_head', 'lokis_visited_pages');
+    add_action('wp_head', 'lokis_last_visited');
 }
 ;
 
-/*updates user meta 'visited_pages'*/
+/*restricts user access to wp-admin*/
 if (!function_exists('lokis_restrict_access')) {
     function lokis_restrict_access()
     {
-        // Check if the user is not an administrator or author
+        /* Check if the user is not an administrator*/
         if (!current_user_can('administrator') && (is_admin())) {
-            // Redirect them to the homepage or any other page
+            /* Redirect them to the homepage or any other page*/
             wp_redirect(home_url());
             exit;
         }
