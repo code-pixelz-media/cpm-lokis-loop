@@ -37,9 +37,9 @@ if (is_user_logged_in()) {
             <form action="" method="post">
                 <div id='lokis-feedback'></div>
                 <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
-                <label for="answer">Answer:</label>
-                <input type="text" id="answer" name="answer">
-                <input type="submit" id=submit value="Submit">
+                <label for="lokis-answer">Answer:</label>
+                <input type="text" id="lokis-answer" name="lokis-answer">
+                <input type="submit" id="lokis-submit-btn" value="lokis-submit-btn">
             </form>
         </div>
     </div>

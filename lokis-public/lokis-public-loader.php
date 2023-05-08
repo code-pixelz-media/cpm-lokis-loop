@@ -159,11 +159,20 @@ if (!function_exists('loki_user_registration')) {
 if (!function_exists('lokis_shortcode_display')) {
     function lokis_shortcode_display($content)
     {
+        /* Display Registration form */
         $register = (get_option('lokis_setting'))['register'];
         if (get_the_ID() === (int) $register) {
             $content .= do_shortcode('[lokis_loop_register_form]');
+            return $content;
         }
-        return $content;
+
+        /* Display Dashboard */
+        $dashboard = (get_option('lokis_setting'))['dashboard'];
+        if (get_the_ID() === (int) $dashboard) {
+            $content .= do_shortcode('[lokis_loop_user_dashboard]');
+            return $content;
+        }
+
     }
     add_action('the_content', 'lokis_shortcode_display');
 }
@@ -175,10 +184,10 @@ if (!function_exists('lokis_last_visited')) {
     {
         $post_id = get_the_ID();
         $user_id = get_current_user_id();
-        $last_visited = get_user_meta($user_id, 'last_visited', true);
+        $last_visited = get_user_meta($user_id, 'lokis_last_visited', true);
 
         if ($post_id && get_post_type($post_id) === 'games') {
-            update_user_meta($user_id, 'last_visited',$post_id, $last_visited);
+            update_user_meta($user_id, 'lokis_last_visited', $post_id, $last_visited);
         }
     }
     add_action('wp_head', 'lokis_last_visited');

@@ -1,11 +1,10 @@
 //sending ajax post to wordpress to check answer from given data
 jQuery(document).ready(function ($) {
-  $("#submit").click(function (event) {
+  $("#lokis-submit-btn").click(function (event) {
     event.preventDefault();
-    var answer = $("#answer").val();
-    console.log(answer);
+    var answer = $("#lokis-answer").val();
     var post_id = $("#loki-post-id").val();
-    console.log(post_id);
+
     $.ajax({
       type: "POST",
       url: gamesajax.ajaxurl,
@@ -34,7 +33,7 @@ jQuery(document).ready(function ($) {
 
 //Form validation to check input and email format
 jQuery(document).ready(function ($) {
-  $("#Submit-button").click(function (event) {
+  $("lokis-registration-button").click(function (event) {
     var name = $("#loki-name").val();
     var email = $("#loki-email").val();
     var organization_name = $("#loki-organization").val();
@@ -94,8 +93,7 @@ jQuery(document).ready(function ($) {
       // Scroll to the top of the page
       $("html, body").animate({ scrollTop: 0 }, "fast");
       return false;
-    }
-    else {
+    } else {
       event.preventDefault();
       $.ajax({
         type: "POST",
@@ -113,7 +111,7 @@ jQuery(document).ready(function ($) {
         success: function (response) {
           if (response.status === "success") {
             $("#lokis-feedback").html(
-              "<div class='lokis-loop-correct'>"+response.message+"</div>"
+              "<div class='lokis-loop-correct'>" + response.message + "</div>"
             );
             $("#lokis-feedback").show();
           } else {

@@ -17,7 +17,7 @@ function lokis_loop_register_form()
                     <span class="question-order">1.</span>Name <span class="req-field">*</span>
                 </label><br>
                 <input aria label="single line text" maxlength="4000" class="form-control" id='loki-name'
-                    placeholder="Enter your answer"><br><br>
+                    placeholder="Enter your name"><br><br>
             </div>
 
             <div class="question-item">
@@ -25,15 +25,15 @@ function lokis_loop_register_form()
                     <span class="question-order">2.</span>Email <span class="req-field">*</span>
                 </label><br>
                 <input aria label="single line text" maxlength="4000" class="form-control" id='loki-email'
-                    placeholder="Enter your answer"><br><br>
+                    placeholder="Enter your Email"><br><br>
             </div>
 
             <div class="question-item">
                 <label for="loki-organization" class="form_control">
                     <span class="question-order">3.</span>Organization Name <span class="req-field">*</span>
                 </label><br>
-                <input aria label="single line text" maxlength="4000" class="form-control" name=''id='loki-organization'
-                    placeholder="Enter your answer"><br><br>
+                <input aria label="single line text" maxlength="4000" class="form-control" id='loki-organization'
+                    placeholder="Enter your organization's name"><br><br>
             </div>
 
 
@@ -65,7 +65,7 @@ function lokis_loop_register_form()
                 <label for="loki-country" class="form_control"><span class="question-order">5.</span>Country <span
                         class="req-field">*</span></label><br>
                 <input aria label="single line text" maxlength="4000" class="form-control" id='loki-country'
-                    placeholder="Enter your answer"><br><br>
+                    placeholder="Enter your country's name"><br><br>
             </div>
             <div class="question-item">
 
@@ -80,11 +80,10 @@ function lokis_loop_register_form()
             <div class="question-item">
                 <label for="loki-zipcode" class="form control"><span class="question-order">7.</span>Zipcode (US and Canada
                     only) <span class="req-field">*</span> </label><br>
-                <input type='number' class="form-control" id='loki-zipcode'
-                    placeholder="Enter your Zipcode"><br><br>
+                <input type='number' class="form-control" id='loki-zipcode' placeholder="Enter your Zipcode"><br><br>
             </div>
-            <input type="submit" class="Submit-button" id="Submit-button">
-
+            <input type="submit" class="lokis-registration-button" id="lokis-registration-button">
+        </form>
     </div>
     <?php
     return ob_get_clean();
