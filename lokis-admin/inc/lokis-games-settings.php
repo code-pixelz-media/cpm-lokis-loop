@@ -29,73 +29,77 @@ function lokis_settings_callback()
     ?>
 
     <div class="lokis-game-wrap">
-        <fieldset>
-            <legend>
-                <h1>Loki Loops Game Settings</h1>
-            </legend>
 
-            <form method="post" action="options.php" class="lokis-game-setting">
+        <legend>
+            <h1>Loki Loops Game Settings</h1>
+        </legend>
+
+        <form method="post" action="options.php" class="lokis-game-setting">
+            <?php
+            settings_fields('lokis_settings_group');
+            do_settings_sections('lokis_settings'); ?>
+            <div class="lokis-inputpage">
+                <label for="login-url">Select Login Page :</label>
+            </div>
+
+            <select class="lokis-login" name="lokis_setting[login]">
+                <option value="">Select a page</option>
                 <?php
-                settings_fields('lokis_settings_group');
-                do_settings_sections('lokis_settings'); ?>
-                <label for="login-url">Select Login Page</label>
-                <select name="lokis_setting[login]">
-                    <option value="">Select a page</option>
-                    <?php
-                    $pages = get_pages();
-                    foreach ($pages as $page) {
-                        $option = '<option value="' . $page->ID . '"';
-                        if (isset($games_setting_data['login']) && $games_setting_data['login'] == $page->ID) {
-                            $option .= ' selected="selected"';
-                        }
-                        $option .= '>' . $page->post_title . '</option>';
-                        echo $option;
+                $pages = get_pages();
+                foreach ($pages as $page) {
+                    $option = '<option value="' . $page->ID . '"';
+                    if (isset($games_setting_data['login']) && $games_setting_data['login'] == $page->ID) {
+                        $option .= ' selected="selected"';
                     }
-                    ?>
-                </select>
-                <div class="register-page">
-                    <label for="register-url">Select Register Page</label>
-                </div>
-                <select name="lokis_setting[register]">
-                    <option value="">Select a page</option>
-
-                    <?php
-                    $pages = get_pages();
-                    foreach ($pages as $page) {
-                        $option = '<option value="' . $page->ID . '"';
-                        if (isset($games_setting_data['register']) && $games_setting_data['register'] == $page->ID) {
-                            $option .= ' selected="selected"';
-                        }
-                        $option .= '>' . $page->post_title . '</option>';
-                        echo $option;
-                    }
-                    ?>
-                </select>
-                <div class="dashboard-page">
-                    <label for="dashboard-url">Select Dashboard Page</label>
-                </div>
-                <select name="lokis_setting[dashboard]">
-                    <option value="">Select a page</option>
-
-                    <?php
-                    $pages = get_pages();
-                    foreach ($pages as $page) {
-                        $option = '<option value="' . $page->ID . '"';
-                        if (isset($games_setting_data['dashboard']) && $games_setting_data['dashboard'] == $page->ID) {
-                            $option .= ' selected="selected"';
-                        }
-                        $option .= '>' . $page->post_title . '</option>';
-                        echo $option;
-                    }
-                    ?>
-                </select>
-                <?php
-                submit_button(null, 'primary', 'loki-submit');
-                settings_errors();
+                    $option .= '>' . $page->post_title . '</option>';
+                    echo $option;
+                }
                 ?>
-            </form>
 
-        </fieldset>
+            </select>
+            <div class="lokis-inputpage">
+                <label for="register-url">Select Register Page :</label>
+            </div>
+            <select class="lokis-register" name="lokis_setting[register]">
+                <option value="">Select a page</option>
+
+                <?php
+                $pages = get_pages();
+                foreach ($pages as $page) {
+                    $option = '<option value="' . $page->ID . '"';
+                    if (isset($games_setting_data['register']) && $games_setting_data['register'] == $page->ID) {
+                        $option .= ' selected="selected"';
+                    }
+                    $option .= '>' . $page->post_title . '</option>';
+                    echo $option;
+                }
+                ?>
+            </select>
+            <div class="lokis-inputpage">
+                <label for="dashboard-url">Select Dashboard Page :</label>
+            </div>
+            <select class="lokis-dashboard" name="lokis_setting[dashboard]">
+                <option value="">Select a page</option>
+
+                <?php
+                $pages = get_pages();
+                foreach ($pages as $page) {
+                    $option = '<option value="' . $page->ID . '"';
+                    if (isset($games_setting_data['dashboard']) && $games_setting_data['dashboard'] == $page->ID) {
+                        $option .= ' selected="selected"';
+                    }
+                    $option .= '>' . $page->post_title . '</option>';
+                    echo $option;
+                }
+                ?>
+            </select>
+            <?php
+            submit_button(null, 'success', 'loki-submit');
+            settings_errors();
+            ?>
+        </form>
+
+
     </div>
 
     <?php

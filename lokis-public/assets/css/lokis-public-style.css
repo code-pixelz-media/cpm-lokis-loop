@@ -60,11 +60,11 @@
 
 /* creating CSS for game host application form  */
 
-.question-item {
+.lokis-question-item {
   padding: 1.25rem 1.25rem;
   position: relative;
 }
-.question-order {
+.lokis-question-order {
   margin: 5px;
   padding: 1px;
   line-height: 1.25rem;
@@ -96,23 +96,16 @@
   resize: none;
   user-select: text;
 }
-.radio-button {
-  margin: 0px;
-  padding: 0px;
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: #75592d;
-  stroke: #75592d;
-}
-.req-field {
+
+.lokis-req-field {
   color: #c12f32;
 }
-.gamehost-application-container {
+.lokis-gamehost-application-container {
   background-color: #f0eae1;
   margin: 10px;
   padding: 2px;
 }
-.Submit-button {
+.lokis-registration-button {
   display: inline-flex;
   flex-flow: row nowrap;
   align-items: center;
