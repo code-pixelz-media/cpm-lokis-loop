@@ -86,6 +86,8 @@ jQuery(document).ready(function ($) {
         error_message += "<li>" + errors[i] + "</li>";
       }
       error_message += "</ul>";
+      $("#error-message").addClass("lokis-loop-incorrect");
+      $("#error-message").css("height", "auto");
       $("#error-message").html(error_message);
       $("#error-message").show();
 
