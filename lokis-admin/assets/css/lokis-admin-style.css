@@ -5,12 +5,14 @@
   align-items: center;
 }
 .lookisloop-navbar-item img.lokisloop-logo {
-  width: 30%;
+  width: 25%;
+  margin-left: 12px;
 }
 img.lokisloop-footer-logo {
-  width: 30%;
+  width: 35%;
   filter: brightness(0);
   height: 3vh;
+  margin-right: 18px;
 }
 .lokis-game-wrap {
   background-color: white;

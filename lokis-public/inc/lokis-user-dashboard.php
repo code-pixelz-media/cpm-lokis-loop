@@ -12,9 +12,9 @@ function lokis_loop_user_dashboard()
 
     <div class="lokisloop-dashboard-container">
         <aside>
-            <ul>
-                <li><a href="#" class="active">DashBoard </a> </li>
 
+            <a href="#" class="active">Menu</a>
+            <ul>
 
                 <li><a href="#"> <i class="fa-regular fa-user"></i>
                         <span class="nav-item">Profile </span>
@@ -23,25 +23,13 @@ function lokis_loop_user_dashboard()
 
 
                 <li><a href="#"> <i class="fa-regular fa-chart-bar"></i>
-                        <span class="nav-item">Analytics</span>
+                        <span class="nav-item">Host a Game</span>
                     </a>
                 </li>
 
 
                 <li><a href="#"> <i class="fa-solid fa-list-check"></i>
-                        <span class="nav-item"> Reports</span>
-                    </a>
-                </li>
-
-                <li><a herf="#" title="Help">
-                        <i class="fa-solid fa-circle-question"></i>
-                        <span class="nav-item">Help</span>
-                    </a>
-                </li>
-
-                <li><a href="#">
-                        <i class="fa-solid fa-gear"></i>
-                        <span class="nav-item">Setting</span>
+                        <span class="nav-item"> Hosted Game</span>
                     </a>
                 </li>
 
