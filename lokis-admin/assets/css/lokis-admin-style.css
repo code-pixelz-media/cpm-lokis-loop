@@ -1,5 +1,17 @@
 /* CSS for lokis-games-settings.php */
-
+.lookisloop-navbar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lookisloop-navbar-item img.lokisloop-logo {
+  width: 30%;
+}
+img.lokisloop-footer-logo {
+  width: 30%;
+  filter: brightness(0);
+  height: 3vh;
+}
 .lokis-game-wrap {
   background-color: white;
   width: 50%;
