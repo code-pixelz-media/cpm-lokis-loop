@@ -83,72 +83,79 @@ if (!function_exists('loki_user_registration')) {
 
         /*Creating username by removing spaces from name*/
         $username = str_replace(' ', '', $name);
+        if (wp_verify_nonce($_POST['nonce'], -1)) {
+            /* Check if the username and email address are unique */
+            if (username_exists($username)) {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'The username ' . $name . ' already exists.'
+                ];
+                wp_send_json($response);
+            }
 
-        /* Check if the username and email address are unique */
-        if (username_exists($username)) {
-            $response = [
-                'status' => 'error',
-                'message' => 'The username ' . $name . ' already exists.'
-            ];
-            wp_send_json($response);
-        }
+            if (email_exists($email)) {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'The email address ' . $email . ' already exists.'
+                ];
+                wp_send_json($response);
+            }
 
-        if (email_exists($email)) {
-            $response = [
-                'status' => 'error',
-                'message' => 'The email address ' . $email . ' already exists.'
-            ];
-            wp_send_json($response);
-        }
+            /* Check if the username and email address meet formatting requirements */
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'The username ' . $name . ' is not valid.'
+                ];
+                wp_send_json($response);
+            }
 
-        /* Check if the username and email address meet formatting requirements */
-        if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
-            $response = [
-                'status' => 'error',
-                'message' => 'The username ' . $name . ' is not valid.'
-            ];
-            wp_send_json($response);
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $response = [
-                'status' => 'error',
-                'message' => 'The email address ' . $email . ' is not valid.'
-            ];
-            wp_send_json($response);
-        }
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'The email address ' . $email . ' is not valid.'
+                ];
+                wp_send_json($response);
+            }
 
 
-        /*Creating new user*/
-        $user_id = register_new_user($username, $email);
+            /*Creating new user*/
+            $user_id = register_new_user($username, $email);
 
-        /*Check for errors when creating new user*/
-        if (empty($user_id)) {
-            $response = [
-                'status' => 'error',
-                'message' => 'Sorry, user cannot be created.',
-            ];
-            wp_send_json($response);
+            /*Check for errors when creating new user*/
+            if (empty($user_id)) {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Sorry, user cannot be created.',
+                ];
+                wp_send_json($response);
+            } else {
+
+                /*Adding data to user meta*/
+                update_user_meta($user_id, 'loki_fullname', $name);
+                update_user_meta($user_id, 'loki_organization', $organization_name);
+                update_user_meta($user_id, 'loki_organization_type', $organization_type);
+                update_user_meta($user_id, 'loki_country', $country);
+                update_user_meta($user_id, 'loki_zipcode', $zipcode);
+
+                $user = new WP_User($user_id);
+
+                /* Remove role */
+                $user->remove_role('subscriber');
+
+                /* Add role */
+                $user->add_role($role);
+
+                $response = [
+                    'status' => 'success',
+                    'message' => 'User has been created',
+                ];
+                wp_send_json($response);
+            }
         } else {
-
-            /*Adding data to user meta*/
-            update_user_meta($user_id, 'loki_fullname', $name);
-            update_user_meta($user_id, 'loki_organization', $organization_name);
-            update_user_meta($user_id, 'loki_organization_type', $organization_type);
-            update_user_meta($user_id, 'loki_country', $country);
-            update_user_meta($user_id, 'loki_zipcode', $zipcode);
-
-            $user = new WP_User($user_id);
-
-            /* Remove role */
-            $user->remove_role('subscriber');
-
-            /* Add role */
-            $user->add_role($role);
-
             $response = [
-                'status' => 'success',
-                'message' => 'User has been created',
+                'status' => 'error',
+                'message' => 'ACCESS DENIED',
             ];
             wp_send_json($response);
         }

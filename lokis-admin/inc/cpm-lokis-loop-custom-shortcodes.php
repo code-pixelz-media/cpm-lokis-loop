@@ -11,6 +11,7 @@ function lokis_loop_register_form()
     <div class="lokis-gamehost-application-container">
         <div id='error-message'></div>
         <form action="" method="post">
+            <?php wp_nonce_field(-1,'loki_registration_nonce'); ?>
             <div id="lokis-feedback"></div>
             <div class="lokis-question-item">
                 <label for="loki-name" class="form_control">

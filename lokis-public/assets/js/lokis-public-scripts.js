@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
 
 //Form validation to check input and email format
 jQuery(document).ready(function ($) {
-  $("lokis-registration-button").click(function (event) {
+  $("#lokis-registration-button").click(function (event) {
     var name = $("#loki-name").val();
     var email = $("#loki-email").val();
     var organization_name = $("#loki-organization").val();
@@ -43,8 +43,15 @@ jQuery(document).ready(function ($) {
     var country_name = $("#loki-country").val();
     var role = $("input[name=role]:checked").val();
     var zipcode = $("#loki-zipcode").val();
+    var nonce = $("#loki_registration_nonce").val();
+
 
     var errors = [];
+
+    //Clearing array if it has any values
+    if (errors.length > 0) {
+      errors = [];
+    }
 
     if (name == "") {
       errors.push("Name is required.");
@@ -79,6 +86,11 @@ jQuery(document).ready(function ($) {
     }
 
     if (errors.length > 0) {
+
+      //Clear div
+      $("#error-message").html("");
+      $("#lokis-feedback").html("");
+
       // Display error messages
       var error_message = "Please correct the following errors:<br><ul>";
       for (var i = 0; i < errors.length; i++) {
@@ -107,14 +119,17 @@ jQuery(document).ready(function ($) {
           country_name: country_name,
           role: role,
           zipcode: zipcode,
+          nonce: nonce
         },
         success: function (response) {
           if (response.status === "success") {
+            $("#error-message").html("");
             $("#lokis-feedback").html(
               "<div class='lokis-loop-correct'>" + response.message + "</div>"
             );
             $("#lokis-feedback").show();
           } else {
+           $("#error-message").html("");
             $("#lokis-feedback").html(
               "<div class='lokis-loop-incorrect'>" + response.message + "</div>"
             );
