@@ -36,6 +36,7 @@ function lokis_settings_callback()
 
         <form method="post" action="options.php" class="lokis-game-setting">
             <?php
+            settings_errors();
             settings_fields('lokis_settings_group');
             do_settings_sections('lokis_settings'); ?>
             <div class="lokis-inputpage">
@@ -95,7 +96,6 @@ function lokis_settings_callback()
             </select>
             <?php
             submit_button(null, 'success', 'loki-submit');
-            settings_errors();
             ?>
         </form>
 
