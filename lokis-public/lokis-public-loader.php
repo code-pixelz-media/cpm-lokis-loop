@@ -35,7 +35,6 @@ if (!function_exists('lokis_loop_single_post_template')) {
     }
     add_filter('single_template', 'lokis_loop_single_post_template');
 }
-;
 
 /*Adding function to check answer of given by ajax post with database correct answer*/
 if (!function_exists('lokis_check_answer')) {
@@ -66,7 +65,6 @@ if (!function_exists('lokis_check_answer')) {
     }
     add_action('wp_ajax_lokis_check_answer', 'lokis_check_answer');
 }
-;
 
 /*Function to register user*/
 if (!function_exists('loki_user_registration')) {
@@ -163,7 +161,6 @@ if (!function_exists('loki_user_registration')) {
     add_action('wp_ajax_loki_user_registration', 'loki_user_registration');
     add_action('wp_ajax_nopriv_loki_user_registration', 'loki_user_registration');
 }
-;
 
 /*displays shortcode on selected page*/
 if (!function_exists('lokis_shortcode_display')) {
@@ -186,7 +183,6 @@ if (!function_exists('lokis_shortcode_display')) {
     }
     add_action('the_content', 'lokis_shortcode_display');
 }
-;
 
 /*updates user meta 'last_visited'*/
 if (!function_exists('lokis_last_visited')) {
@@ -202,7 +198,6 @@ if (!function_exists('lokis_last_visited')) {
     }
     add_action('wp_head', 'lokis_last_visited');
 }
-;
 
 /*restricts user access to wp-admin*/
 if (!function_exists('lokis_restrict_access')) {
@@ -217,4 +212,3 @@ if (!function_exists('lokis_restrict_access')) {
     }
     add_action('admin_init', 'lokis_restrict_access');
 }
-;
