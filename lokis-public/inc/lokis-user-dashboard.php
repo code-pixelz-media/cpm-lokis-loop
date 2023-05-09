@@ -5,45 +5,81 @@ function lokis_loop_user_dashboard()
 {
     ob_start();
     ?>
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 
-    <div class="profile-header container-fluid">
-        <div class="header-title">
-            <h1> My profile </h1>
-        </div>
+
+
+
+
+    <div class="lokisloop-dashboard-container">
+        <aside>
+            <ul>
+                <li><a href="#" class="active">DashBoard </a> </li>
+
+
+                <li><a href="#"> <i class="fa-regular fa-user"></i>
+                        <span class="nav-item">Profile </span>
+                    </a>
+                </li>
+
+
+                <li><a href="#"> <i class="fa-regular fa-chart-bar"></i>
+                        <span class="nav-item">Analytics</span>
+                    </a>
+                </li>
+
+
+                <li><a href="#"> <i class="fa-solid fa-list-check"></i>
+                        <span class="nav-item"> Reports</span>
+                    </a>
+                </li>
+
+                <li><a herf="#" title="Help">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span class="nav-item">Help</span>
+                    </a>
+                </li>
+
+                <li><a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <span class="nav-item">Setting</span>
+                    </a>
+                </li>
+
+                <li><a herf="#" title="LogOut">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span class="nav-item">LogOut</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        </aside>
+
+
+
     </div>
-    <menu id="user" class="dynamicMenu">
-        <div class="user-profile">
-            <div class="profile-pic">
-                <img src="https://images.unsplash.com/photo-1549669944-ca3e8b576248?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80"
-                    alt="username here" />
+
+    <section class="home-section">
+        <nav>
+            <div class="sidebar-button">
+                <i class='bx bx-menu sidebarBtn'></i>
+                <span class="dashboard">Dashboard</span>
             </div>
-            <div class="user-info">
-                <div class="username">
-                    <p><strong> Laura Egan</strong> </p>
-                </div>
-                <ul class="profile-menu">
-                    <li><a herf="/directoryphonebook" title="Directory Phonebook"><span><i class="<i class=" fa-regular
-                                    fa-address-card></i>" style="color: #a1c0f5;"></i></span></a></li>
-                    <li><a herf="#" title="Help"></a></li>
-                    <li><a herf="#" title="Setting"></a></li>
-                    <li><a herf="#" title="LogOut"></a></li>
-                </ul>
+            <div class="search-box">
+                <input type="text" placeholder="Search...">
+                <i class='bx bx-search'></i>
             </div>
-        </div>
-        <ul class="admin-menu">
-            <li> <a href="#"> Link Examples </a></li>
-            <li> <a href="#"> Link Examples </a></li>
-            <li> <a href="#"> Link Examples </a></li>
-            <li> <a href="#"> Link Examples </a></li>
-        </ul>
-    </menu>
+            <div class="profile-details">
+                <img src="images/profile.jpg" alt="">
+                <span class="admin_name">Lokisloop-Usename</span>
+                <i class='bx bx-chevron-down'></i>
+            </div>
+        </nav>
 
 
 
 
-
-    <?php
-    return ob_get_clean();
+        <?php
+        return ob_get_clean();
 }
 add_shortcode('lokis_loop_user_dashboard', 'lokis_loop_user_dashboard');

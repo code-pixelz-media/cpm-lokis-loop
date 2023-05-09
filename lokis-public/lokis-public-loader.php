@@ -10,6 +10,9 @@ function cpm_lokis_public_scripts()
     wp_enqueue_style('cpm-lokis-public-js', plugin_dir_url(__FILE__) . 'assets/css/lokis-public-style.css', array(), false, 'all');
     /* js for plugin  */
     wp_enqueue_script('cpm-lokis-public-js', plugin_dir_url(__FILE__) . 'assets/js/lokis-public-scripts.js', array('jquery'), '1.0.0', true);
+
+    wp_enqueue_style('lokis-fontawesome-css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), false, 'all');
+
     wp_localize_script('cpm-lokis-public-js', 'gamesajax', array('ajaxurl' => admin_url('admin-ajax.php')));
 }
 add_action('wp_enqueue_scripts', 'cpm_lokis_public_scripts');

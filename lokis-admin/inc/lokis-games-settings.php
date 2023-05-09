@@ -31,7 +31,7 @@ function lokis_settings_callback()
     <div class="lokis-game-wrap">
 
         <legend>
-            <h1>Loki Loops Game Settings</h1>
+            <h1>Settings</h1>
         </legend>
 
         <form method="post" action="options.php" class="lokis-game-setting">
@@ -39,7 +39,7 @@ function lokis_settings_callback()
             settings_fields('lokis_settings_group');
             do_settings_sections('lokis_settings'); ?>
             <div class="lokis-inputpage">
-                <label for="login-url">Select Login Page :</label>
+                <label for="login-url"> Login Page :</label>
             </div>
 
             <select class="lokis-login" name="lokis_setting[login]">
@@ -58,7 +58,7 @@ function lokis_settings_callback()
 
             </select>
             <div class="lokis-inputpage">
-                <label for="register-url">Select Register Page :</label>
+                <label for="register-url"> Register Page :</label>
             </div>
             <select class="lokis-register" name="lokis_setting[register]">
                 <option value="">Select a page</option>
@@ -76,7 +76,7 @@ function lokis_settings_callback()
                 ?>
             </select>
             <div class="lokis-inputpage">
-                <label for="dashboard-url">Select Dashboard Page :</label>
+                <label for="dashboard-url"> Dashboard Page :</label>
             </div>
             <select class="lokis-dashboard" name="lokis_setting[dashboard]">
                 <option value="">Select a page</option>

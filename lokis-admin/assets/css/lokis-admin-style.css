@@ -1,9 +1,11 @@
 /* CSS for lokis-games-settings.php */
 
-#wpbody-content {
+.lokis-game-wrap {
   background-color: white;
-  width: 90%;
+  width: 50%;
   padding: 20px 10px;
+  margin: 0 auto;
+  margin-top: 30px;
 }
 .lokis-game-setting {
   padding: 10px;
@@ -34,5 +36,20 @@
   border-color: #4dc972;
   padding: 8px;
   font-size: 1rem;
+}
+
+.wp-core-ui .lokis-game-wrap select:focus {
+  border-color: #e8eeef;
+  color: #000000;
+  box-shadow: 0 0 0 1px #e8eeef;
+}
+
+.wp-core-ui .lokis-game-wrap select:hover {
+  color: #252627;
+}
+@media only screen and (max-width: 782) {
+  .lokis-game-wrap {
+    width: 85%;
+  }
 }
 /* End off  CSS for lokis-games-settings.php */
