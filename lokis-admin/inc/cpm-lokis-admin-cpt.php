@@ -22,6 +22,8 @@ class lokis_loop_game_info
         add_action('init', array($this, 'lokis_loop_create_post_type'));
         add_action('add_meta_boxes', array($this, 'lokis_loop_game_info_metabox'));
         add_action('save_post', array($this, 'lokis_loop_save_game_info'));
+        add_action('add_meta_boxes', array($this, 'lokis_loop_checkbox_metabox'));
+        add_action('save_post', array($this, 'lokis_loop_save_checkbox'));
 
     }
 
@@ -49,7 +51,7 @@ class lokis_loop_game_info
                 'custom-fields',
                 'post-formats'
             ),
-            'menu_icon'   => 'dashicons-games',
+            'menu_icon' => 'dashicons-games',
             'show_in_rest' => true,
             'rewrite' => array('slug' => 'games')
         );
@@ -115,6 +117,43 @@ class lokis_loop_game_info
         endif;
 
     }
+
+    // creating custom metabox field for custom post Games
+    public function lokis_loop_checkbox_metabox()
+    {
+        add_meta_box("lokis_loop_checkbox_metabox", "Loki's Loop Primary Game?", array($this, "lokis_loop_checkbox_field"), 'games', 'side', 'core');
+    }
+
+    // Output the meta box HTML
+    function lokis_loop_checkbox_field()
+    {
+        // Retrieve the current value of the meta field
+        $checked = get_post_meta(get_the_ID(), 'lokis_checkbox', true);
+
+        // Output the checkbox
+        echo '<label>';
+        echo '<input type="checkbox" name="lokis_checkbox" value="1" ' . checked($checked, 1, false) . ' />';
+        echo ' Yes';
+        echo '</label>';
+    }
+
+    //updating or saving data from Games Custom Post to Post Meta
+    public function lokis_loop_save_checkbox()
+    {
+        global $post;
+
+        $post_id = get_the_ID();
+
+        // Update the meta field with the new value
+        if(isset($_POST['lokis_checkbox'])){
+            $value = 1;
+        }
+        else{
+            $value = 0;
+        }
+        update_post_meta($post_id, 'lokis_checkbox', $value);
+    }
+
 
 }
 new lokis_loop_game_info();

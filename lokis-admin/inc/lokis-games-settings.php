@@ -4,8 +4,8 @@ function lokis_settings_submenu()
 {
     add_submenu_page(
         'edit.php?post_type=games',
-        'Lokis Loops Games Settings',
-        'Lokis Loops Games Settings',
+        'Settings',
+        'Settings',
         'manage_options',
         'lokis_games_settings',
         'lokis_settings_callback'
