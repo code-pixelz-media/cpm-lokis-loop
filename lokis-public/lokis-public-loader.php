@@ -167,17 +167,27 @@ if (!function_exists('lokis_shortcode_display')) {
     function lokis_shortcode_display($content)
     {
         /* Display Registration form */
-        $register = (get_option('lokis_setting'))['register'];
-        if (get_the_ID() === (int) $register) {
-            $content .= do_shortcode('[lokis_loop_register_form]');
-            return $content;
+        if (isset((get_option('lokis_setting'))['register'])) {
+            $register = (get_option('lokis_setting'))['register'];
+        }
+
+        if (!empty($register)) {
+            if (get_the_ID() === (int) $register) {
+                $content .= do_shortcode('[lokis_loop_register_form]');
+                return $content;
+            }
         }
 
         /* Display Dashboard */
-        $dashboard = (get_option('lokis_setting'))['dashboard'];
-        if (get_the_ID() === (int) $dashboard) {
-            $content .= do_shortcode('[lokis_loop_user_dashboard]');
-            return $content;
+        if (isset((get_option('lokis_setting'))['dashboard'])) {
+            $dashboard = (get_option('lokis_setting'))['dashboard'];
+        }
+
+        if (!empty($dashboard)) {
+            if (get_the_ID() === (int) $dashboard) {
+                $content .= do_shortcode('[lokis_loop_user_dashboard]');
+                return $content;
+            }
         }
 
     }

@@ -41,10 +41,11 @@ function lokis_settings_callback()
                 alt="University of Washington Center for an Informed Public">
         </div>
 
-        <form method=" post" action="options.php" class="lokis-game-setting">
+        <form method="post" action="options.php" class="lokis-game-setting">
             <?php
             settings_fields('lokis_settings_group');
-            do_settings_sections('lokis_settings'); ?>
+            do_settings_sections('lokis_settings');
+            ?>
             <div class="lokis-inputpage">
                 <label for="login-url"> Login Page :</label>
             </div>
