@@ -45,7 +45,6 @@ jQuery(document).ready(function ($) {
     var zipcode = $("#loki-zipcode").val();
     var nonce = $("#loki_registration_nonce").val();
 
-
     var errors = [];
 
     //Clearing array if it has any values
@@ -86,7 +85,6 @@ jQuery(document).ready(function ($) {
     }
 
     if (errors.length > 0) {
-
       //Clear div
       $("#error-message").html("");
       $("#lokis-feedback").html("");
@@ -119,7 +117,7 @@ jQuery(document).ready(function ($) {
           country_name: country_name,
           role: role,
           zipcode: zipcode,
-          nonce: nonce
+          nonce: nonce,
         },
         success: function (response) {
           if (response.status === "success") {
@@ -129,7 +127,7 @@ jQuery(document).ready(function ($) {
             );
             $("#lokis-feedback").show();
           } else {
-           $("#error-message").html("");
+            $("#error-message").html("");
             $("#lokis-feedback").html(
               "<div class='lokis-loop-incorrect'>" + response.message + "</div>"
             );

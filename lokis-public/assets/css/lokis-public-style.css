@@ -1,3 +1,10 @@
+:root {
+  --lokis-bg: #f0eae1;
+  --lokis-primary: #f8f8ff;
+  --lokis-border: #eee;
+  --lokis-border-color: #d9d9d9;
+}
+
 /* creating CSS for single-games.php */
 
 /* for lokis-paragraph-content */
@@ -141,7 +148,7 @@
   text-decoration-line: none;
   outline-style: none;
   width: fit-content;
-  color: white;
+  color: #ffffff;
   background: #75592d;
   border-radius: 0.25rem;
   padding: 0.625rem 1.25rem;
@@ -155,76 +162,147 @@
 /* End of CSS for game host application form */
 
 /* Creating CSS for User Dashboard  */
-.sidebar.active ~ .home-section nav {
-  left: 60px;
-  width: calc(100% - 60px);
-}
-.home-section nav .sidebar-button {
-  display: flex;
-  align-items: center;
-  font-size: 24px;
-  font-weight: 500;
-}
-nav .sidebar-button i {
-  font-size: 35px;
-  margin-right: 10px;
-}
-.home-section nav .search-box {
-  position: relative;
-  height: 50px;
-  max-width: 550px;
-  width: 100%;
-  margin: 0 20px;
-}
-nav .search-box input {
-  height: 100%;
-  width: 100%;
-  outline: none;
-  background: #f5f6fa;
-  border: 2px solid #efeef1;
-  border-radius: 6px;
-  font-size: 18px;
-  padding: 0 15px;
-}
-nav .search-box .bx-search {
-  position: absolute;
-  height: 40px;
-  width: 40px;
-  background: #2697ff;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 4px;
-  line-height: 40px;
+
+.lokisloop-dashboard-container aside .lokies-logo a {
+  margin: 1rem 0;
+  display: block;
+  padding: 0.5rem 1rem;
   text-align: center;
-  color: #fff;
-  font-size: 22px;
-  transition: all 0.4 ease;
+  font-size: 2.4rem;
+  text-decoration: none;
 }
-.home-section nav .profile-details {
+.lokisloop-dashboard-container aside ul li {
+  list-style-type: none;
+  margin: 10px 0 10px 0;
+  border-bottom: 1px solid #d3d3d3;
+  padding-top: 15px;
+  font-size: 18px;
+}
+
+.lokisloop-dashboard-container .lokisloop-menu ul li .logout:hover {
+  background-color: #eee;
+}
+
+.lokisloop-hosted-game .lokisloop-container-wrapper {
+  padding: 30px;
+}
+.entry-content .lokisloop-dashboard-container {
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  max-width: 100% !important;
   display: flex;
-  align-items: center;
-  background: #f5f6fa;
-  border: 2px solid #efeef1;
-  border-radius: 6px;
-  height: 50px;
-  min-width: 190px;
-  padding: 0 15px 0 2px;
 }
-nav .profile-details img {
+.lokisloop-dashboard-container aside ul {
+  padding-left: 0;
+}
+.lokisloop-dashboard-container aside ul li:hover {
+  background-color: #eee;
+}
+.lokisloop-dashboard-container aside {
+  position: relative;
+  font-size: 16px;
+  border: 1px solid #ffffff;
+  width: 25%;
+
+  background-color: rgb(238, 238, 238);
+
+  float: left;
+}
+
+.lokisloop-dashboard-container .lokisloop-hosted-game {
+  font-size: 16px;
+  float: right;
+  width: 70%;
+  margin-left: 20px;
+  background-color: var(--lokis-primary);
+}
+
+.lokisloop-dashboard-container .lokisloop-hosted-game .lokisloop-main-top {
+  text-align: center;
+}
+.lokisloop-dashboard-container .lokisloop-hosted-game h5 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.lokisloop-dashboard-container ul li a {
+  text-decoration: none;
+}
+.lokisloop-dashboard-container ul li a i.fa-regular {
+  position: relative;
+  width: 70px;
   height: 40px;
-  width: 40px;
-  border-radius: 6px;
-  object-fit: cover;
+  font-size: 20px;
+  text-align: center;
 }
-nav .profile-details .admin_name {
-  font-size: 15px;
-  font-weight: 500;
-  color: #333;
-  margin: 0 10px;
-  white-space: nowrap;
+.lokisloop-dashboard-container ul li a i.fa-solid {
+  position: relative;
+  width: 70px;
+  height: 40px;
+  font-size: 20px;
+  text-align: center;
 }
-nav .profile-details i {
-  font-size: 25px;
-  color: #333;
+.lokisloop-dashboard-container aside img {
+  max-width: 100%;
+  padding: 3px;
 }
+
+.lokisloop-dashboard-container
+  .lokisloop-hosted-game
+  .lokisloop-container-wrapper
+  table.lookisloop-games
+  tbody
+  tr
+  td
+  button.button {
+  background-color: var(--lokis-border-color);
+  color: #5a5a5a;
+  padding: 12px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  border: 1px solid var(--lokis-border-color);
+}
+.lokisloop-dashboard-container
+  .lokisloop-hosted-game
+  .lokisloop-container-wrapper
+  table.lookisloop-games
+  tbody
+  tr
+  td
+  button.button:hover {
+  background-color: transparent-game;
+}
+.lokisloop-container-wrapper button.view-player::before {
+  content: "\f06e";
+  font-family: fontawesome;
+  margin-right: 5px;
+}
+.lokisloop-container-wrapper button.end-session::before {
+  content: "\f08b";
+  font-family: fontawesome;
+  margin-right: 5px;
+}
+
+.lokisloop-container-wrapper table tr th,
+.lokisloop-container-wrapper table tr td {
+  border-color: var(--lokis-border-color);
+  padding: 10px 15px;
+}
+.lokisloop-container-wrapper table tr {
+  text-align: center;
+}
+
+.lokisloop-container-wrapper table.lokisloopgame thead tr th {
+  border: 1px solid transparent;
+  border-bottom: 1px solid var(--lokis-border-color);
+  border-right: 1px solid var(--lokis-border-color);
+}
+.lokisloop-container-wrapper tbody tr td {
+  text-align: left;
+}
+/* Ended CSS for User Dashboard  */

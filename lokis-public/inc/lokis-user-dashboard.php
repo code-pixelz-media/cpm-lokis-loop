@@ -6,68 +6,136 @@ function lokis_loop_user_dashboard()
     ob_start();
     ?>
 
-
-
-
-
     <div class="lokisloop-dashboard-container">
+
         <aside>
+            <div class="lokies-logo">
+                <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
 
-            <a href="#" class="active">Menu</a>
-            <ul>
+            </div>
 
-                <li><a href="#"> <i class="fa-regular fa-user"></i>
-                        <span class="nav-item">Profile </span>
-                    </a>
-                </li>
+            <div class="lokisloop-dashboard-menu">
+                <ul class="lokisloop-menu">
 
+                    <li><a href="#"> <i class="fa-regular fa-user"></i>
+                            <span class="nav-item">Profile </span>
+                        </a>
+                    </li>
 
-                <li><a href="#"> <i class="fa-regular fa-chart-bar"></i>
-                        <span class="nav-item">Host a Game</span>
-                    </a>
-                </li>
+                    <li><a href="#"> <i class="fa-regular fa-chart-bar"></i>
+                            <span class="nav-item">Host A Game</span>
+                        </a>
+                    </li>
 
+                    <li><a href="#" class="hosted-game"> <i class="fa-solid fa-list-check"></i>
+                            <span class="nav-item"> Hosted Game</span>
+                        </a>
+                    </li>
 
-                <li><a href="#"> <i class="fa-solid fa-list-check"></i>
-                        <span class="nav-item"> Hosted Game</span>
-                    </a>
-                </li>
+                    <li><a herf="#">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span class="nav-item">LogOut</span>
+                        </a>
+                    </li>
 
-                <li><a herf="#" title="LogOut">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span class="nav-item">LogOut</span>
-                    </a>
-                </li>
+                </ul>
+            </div>
 
-
-            </ul>
         </aside>
+
+        <div class="lokisloop-hosted-game">
+            <div class="lokisloop-container-wrapper">
+                <div class="lokisloop-main-top">
+                    <h5>Current Games</h5>
+                </div>
+
+                <table id="current-games" class="lookisloop-games">
+                    <thead>
+                        <tr>
+                            <th>Game Name</th>
+                            <th>Game Url</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td><a href="#">link text</a></td>
+                            <td> <button type="button" class="button view-player">View Player</button>
+                                <button type="button" class="button end-session">End Session</button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Berglunds snabbköp</td>
+                            <td><a href="#">link text</a></td>
+                            <td> <button class="button view-player">view player</button>
+                                <button type="button" class="button end-session ">End Session</button>
+
+                        </tr>
+                        <tr>
+                            <td>Centro comercial Moctezuma</td>
+                            <td><a href="#">link text</a></td>
+                            <td> <button type="button" class="button view-player">view player</button>
+                                <button type="button" class="button end-session">End Session</button>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="lokisloop-container-wrapper">
+                <h5> Expired Games</h5>
+                <table id="expired-games" class="lookisloop-games">
+                    <div class="thead">
+                        <tr>
+                            <td>Game Name</td>
+                            <td>Game Url</td>
+                            <td>Action</td>
+
+                        </tr>
+                    </div>
+
+
+                    <tbody>
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td><a href="#">link text</a></td>
+                            <td> <button type="button" class="button view-player">view player</button></td>
+                        </tr>
+                        <tr>
+                            <td>Berglunds snabbköp</td>
+                            <td><a href="#">link text</a></td>
+                            <td> <button type="button" class="button view-player">view player</button>
+
+                        </tr>
+                        <tr>
+                            <td>Centro comercial Moctezuma</td>
+                            <td><a href="#">link text</a></td>
+                            <td> <button type="button" class="button view-player">view player</button></td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+
+        </div>
+
 
 
 
     </div>
-
-    <section class="home-section">
-        <nav>
-            <div class="sidebar-button">
-                <i class='bx bx-menu sidebarBtn'></i>
-                <span class="dashboard">Dashboard</span>
-            </div>
-            <div class="search-box">
-                <input type="text" placeholder="Search...">
-                <i class='bx bx-search'></i>
-            </div>
-            <div class="profile-details">
-                <img src="images/profile.jpg" alt="">
-                <span class="admin_name">Lokisloop-Usename</span>
-                <i class='bx bx-chevron-down'></i>
-            </div>
-        </nav>
+    </div>
 
 
+    <?php
+    return ob_get_clean();
 
 
-        <?php
-        return ob_get_clean();
 }
 add_shortcode('lokis_loop_user_dashboard', 'lokis_loop_user_dashboard');
