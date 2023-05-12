@@ -9,7 +9,7 @@ function lokis_loop_user_dashboard()
     <div class="lokisloop-dashboard-container">
 
         <aside>
-            <div class="lokis-logo">
+            <div class="lokies-logo">
                 <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
 
             </div>
@@ -135,7 +135,4 @@ function lokis_loop_user_dashboard()
 
     <?php
     return ob_get_clean();
-
-
 }
-add_shortcode('lokis_loop_user_dashboard', 'lokis_loop_user_dashboard');

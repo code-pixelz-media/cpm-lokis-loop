@@ -1,4 +1,4 @@
-//sending ajax post to wordpress to check answer from given data
+//sending ajax post to wordpress to check answer from given data coming from games post page (single-games.php)
 jQuery(document).ready(function ($) {
   $("#lokis-submit-btn").click(function (event) {
     event.preventDefault();
@@ -31,7 +31,7 @@ jQuery(document).ready(function ($) {
   });
 });
 
-//Form validation to check input and email format
+//Form validation to check input and email format from registration form shortcode (cpm-lokis-loop-custom-shortcodes.php)
 jQuery(document).ready(function ($) {
   $("#lokis-registration-button").click(function (event) {
     var name = $("#loki-name").val();

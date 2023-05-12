@@ -4,6 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 /* Enqueuing the scripts and styles for the plugin on frontend  */
+
+/* Steps to make a custom endpoint in my accounts page:
+   1. Find the lokis_endpoints()
+   2. Add endpoints to the array loki_endpoints using array_push() and make endpoints
+   3. Match the endpoint with file name for one of the proceeding functions to pull the template. Eg. lokis-(endpoint).php
+   4. Add the tab name of the endpoint needed to be shown in loki_endpoint_name using array_push()
+   5. Add the full icon class using array_push() in loki_account_icons
+*/
+
 function cpm_lokis_public_scripts()
 {
     /* css for plugin  */
@@ -18,8 +27,7 @@ function cpm_lokis_public_scripts()
 add_action('wp_enqueue_scripts', 'cpm_lokis_public_scripts');
 
 /*Loads public files*/
-require_once('inc/lokis-user-dashboard.php');
-
+require_once('inc/dashboard/lokis-user-dashboard.php');
 
 /*Loads single post template for custom post type of games*/
 if (!function_exists('lokis_loop_single_post_template')) {
@@ -221,4 +229,136 @@ if (!function_exists('lokis_restrict_access')) {
         }
     }
     add_action('admin_init', 'lokis_restrict_access');
+}
+
+/* Creates endpoints, endpoint name and icon arrays */
+if (!function_exists('lokis_endpoints')) {
+    function lokis_endpoints()
+    {
+        global $lokis_endpoints;
+        global $lokis_endpoint_name;
+        global $lokis_account_icons;
+
+        $lokis_endpoints = array();
+        $lokis_endpoint_name = array();
+        $lokis_account_icons = array();
+
+        array_push($lokis_endpoints, 'host-game');
+        array_push($lokis_endpoint_name, 'Host a Game');
+        array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
+
+        array_push($lokis_endpoints, 'hosted-game');
+        array_push($lokis_endpoint_name, 'Hosted Games');
+        array_push($lokis_account_icons, 'fa-solid fa-list-check');
+
+
+        // Register the endpoints
+        foreach ($lokis_endpoints as $endpoint) {
+            add_rewrite_endpoint($endpoint, EP_PAGES);
+        }
+
+
+        flush_rewrite_rules();
+    }
+    add_action('init', 'lokis_endpoints');
+}
+
+/* Pulls template of the host game and hosted games tabs */
+if (!function_exists('load_custom_endpoint_template')) {
+    function load_custom_endpoint_template($template)
+    {
+        global $wp_query;
+        global $lokis_endpoints;
+
+        foreach ($lokis_endpoints as $endpoint) {
+
+            $is_endpoint = isset($wp_query->query_vars[$endpoint]);
+
+            if ($is_endpoint) {
+                $template = locate_template('inc/dashboard/lokis-' . $endpoint . '.php');
+                if (!$template) {
+                    $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
+                }
+            }
+        }
+        return $template;
+    }
+    add_filter('template_include', 'load_custom_endpoint_template');
+}
+
+/* Creates endpoint url from given endpoints on the basis of my account/dashboard page */
+if (!function_exists('lokis_endpoint_url')) {
+    function lokis_endpoint_url()
+    {
+        global $lokis_url;
+        global $lokis_endpoints;
+
+        $lokis_url = array();
+
+        if (function_exists('get_query_var')) {
+
+            foreach ($lokis_endpoints as $endpoint) {
+
+                if (isset((get_option('lokis_setting'))['dashboard'])) {
+                    $dashboard = (get_option('lokis_setting'))['dashboard'];
+                }
+
+                if ($endpoint) {
+                    array_push($lokis_url, get_permalink($dashboard) . $endpoint . '/');
+                }
+
+            }
+        }
+    }
+    add_action('init', 'lokis_endpoint_url');
+}
+
+/* Displays my account menu */
+if (!function_exists('lokis_account_menu')) {
+    function lokis_account_menu()
+    {
+        global $lokis_url;
+        global $lokis_endpoint_name;
+        global $lokis_account_icons;
+
+        if (isset((get_option('lokis_setting'))['dashboard'])) {
+            $dashboard = (get_option('lokis_setting'))['dashboard'];
+        }
+
+        echo '
+         <div class="lokisloop-dashboard-menu">
+                <ul class="lokisloop-menu">
+
+                    <li><a href="' . get_permalink($dashboard) . '"> <i class="fa-regular fa-user"></i>
+                            <span class="nav-item">Profile </span>
+                        </a>
+                    </li>';
+
+        $length = count($lokis_endpoint_name);
+        for ($index = 0; $index < $length; $index++) {
+            $link_name = $lokis_endpoint_name[$index];
+            $link_url = $lokis_url[$index];
+            $link_icon = $lokis_account_icons[$index];
+            ?>
+            <li><a href="<?php echo $link_url; ?>">
+                    <i class="<?php echo $link_icon; ?>"></i>
+                    <span class="nav-item">
+                        <?php echo $link_name; ?>
+                    </span>
+                </a>
+            </li>
+        <?php }
+
+        echo '
+
+                    <li><a herf="#">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span class="nav-item">LogOut</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        ';
+    }
 }
