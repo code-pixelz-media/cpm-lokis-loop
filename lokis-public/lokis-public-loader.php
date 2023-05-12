@@ -4,6 +4,15 @@ if (!defined('ABSPATH')) {
     exit;
 }
 /* Enqueuing the scripts and styles for the plugin on frontend  */
+
+/* Steps to make a custom endpoint in my accounts page:
+   1. Find the lokis_endpoints()
+   2. Add endpoints to the array loki_endpoints using array_push() and make endpoints
+   3. Match the endpoint with file name for one of the proceeding functions to pull the template. Eg. lokis-(endpoint).php
+   4. Add the tab name of the endpoint needed to be shown in loki_endpoint_name using array_push()
+   5. Add the full icon class using array_push() in loki_account_icons
+*/
+
 function cpm_lokis_public_scripts()
 {
     /* css for plugin  */
@@ -234,8 +243,6 @@ if (!function_exists('lokis_endpoints')) {
         $lokis_endpoint_name = array();
         $lokis_account_icons = array();
 
-        // Add endpoints to the array using array_push() and make endpoints
-        //Match with file name. Eg. lokis-(endpoint).php
         array_push($lokis_endpoints, 'host-game');
         array_push($lokis_endpoint_name, 'Host a Game');
         array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
