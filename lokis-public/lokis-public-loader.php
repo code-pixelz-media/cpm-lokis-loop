@@ -222,22 +222,27 @@ if (!function_exists('lokis_restrict_access')) {
     add_action('admin_init', 'lokis_restrict_access');
 }
 
+/* Creates endpoints, endpoint name and icon arrays */
 if (!function_exists('lokis_endpoints')) {
     function lokis_endpoints()
     {
         global $lokis_endpoints;
         global $lokis_endpoint_name;
+        global $lokis_account_icons;
 
         $lokis_endpoints = array();
         $lokis_endpoint_name = array();
+        $lokis_account_icons = array();
 
         // Add endpoints to the array using array_push() and make endpoints
         //Match with file name. Eg. lokis-(endpoint).php
         array_push($lokis_endpoints, 'host-game');
         array_push($lokis_endpoint_name, 'Host a Game');
+        array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
 
         array_push($lokis_endpoints, 'hosted-game');
         array_push($lokis_endpoint_name, 'Hosted Games');
+        array_push($lokis_account_icons, 'fa-solid fa-list-check');
 
 
         // Register the endpoints
@@ -251,6 +256,7 @@ if (!function_exists('lokis_endpoints')) {
     add_action('init', 'lokis_endpoints');
 }
 
+/* Pulls template of the host game and hosted games tabs */
 if (!function_exists('load_custom_endpoint_template')) {
     function load_custom_endpoint_template($template)
     {
@@ -258,6 +264,7 @@ if (!function_exists('load_custom_endpoint_template')) {
         global $lokis_endpoints;
 
         foreach ($lokis_endpoints as $endpoint) {
+
             $is_endpoint = isset($wp_query->query_vars[$endpoint]);
 
             if ($is_endpoint) {
@@ -266,14 +273,13 @@ if (!function_exists('load_custom_endpoint_template')) {
                     $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
                 }
             }
-
-            return $template;
         }
-
+        return $template;
     }
     add_filter('template_include', 'load_custom_endpoint_template');
 }
 
+/* Creates endpoint url from given endpoints on the basis of my account/dashboard page */
 if (!function_exists('lokis_endpoint_url')) {
     function lokis_endpoint_url()
     {
@@ -300,17 +306,23 @@ if (!function_exists('lokis_endpoint_url')) {
     add_action('init', 'lokis_endpoint_url');
 }
 
+/* Displays my account menu */
 if (!function_exists('lokis_account_menu')) {
     function lokis_account_menu()
     {
         global $lokis_url;
         global $lokis_endpoint_name;
+        global $lokis_account_icons;
+
+        if (isset((get_option('lokis_setting'))['dashboard'])) {
+            $dashboard = (get_option('lokis_setting'))['dashboard'];
+        }
 
         echo '
          <div class="lokisloop-dashboard-menu">
                 <ul class="lokisloop-menu">
 
-                    <li><a href="#"> <i class="fa-regular fa-user"></i>
+                    <li><a href="' . get_permalink($dashboard) . '"> <i class="fa-regular fa-user"></i>
                             <span class="nav-item">Profile </span>
                         </a>
                     </li>';
@@ -319,9 +331,10 @@ if (!function_exists('lokis_account_menu')) {
         for ($index = 0; $index < $length; $index++) {
             $link_name = $lokis_endpoint_name[$index];
             $link_url = $lokis_url[$index];
+            $link_icon = $lokis_account_icons[$index];
             ?>
             <li><a href="<?php echo $link_url; ?>">
-                    <i class="fa-regular fa-chart-bar"></i>
+                    <i class="<?php echo $link_icon; ?>"></i>
                     <span class="nav-item">
                         <?php echo $link_name; ?>
                     </span>
