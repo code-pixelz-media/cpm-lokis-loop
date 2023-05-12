@@ -3,12 +3,12 @@
 <div class="lokisloop-dashboard-container">
 
     <aside>
-        <div class="lokies-logo">
+        <div class="lokis-logo">
             <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
 
         </div>
 
-        <?php echo lokis_account_menu(); ?>
+        <?php lokis_account_menu(); ?>
 
     </aside>
 

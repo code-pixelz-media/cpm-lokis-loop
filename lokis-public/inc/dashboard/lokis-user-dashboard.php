@@ -14,7 +14,7 @@ function lokis_loop_user_dashboard()
 
             </div>
 
-            <?php echo lokis_account_menu(); ?>
+            <?php lokis_account_menu(); ?>
 
         </aside>
 

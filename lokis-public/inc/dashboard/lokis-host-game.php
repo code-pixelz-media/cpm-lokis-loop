@@ -3,12 +3,12 @@
 <div class="lokisloop-dashboard-container">
 
     <aside>
-        <div class="lokies-logo">
+        <div class="lokis-logo">
             <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
 
         </div>
 
-        <?php echo lokis_account_menu(); ?>
+        <?php lokis_account_menu(); ?>
 
     </aside>
     <div class="lokisloop-hosted-game">
@@ -87,8 +87,6 @@
 
             // Retrieve previously inserted sessions
             $previously_inserted_sessions = $wpdb->get_var("SELECT COUNT(session_id) FROM $lokis_game_sessions_table_name where session_id = '{$session_id}'");
-
-            // var_dump($previously_inserted_sessions);
         
             if ($previously_inserted_sessions == 0) {
                 $data = [
