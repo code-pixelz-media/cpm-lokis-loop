@@ -163,7 +163,7 @@
 
 /* Creating CSS for User Dashboard  */
 
-.lokisloop-dashboard-container aside .lokies-logo a {
+.lokisloop-dashboard-container aside .lokis-logo a {
   margin: 1rem 0;
   display: block;
   padding: 0.5rem 1rem;
@@ -292,6 +292,7 @@
 .lokisloop-container-wrapper table tr td {
   border-color: var(--lokis-border-color);
   padding: 10px 15px;
+  border: 1px solid;
 }
 .lokisloop-container-wrapper table tr {
   text-align: center;
