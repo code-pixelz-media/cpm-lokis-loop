@@ -9,7 +9,7 @@ function lokis_loop_user_dashboard()
     <div class="lokisloop-dashboard-container">
 
         <aside>
-            <div class="lokies-logo">
+            <div class="lokis-logo">
                 <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
 
             </div>
