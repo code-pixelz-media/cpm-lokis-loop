@@ -18,8 +18,7 @@ function cpm_lokis_public_scripts()
 add_action('wp_enqueue_scripts', 'cpm_lokis_public_scripts');
 
 /*Loads public files*/
-require_once('inc/lokis-user-dashboard.php');
-
+require_once('inc/dashboard/lokis-user-dashboard.php');
 
 /*Loads single post template for custom post type of games*/
 if (!function_exists('lokis_loop_single_post_template')) {
@@ -221,4 +220,125 @@ if (!function_exists('lokis_restrict_access')) {
         }
     }
     add_action('admin_init', 'lokis_restrict_access');
+}
+
+if (!function_exists('lokis_endpoints')) {
+    function lokis_endpoints()
+    {
+        global $lokis_endpoints;
+        global $lokis_endpoint_name;
+
+        $lokis_endpoints = array();
+        $lokis_endpoint_name = array();
+
+        // Add endpoints to the array using array_push() and make endpoints
+        //Match with file name. Eg. lokis-(endpoint).php
+        array_push($lokis_endpoints, 'host-game');
+        array_push($lokis_endpoint_name, 'Host a Game');
+
+        array_push($lokis_endpoints, 'hosted-game');
+        array_push($lokis_endpoint_name, 'Hosted Games');
+
+
+        // Register the endpoints
+        foreach ($lokis_endpoints as $endpoint) {
+            add_rewrite_endpoint($endpoint, EP_PAGES);
+        }
+
+
+        flush_rewrite_rules();
+    }
+    add_action('init', 'lokis_endpoints');
+}
+
+if (!function_exists('load_custom_endpoint_template')) {
+    function load_custom_endpoint_template($template)
+    {
+        global $wp_query;
+        global $lokis_endpoints;
+
+        foreach ($lokis_endpoints as $endpoint) {
+            $is_endpoint = isset($wp_query->query_vars[$endpoint]);
+
+            if ($is_endpoint) {
+                $template = locate_template('inc/dashboard/lokis-' . $endpoint . '.php');
+                if (!$template) {
+                    $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
+                }
+            }
+
+            return $template;
+        }
+
+    }
+    add_filter('template_include', 'load_custom_endpoint_template');
+}
+
+if (!function_exists('lokis_endpoint_url')) {
+    function lokis_endpoint_url()
+    {
+        global $lokis_url;
+        global $lokis_endpoints;
+
+        $lokis_url = array();
+
+        if (function_exists('get_query_var')) {
+
+            foreach ($lokis_endpoints as $endpoint) {
+
+                if (isset((get_option('lokis_setting'))['dashboard'])) {
+                    $dashboard = (get_option('lokis_setting'))['dashboard'];
+                }
+
+                if ($endpoint) {
+                    array_push($lokis_url, get_permalink($dashboard) . $endpoint . '/');
+                }
+
+            }
+        }
+    }
+    add_action('init', 'lokis_endpoint_url');
+}
+
+if (!function_exists('lokis_account_menu')) {
+    function lokis_account_menu()
+    {
+        global $lokis_url;
+        global $lokis_endpoint_name;
+
+        echo '
+         <div class="lokisloop-dashboard-menu">
+                <ul class="lokisloop-menu">
+
+                    <li><a href="#"> <i class="fa-regular fa-user"></i>
+                            <span class="nav-item">Profile </span>
+                        </a>
+                    </li>';
+
+        $length = count($lokis_endpoint_name);
+        for ($index = 0; $index < $length; $index++) {
+            $link_name = $lokis_endpoint_name[$index];
+            $link_url = $lokis_url[$index];
+            ?>
+            <li><a href="<?php echo $link_url; ?>">
+                    <i class="fa-regular fa-chart-bar"></i>
+                    <span class="nav-item">
+                        <?php echo $link_name; ?>
+                    </span>
+                </a>
+            </li>
+        <?php }
+
+        echo '
+
+                    <li><a herf="#">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span class="nav-item">LogOut</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        ';
+    }
 }

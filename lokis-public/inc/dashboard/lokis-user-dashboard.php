@@ -14,32 +14,7 @@ function lokis_loop_user_dashboard()
 
             </div>
 
-            <div class="lokisloop-dashboard-menu">
-                <ul class="lokisloop-menu">
-
-                    <li><a href="#"> <i class="fa-regular fa-user"></i>
-                            <span class="nav-item">Profile </span>
-                        </a>
-                    </li>
-
-                    <li><a href="#"> <i class="fa-regular fa-chart-bar"></i>
-                            <span class="nav-item">Host A Game</span>
-                        </a>
-                    </li>
-
-                    <li><a href="#" class="hosted-game"> <i class="fa-solid fa-list-check"></i>
-                            <span class="nav-item"> Hosted Game</span>
-                        </a>
-                    </li>
-
-                    <li><a herf="#">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span class="nav-item">LogOut</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
+            <?php echo lokis_account_menu(); ?>
 
         </aside>
 
@@ -129,7 +104,6 @@ function lokis_loop_user_dashboard()
 
 
 
-    </div>
     </div>
 
 
