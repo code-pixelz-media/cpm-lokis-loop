@@ -140,3 +140,15 @@ jQuery(document).ready(function ($) {
     }
   });
 });
+
+
+// js code to copy to clipboard
+jQuery(document).on("click", ".lokisloop-url-copy", function (cp) {
+  cp.preventDefault();
+  var urlcp = jQuery(this).attr("data-url");
+  var $temp = jQuery("<input>");
+  jQuery("body").append($temp);
+  $temp.val(urlcp).select();
+  if (document.execCommand("copy") && $temp.remove())
+      alert("URL copied to clipboard");
+});
