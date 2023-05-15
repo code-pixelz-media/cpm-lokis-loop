@@ -121,13 +121,37 @@ jQuery(document).ready(function ($) {
         },
         success: function (response) {
           if (response.status === "success") {
+            //Clear input fields
+            $("form :input").val("");
+
+            var radio1 = document.getElementsByName("loki_organization_type");
+
+            // Loop through the radio buttons and unset the checked property
+            for (var i = 0; i < radio1.length; i++) {
+              radio1[i].checked = false;
+            }
+
+            var radio2 = document.getElementsByName("role");
+
+            // Loop through the radio buttons and unset the checked property
+            for (var i = 0; i < radio2.length; i++) {
+              radio2[i].checked = false;
+            }
+
+            //Resetting cleared value of submit button
+            $("#lokis-registration-button").val('Submit');
+
+            //Clear error messages
             $("#error-message").html("");
+
             $("#lokis-feedback").html(
               "<div class='lokis-loop-correct'>" + response.message + "</div>"
             );
             $("#lokis-feedback").show();
           } else {
+            //Clear error messages
             $("#error-message").html("");
+
             $("#lokis-feedback").html(
               "<div class='lokis-loop-incorrect'>" + response.message + "</div>"
             );
@@ -142,7 +166,7 @@ jQuery(document).ready(function ($) {
 });
 
 
-// js code to copy to clipboard
+// Copy Link
 jQuery(document).on("click", ".lokisloop-url-copy", function (cp) {
   cp.preventDefault();
   var urlcp = jQuery(this).attr("data-url");

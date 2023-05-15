@@ -154,7 +154,7 @@ if (!function_exists('loki_user_registration')) {
 
                 $response = [
                     'status' => 'success',
-                    'message' => 'User has been created',
+                    'message' => 'User has been created. An email has been sent to set the password',
                 ];
                 wp_send_json($response);
             }
@@ -247,10 +247,13 @@ if (!function_exists('lokis_endpoints')) {
         array_push($lokis_endpoint_name, 'Host a Game');
         array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
 
-        array_push($lokis_endpoints, 'hosted-game');
-        array_push($lokis_endpoint_name, 'Hosted Games');
+        array_push($lokis_endpoints, 'current-games');
+        array_push($lokis_endpoint_name, 'Current Games');
         array_push($lokis_account_icons, 'fa-solid fa-list-check');
 
+        array_push($lokis_endpoints, 'expired-games');
+        array_push($lokis_endpoint_name, 'Expired Games');
+        array_push($lokis_account_icons, 'fa-solid fa-list-check');
 
         // Register the endpoints
         foreach ($lokis_endpoints as $endpoint) {
