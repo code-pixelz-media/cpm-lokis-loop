@@ -3,12 +3,12 @@
 <div class="lokisloop-dashboard-container">
 
     <aside>
-        <div class="lokies-logo">
+        <div class="lokis-logo">
             <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
 
         </div>
 
-        <?php echo lokis_account_menu(); ?>
+        <?php lokis_account_menu(); ?>
 
     </aside>
     <div class="lokisloop-hosted-game">
@@ -18,9 +18,7 @@
         ?>
 
         <form method="POST" class="row g-3">
-
             <input type="hidden" name="sessionToken" id="sessionToken" value="<?php echo $session_id ?>">
-
             <div class="col-auto" bis_skin_checked="1">
                 <label for="id_game" class="visually-hidden">Game</label>
                 <select class="form-select" aria-label="Game" id="id_game" name="game">
@@ -88,20 +86,26 @@
             // Retrieve previously inserted sessions
             $previously_inserted_sessions = $wpdb->get_var("SELECT COUNT(session_id) FROM $lokis_game_sessions_table_name where session_id = '{$session_id}'");
 
-            // var_dump($previously_inserted_sessions);
-        
             if ($previously_inserted_sessions == 0) {
+
+
+                // Generate the URL
+                $game_url = get_permalink($game_id) . '?game=' . $session_id;
+
                 $data = [
                     'host_id' => $host_id,
                     'game_id' => $game_id,
                     'session_id' => $session_id,
                     'expires_in' => $end_timestamp,
-                    'started_at' => date('Y-m-d H:i:s')
+                    'started_at' => date('Y-m-d H:i:s'),
+                    'gamesession_url' => $game_url,
                 ];
                 // Insert the data into the table
                 $wpdb->insert($lokis_game_sessions_table_name, $data);
+                // sucess message 
+                echo '<div class="lokis-loop-correct" role="alert">Game Session created successfully and the URL is <a href="' . $game_url . '">' . $game_url . '</a></div>';
             } else {
-                echo "Session ID already exists";
+                echo '<div class="lokis-loop-incorrect" role="alert">Session ID already exists.</div>';
             }
         }
         ?>
