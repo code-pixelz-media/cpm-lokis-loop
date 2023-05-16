@@ -427,3 +427,65 @@
 /* End of profile */
 
 /* Ended CSS for User Dashboard  */
+/* CSS for Login-Form started here .......................... */
+.lokisloop-loginform-container {
+  padding: 2em;
+  color: #fff;
+  max-width: 55vh;
+  margin-inline: auto;
+  background-color: #eee;
+}
+.lokisloop-loginform-container h2 {
+  font-weight: bold;
+  text-align: center;
+  font-size: 2em;
+  color: #5a5a5a;
+}
+.lokisloop-loginform-container label.form-label {
+  color: #5a5a5a;
+}
+.lokisloop-loginform-container .form-control {
+  background-color: inherit;
+  color: #5a5a5a;
+  border: none;
+  border-bottom: 1px solid #fff;
+  border-radius: 0;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+.lokisloop-loginform-container .form-control:focus {
+  outline: none;
+}
+.lokisloop-login-checkbox {
+  margin: 25px 0;
+}
+.lokisloop-login-checkbox input#remember:focus {
+  outline: none;
+}
+.lokisloop-login-checkbox label.remember {
+  color: #5a5a5a;
+}
+.lokisloop-loginform-container .lokisloop-login-btn {
+  border-radius: 0;
+  width: 100%;
+  font-weight: bold;
+}
+.lokisloop-loginform-container .lokisloop-login-btn:hover {
+  background-color: #a4a4a4;
+  border-color: #a4a4a4;
+  color: #292929;
+  outline: none;
+}
+.lokisloop-loginform-container p {
+  color: gray;
+  text-align: center;
+  margin-top: 10px;
+}
+.lokisloop-loginform-container p a {
+  text-decoration: none;
+}
+.lokisloop-loginform-container p a:hover {
+  color: #525252;
+  outline: none;
+}
+/* CSS for Login-Form end here........................................................... */
