@@ -364,16 +364,81 @@ if (!function_exists('lokis_account_menu')) {
             </li>
         <?php }
 
-        echo '
-
-                    <li><a herf="#">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                            <span class="nav-item">LogOut</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
-        ';
+        echo '<li><a href="' . wp_logout_url() . '"> <i class="fa-solid fa-arrow-right-from-bracket"></i>
+             <span class="nav-item">LogOut</span></a></li></ul></div>';
     }
 }
+
+
+// view players modal box
+function lokis_loop_modal_box()
+{
+
+    $get_game_id = $_POST['game_id'];
+
+    ?>
+    <!-- The Modal -->
+    <svg display="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        width="768" height="800" viewBox="0 0 768 800">
+        <defs>
+            <g id="icon-close">
+                <path class="path1"
+                    d="M31.708 25.708c-0-0-0-0-0-0l-9.708-9.708 9.708-9.708c0-0 0-0 0-0 0.105-0.105 0.18-0.227 0.229-0.357 0.133-0.356 0.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13 0.048-0.252 0.124-0.357 0.228 0 0-0 0-0 0l-9.708 9.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057 0.229l-4.586 4.586c-0.286 0.286-0.361 0.702-0.229 1.057 0.049 0.13 0.124 0.252 0.229 0.357 0 0 0 0 0 0l9.708 9.708-9.708 9.708c-0 0-0 0-0 0-0.104 0.105-0.18 0.227-0.229 0.357-0.133 0.355-0.057 0.771 0.229 1.057l4.586 4.586c0.286 0.286 0.702 0.361 1.057 0.229 0.13-0.049 0.252-0.124 0.357-0.229 0-0 0-0 0-0l9.708-9.708 9.708 9.708c0 0 0 0 0 0 0.105 0.105 0.227 0.18 0.357 0.229 0.356 0.133 0.771 0.057 1.057-0.229l4.586-4.586c0.286-0.286 0.362-0.702 0.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z">
+                </path>
+            </g>
+        </defs>
+    </svg>
+
+    <!-- Modal content -->
+    <div class="modal">
+        <div class="modal-overlay modal-toggle"></div>
+        <div class="modal-wrapper modal-transition">
+            <div class="modal-header">
+                <button class="modal-close modal-toggle"><svg class="icon-close lokis-icon" viewBox="0 0 32 32">
+                        <use xlink:href="#icon-close"></use>
+                    </svg></button>
+                <h2 class="modal-heading">Game:
+                    <?php echo get_the_title($get_game_id); ?>
+                </h2>
+            </div>
+            <?php //echo $get_game_id . '-thias is game id'; ?>
+
+            <div class="modal-body">
+                <div class="modal-content">
+                    <p>
+                        <?php
+
+                        $post_id = $get_game_id;
+                        $user_ids = get_post_meta($post_id, 'loki_player_count', true);
+                        if (!empty($user_ids)) {
+                            foreach ($user_ids as $user_id) {
+                                $avatar = get_avatar($user_id);
+                                $user_info = get_userdata($user_id);
+                                if ($user_info) {
+                                    $user_name = $user_info->display_name;
+                                    if (strpos($avatar, 'gravatar.com') !== false) {
+                                        echo '<div class="lokis-user-listing"><div class="lokis-user-avatar">';
+                                        echo $avatar . "</div>" . $user_name . "</div><br>";
+                                    } else {
+                                        // Avatar doesn't exist, display a placeholder image
+                                        $placeholder_image_url = plugin_dir_url(__FILE__) . 'assets/images/placeholder.png';
+                                        echo '<img src="' . $placeholder_image_url . '" alt="Placeholder-Image">' . $user_name . "<br>";
+                                    }
+                                } else {
+                                    echo "User ID: " . $user_id . " - User not found.<br>";
+                                }
+                            }
+                        } else {
+                            echo "No user found.";
+                        }
+                        ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+    die();
+}
+
+add_action('wp_ajax_lokis_loop_modal_box', 'lokis_loop_modal_box');
