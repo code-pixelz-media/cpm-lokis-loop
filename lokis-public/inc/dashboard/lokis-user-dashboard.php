@@ -42,16 +42,16 @@ function lokis_loop_user_dashboard()
 
                                         <div class="lokis-form-item">
                                             <label for="loki-name" class="form_control">Name :</label>
-                                            <input aria label="single line text" maxlength="4000" class="lokis-form-control"
-                                                id='loki-name'
-                                                value="<?php echo get_user_meta($user_id, 'loki_fullname', true); ?>"
-                                                disabled>
+                                            <p aria label="single line text" maxlength="4000" class="lokis-form-control"
+                                                id='loki-name'><?php echo get_user_meta($user_id, 'loki_fullname', true); ?>
+                                            </p>
                                         </div>
 
                                         <div class="lokis-form-item">
                                             <label for="loki-email" class="form_control"> Email : </label>
-                                            <input aria label="single line text" maxlength="4000" class="lokis-form-control"
-                                                id='loki-email' value="<?php echo $user_email; ?>" disabled>
+                                            <p aria label="single line text" maxlength="4000" class="lokis-form-control"
+                                                id='loki-email'><?php echo $user_email; ?>
+                                            </p>
                                         </div>
 
                                         <div class="lokis-form-item">
@@ -123,7 +123,8 @@ function lokis_loop_user_dashboard()
                                         </div>
 
 
-                                        <button class="edit-button" id='lokis-profile-update-button' type="submit">Update</button>
+                                        <button class="edit-button" id='lokis-profile-update-button'
+                                            type="submit">Update</button>
 
                                     </form>
 
