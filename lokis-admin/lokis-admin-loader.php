@@ -50,50 +50,31 @@ if (!function_exists('loki_players_count')) {
     add_action('wp_head', 'loki_players_count');
 }
 
-/*Store hosts game id in user meta*/
-if (!function_exists('loki_store_games')) {
-    function loki_store_games()
+/*Add capabilities to administrator and make host and player roles with no capabilities*/
+if (!function_exists('loki_add_and_modify_roles')) {
+    function loki_add_and_modify_roles()
     {
-        $user = wp_get_current_user();
-        $user_id = $user->ID;
-        $user_meta = get_userdata($user_id);
+        //Editing administrator role
+        $role = get_role('administrator');
 
-        if (current_user_can('administrator')) {
-            return;
-        }
-            $user_roles = $user_meta->roles;
-        
+        // Add capability of custom post type for administrator
+        $role->add_cap('edit_others_games');
+        $role->add_cap('delete_others_games');
+        $role->add_cap('edit_private_games');
+        $role->add_cap('read_private_games');
+        $role->add_cap('edit_published_games');
+        $role->add_cap('publish_games');
+        $role->add_cap('delete_published_games');
+        $role->add_cap('edit_games');
+        $role->add_cap('delete_games');
+        $role->add_cap('edit_game');
+        $role->add_cap('read_game');
+        $role->add_cap('delete_game');
+        $role->add_cap('create_games');
 
-            if (in_array("author", $user_roles)) {
-
-                // Retrieve all posts of post type 'games' authored by the current user
-                $args = array(
-                    'post_type' => 'games',
-                    'author' => $user_id,
-                    'posts_per_page' => -1,
-                );
-                $query = new WP_Query($args);
-
-                // Check if the user meta 'lokis_hosts_games' is an array
-                $games = get_user_meta($user_id, 'loki_hosts_games', true);
-                if (!is_array($games)) {
-                    $games = array();
-                }
-
-                // Store the IDs of the 'games' posts in the 'lokis_hosts_games' user meta
-                if ($query->have_posts()) {
-                    while ($query->have_posts()) {
-                        $query->the_post();
-                        $game_id = get_the_ID();
-                        if (!in_array($game_id, $games)) {
-                            $games[] = $game_id;
-                        }
-                    }
-                    wp_reset_postdata();
-                }
-
-                update_user_meta($user_id, 'loki_hosts_games', $games);
-            }
+        //Adding Host and Player roles
+        add_role('host', 'Host');
+        add_role('player', 'Player');
     }
-    add_action('save_post', 'loki_store_games');
+    add_action('init', 'loki_add_and_modify_roles');
 }

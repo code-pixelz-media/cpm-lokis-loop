@@ -72,9 +72,9 @@ function lokis_loop_register_form()
 
                 <label for="role" class="form_control"><span class="lokis-question-order">6.</span>Role <span
                         class="lokis-req-field">*</span></label><br>
-                <input type="radio" id="host" name="role" value="author">
+                <input type="radio" id="host" name="role" value="host">
                 <label for="host">Host</label><br>
-                <input type="radio" id="player" name="role" value="subscriber">
+                <input type="radio" id="player" name="role" value="player">
                 <label for="player">Player</label><br><br>
 
             </div>
