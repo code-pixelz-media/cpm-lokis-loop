@@ -28,6 +28,7 @@ add_action('wp_enqueue_scripts', 'cpm_lokis_public_scripts');
 
 /*Loads public files*/
 require_once('inc/dashboard/lokis-user-dashboard.php');
+require_once('inc/lokis-login.php');
 
 /*Loads single post template for custom post type of games*/
 if (!function_exists('lokis_loop_single_post_template')) {
@@ -194,6 +195,17 @@ if (!function_exists('lokis_shortcode_display')) {
         if (!empty($dashboard)) {
             if (get_the_ID() === (int) $dashboard) {
                 $content .= do_shortcode('[lokis_loop_user_dashboard]');
+                return $content;
+            }
+        }
+
+        if (isset((get_option('lokis_setting'))['login'])) {
+            $login = (get_option('lokis_setting'))['login'];
+        }
+
+        if (!empty($login)) {
+            if (get_the_ID() === (int) $login) {
+                $content .= do_shortcode('[lokis_loop_login]');
                 return $content;
             }
         }
