@@ -176,3 +176,36 @@ jQuery(document).on("click", ".lokisloop-url-copy", function (cp) {
   if (document.execCommand("copy") && $temp.remove())
       alert("URL copied to clipboard");
 });
+
+
+// js code to close modal box
+jQuery('body').on('click', '.modal-close', function(e) {
+  e.preventDefault();
+  jQuery('.modal').removeClass('is-visible');
+});
+
+
+// code for view-player Modal-box
+
+jQuery(document).ready(function () {
+  jQuery('body').on('click', '#lokisLoopModalBox', function(event) {
+  
+    event.preventDefault(); // Prevent the default action 
+    
+    var game_id = jQuery(this).data('game-id');  // Get the URL from the data attribute
+    console.log(game_id);
+    jQuery.ajax({
+      url: gamesajax.ajaxurl,
+      type: 'POST',
+      data: {
+        action: 'lokis_loop_modal_box',
+        game_id: game_id,
+      },
+      success: function (response) {
+        jQuery('.show_modal_test').html(response);
+        jQuery('.modal').toggleClass('is-visible');
+      },
+    });
+  });
+});
+

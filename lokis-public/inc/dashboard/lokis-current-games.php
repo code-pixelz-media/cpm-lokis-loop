@@ -49,13 +49,16 @@ get_header(); ?>
                     $current_games[] = [
                         'id' => $id,
                         'title' => $title,
-                        'url' => $url
+                        'url' => $url,
+                        "game_id" => $game_id
                     ];
                 }
             }
             if (!empty($current_games)) {
                 ?>
                 <div class="lokisloop-container-wrapper">
+                    <!-- here is the modal box code -->
+                <div class="show_modal_test"></div>
                     <div class="lokisloop-main-top">
                         <h5>Current Games</h5>
                     </div>
@@ -92,11 +95,12 @@ get_header(); ?>
                                 // Perform actions with the retrieved data
                                 echo '<tr><td>' . $game['title'] . '</td><td><a class="lokisloop-visit-url" target="_blank" href="' . $game['url'] . '" title="' . $game['url'] . '">Visit Url</a>';
                                 echo '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy" >  ' . "     " . 'Copy URL</a></td><td>';
-                                echo '<button type="button" class="button view-player" data-url="' . $game['url'] . '" id="view-player-' . $game['id'] . '">View Player</button>';
+                                echo '<div class="lokis-action-td">';
+                                echo '<button id="lokisLoopModalBox" class="button view-player modal-toggle" name="view_player" data-game-id="' . $game['game_id'] . '" >View Player</button>';
                                 echo '<form method="POST" action="">';
                                 echo '<input type="hidden" name="end_session" value="' . $game['id'] . '">';
                                 echo '<button type="submit" class="button end-session">End Session</button>';
-                                echo '</form></td></tr>';
+                                echo '</form></div></td></tr>';
                             }
                             if (isset($_POST['end_session'])) {
                                 $id = $_POST['end_session'];

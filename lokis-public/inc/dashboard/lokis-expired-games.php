@@ -13,6 +13,8 @@ get_header(); ?>
     </aside>
 
     <div class="lokisloop-hosted-game">
+        <!-- here is the modal box code -->
+    <div class="show_modal_test"></div>
         <?php
         global $wpdb;
         $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
@@ -91,12 +93,13 @@ get_header(); ?>
 
                             foreach ($expired_page_games as $game) {
                                 // Perform actions with the retrieved data
-                                echo '<tr><td>' . $game['title'] . '</td><td><a class="lokisloop-visit-url" target="_blank" href="' . $game['url'] . '" title="' . $game['url'] . '">Visit Url</a>';
+                                echo '<tr><td>' . $game['title'] . '</td><td><div class="lokis-view-copy-btn"><a class="lokisloop-visit-url" target="_blank" href="' . $game['url'] . '" title="' . $game['url'] . '">Visit Url</a>';
                                 echo '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy" >  ' . "     " . 'Copy URL</a></td><td>';
+                                echo '<div class="lokis-action-td">';
                                 echo '<form method="POST" action="">';
                                 echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
-                                echo '<button type="submit" class="button view-player" name="view_player">View Player</button>';
-                                echo '</form></td></tr>';
+                                echo '<button id="lokisLoopModalBox" class="button view-player modal-toggle" name="view_player" data-game-id="' . $game['game_id'] . '" >View Player</button>';
+                                echo '</form></div></td></tr>';
                             }
                             ?>
                         </tbody>
@@ -114,11 +117,9 @@ get_header(); ?>
                             }
                             echo '>' . $i . '</a>';
                         }
-
                         ?>
                     </div>
                 </div>
-
                 <?php
             } else {
                 echo "No expired games found.";
