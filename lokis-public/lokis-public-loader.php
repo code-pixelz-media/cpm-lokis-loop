@@ -255,25 +255,47 @@ if (!function_exists('lokis_endpoints')) {
         $lokis_endpoint_name = array();
         $lokis_account_icons = array();
 
-        array_push($lokis_endpoints, 'host-game');
-        array_push($lokis_endpoint_name, 'Host a Game');
-        array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
+        //Check whether the user is host or player
+        if (current_user_can('host')) {
 
-        array_push($lokis_endpoints, 'current-games');
-        array_push($lokis_endpoint_name, 'Current Games');
-        array_push($lokis_account_icons, 'fa-solid fa-list-check');
+            array_push($lokis_endpoints, 'host-game');
+            array_push($lokis_endpoint_name, 'Host a Game');
+            array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
 
-        array_push($lokis_endpoints, 'expired-games');
-        array_push($lokis_endpoint_name, 'Expired Games');
-        array_push($lokis_account_icons, 'fa-solid fa-list-check');
+            array_push($lokis_endpoints, 'current-games');
+            array_push($lokis_endpoint_name, 'Current Games');
+            array_push($lokis_account_icons, 'fa-solid fa-list-check');
 
-        // Register the endpoints
-        foreach ($lokis_endpoints as $endpoint) {
-            add_rewrite_endpoint($endpoint, EP_PAGES);
+            array_push($lokis_endpoints, 'expired-games');
+            array_push($lokis_endpoint_name, 'Expired Games');
+            array_push($lokis_account_icons, 'fa-solid fa-list-check');
+
+            // Register the endpoints
+            foreach ($lokis_endpoints as $endpoint) {
+                add_rewrite_endpoint($endpoint, EP_PAGES);
+            }
+
+            flush_rewrite_rules();
+
+        } elseif (current_user_can('player')) {
+
+            array_push($lokis_endpoints, 'active-games');
+            array_push($lokis_endpoint_name, 'Active Games');
+            array_push($lokis_account_icons, 'fa-solid fa-list-check');
+
+            array_push($lokis_endpoints, 'completed-games');
+            array_push($lokis_endpoint_name, 'Completed Games');
+            array_push($lokis_account_icons, 'fa-solid fa-list-check');
+
+            // Register the endpoints
+            foreach ($lokis_endpoints as $endpoint) {
+                add_rewrite_endpoint($endpoint, EP_PAGES);
+            }
+
+            flush_rewrite_rules();
+
         }
 
-
-        flush_rewrite_rules();
     }
     add_action('init', 'lokis_endpoints');
 }
@@ -290,9 +312,17 @@ if (!function_exists('load_custom_endpoint_template')) {
             $is_endpoint = isset($wp_query->query_vars[$endpoint]);
 
             if ($is_endpoint) {
-                $template = locate_template('inc/dashboard/lokis-' . $endpoint . '.php');
-                if (!$template) {
-                    $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
+                if (current_user_can('host')) {
+                    $template = locate_template('inc/dashboard/lokis-' . $endpoint . '.php');
+                    if (!$template) {
+                        $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
+                    }
+                }
+                elseif (current_user_can('player')){
+                    $template = locate_template('inc/dashboard/lokis-user' . $endpoint . '.php');
+                    if (!$template) {
+                        $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-user' . $endpoint . '.php';
+                    }
                 }
             }
         }
