@@ -78,3 +78,14 @@ if (!function_exists('loki_add_and_modify_roles')) {
     }
     add_action('init', 'loki_add_and_modify_roles');
 }
+
+function loki_redirect_after_login($redirect_to, $user)
+{
+    // Modify the redirect URL as per your requirements
+    $redirect_url = home_url().'/user-dashboard';
+
+    // Redirect the user
+    wp_redirect($redirect_url);
+    exit;
+}
+add_action('wp_login', 'loki_redirect_after_login', 10, 3);

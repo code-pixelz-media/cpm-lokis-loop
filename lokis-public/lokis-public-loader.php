@@ -229,20 +229,6 @@ if (!function_exists('lokis_last_visited')) {
     add_action('wp_head', 'lokis_last_visited');
 }
 
-/*restricts user access to wp-admin*/
-if (!function_exists('lokis_restrict_access')) {
-    function lokis_restrict_access()
-    {
-        /* Check if the user is not an administrator*/
-        if (!current_user_can('administrator') && (is_admin())) {
-            /* Redirect them to the homepage or any other page*/
-            wp_redirect(home_url());
-            exit;
-        }
-    }
-    add_action('admin_init', 'lokis_restrict_access');
-}
-
 /* Creates endpoints, endpoint name and icon arrays */
 if (!function_exists('lokis_endpoints')) {
     function lokis_endpoints()
@@ -317,8 +303,7 @@ if (!function_exists('load_custom_endpoint_template')) {
                     if (!$template) {
                         $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
                     }
-                }
-                elseif (current_user_can('player')){
+                } elseif (current_user_can('player')) {
                     $template = locate_template('inc/dashboard/lokis-user' . $endpoint . '.php');
                     if (!$template) {
                         $template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-user' . $endpoint . '.php';
@@ -400,75 +385,125 @@ if (!function_exists('lokis_account_menu')) {
 }
 
 
-// view players modal box
-function lokis_loop_modal_box()
-{
+/* view players modal box*/
+if (!function_exists('lokis_loop_modal_box')) {
+    function lokis_loop_modal_box()
+    {
 
-    $get_game_id = $_POST['game_id'];
+        $get_game_id = $_POST['game_id'];
 
-    ?>
-    <!-- The Modal -->
-    <svg display="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-        width="768" height="800" viewBox="0 0 768 800">
-        <defs>
-            <g id="icon-close">
-                <path class="path1"
-                    d="M31.708 25.708c-0-0-0-0-0-0l-9.708-9.708 9.708-9.708c0-0 0-0 0-0 0.105-0.105 0.18-0.227 0.229-0.357 0.133-0.356 0.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13 0.048-0.252 0.124-0.357 0.228 0 0-0 0-0 0l-9.708 9.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057 0.229l-4.586 4.586c-0.286 0.286-0.361 0.702-0.229 1.057 0.049 0.13 0.124 0.252 0.229 0.357 0 0 0 0 0 0l9.708 9.708-9.708 9.708c-0 0-0 0-0 0-0.104 0.105-0.18 0.227-0.229 0.357-0.133 0.355-0.057 0.771 0.229 1.057l4.586 4.586c0.286 0.286 0.702 0.361 1.057 0.229 0.13-0.049 0.252-0.124 0.357-0.229 0-0 0-0 0-0l9.708-9.708 9.708 9.708c0 0 0 0 0 0 0.105 0.105 0.227 0.18 0.357 0.229 0.356 0.133 0.771 0.057 1.057-0.229l4.586-4.586c0.286-0.286 0.362-0.702 0.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z">
-                </path>
-            </g>
-        </defs>
-    </svg>
+        ?>
+        <!-- The Modal -->
+        <svg display="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="768" height="800" viewBox="0 0 768 800">
+            <defs>
+                <g id="icon-close">
+                    <path class="path1"
+                        d="M31.708 25.708c-0-0-0-0-0-0l-9.708-9.708 9.708-9.708c0-0 0-0 0-0 0.105-0.105 0.18-0.227 0.229-0.357 0.133-0.356 0.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13 0.048-0.252 0.124-0.357 0.228 0 0-0 0-0 0l-9.708 9.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057 0.229l-4.586 4.586c-0.286 0.286-0.361 0.702-0.229 1.057 0.049 0.13 0.124 0.252 0.229 0.357 0 0 0 0 0 0l9.708 9.708-9.708 9.708c-0 0-0 0-0 0-0.104 0.105-0.18 0.227-0.229 0.357-0.133 0.355-0.057 0.771 0.229 1.057l4.586 4.586c0.286 0.286 0.702 0.361 1.057 0.229 0.13-0.049 0.252-0.124 0.357-0.229 0-0 0-0 0-0l9.708-9.708 9.708 9.708c0 0 0 0 0 0 0.105 0.105 0.227 0.18 0.357 0.229 0.356 0.133 0.771 0.057 1.057-0.229l4.586-4.586c0.286-0.286 0.362-0.702 0.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z">
+                    </path>
+                </g>
+            </defs>
+        </svg>
 
-    <!-- Modal content -->
-    <div class="modal">
-        <div class="modal-overlay modal-toggle"></div>
-        <div class="modal-wrapper modal-transition">
-            <div class="modal-header">
-                <button class="modal-close modal-toggle"><svg class="icon-close lokis-icon" viewBox="0 0 32 32">
-                        <use xlink:href="#icon-close"></use>
-                    </svg></button>
-                <h2 class="modal-heading">Game:
-                    <?php echo get_the_title($get_game_id); ?>
-                </h2>
-            </div>
-            <?php //echo $get_game_id . '-thias is game id'; ?>
+        <!-- Modal content -->
+        <div class="modal">
+            <div class="modal-overlay modal-toggle"></div>
+            <div class="modal-wrapper modal-transition">
+                <div class="modal-header">
+                    <button class="modal-close modal-toggle"><svg class="icon-close lokis-icon" viewBox="0 0 32 32">
+                            <use xlink:href="#icon-close"></use>
+                        </svg></button>
+                    <h2 class="modal-heading">Game:
+                        <?php echo get_the_title($get_game_id); ?>
+                    </h2>
+                </div>
+                <?php //echo $get_game_id . '-thias is game id'; ?>
 
-            <div class="modal-body">
-                <div class="modal-content">
-                    <p>
-                        <?php
+                <div class="modal-body">
+                    <div class="modal-content">
+                        <p>
+                            <?php
 
-                        $post_id = $get_game_id;
-                        $user_ids = get_post_meta($post_id, 'loki_player_count', true);
-                        if (!empty($user_ids)) {
-                            foreach ($user_ids as $user_id) {
-                                $avatar = get_avatar($user_id);
-                                $user_info = get_userdata($user_id);
-                                if ($user_info) {
-                                    $user_name = $user_info->display_name;
-                                    if (strpos($avatar, 'gravatar.com') !== false) {
-                                        echo '<div class="lokis-user-listing"><div class="lokis-user-avatar">';
-                                        echo $avatar . "</div>" . $user_name . "</div><br>";
+                            $post_id = $get_game_id;
+                            $user_ids = get_post_meta($post_id, 'loki_player_count', true);
+                            if (!empty($user_ids)) {
+                                foreach ($user_ids as $user_id) {
+                                    $avatar = get_avatar($user_id);
+                                    $user_info = get_userdata($user_id);
+                                    if ($user_info) {
+                                        $user_name = $user_info->display_name;
+                                        if (strpos($avatar, 'gravatar.com') !== false) {
+                                            echo '<div class="lokis-user-listing"><div class="lokis-user-avatar">';
+                                            echo $avatar . "</div>" . $user_name . "</div><br>";
+                                        } else {
+                                            // Avatar doesn't exist, display a placeholder image
+                                            $placeholder_image_url = plugin_dir_url(__FILE__) . 'assets/images/placeholder.png';
+                                            echo '<img src="' . $placeholder_image_url . '" alt="Placeholder-Image">' . $user_name . "<br>";
+                                        }
                                     } else {
-                                        // Avatar doesn't exist, display a placeholder image
-                                        $placeholder_image_url = plugin_dir_url(__FILE__) . 'assets/images/placeholder.png';
-                                        echo '<img src="' . $placeholder_image_url . '" alt="Placeholder-Image">' . $user_name . "<br>";
+                                        echo "User ID: " . $user_id . " - User not found.<br>";
                                     }
-                                } else {
-                                    echo "User ID: " . $user_id . " - User not found.<br>";
                                 }
+                            } else {
+                                echo "No user found.";
                             }
-                        } else {
-                            echo "No user found.";
-                        }
-                        ?>
-                    </p>
+                            ?>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <?php
-    die();
+        <?php
+        die();
+    }
+    add_action('wp_ajax_lokis_loop_modal_box', 'lokis_loop_modal_box');
 }
 
-add_action('wp_ajax_lokis_loop_modal_box', 'lokis_loop_modal_box');
+if (!function_exists('lokis_profile_update')) {
+    function lokis_profile_update()
+    {
+        $organization_name = $_POST['organization_name'];
+        $organization_type = $_POST['organization_type'];
+        $old_password = $_POST['old_password'];
+        $new_password = $_POST['new_password'];
+        $userdata = get_user_by('ID', get_current_user_id());
+
+        if (wp_verify_nonce($_POST['nonce'], -1)) {
+
+            if ($old_password !== "") {
+                if (wp_check_password($old_password, $userdata->user_pass, $userdata->ID) !== true) {
+                    $response = [
+                        'status' => 'error',
+                        'message' => "the old password doesn't match the one in the database"
+                    ];
+                    wp_send_json($response);
+                }
+            }
+
+            update_user_meta(get_current_user_id(), 'loki_organization', $organization_name);
+            update_user_meta(get_current_user_id(), 'loki_organization_type', $organization_type);
+
+            if($new_password !== ""){
+                wp_set_password($new_password, get_current_user_id());
+                $response = [
+                    'status' => 'success',
+                    'message' => 'The profile and password has been updated. Please refresh the page and log back in',
+                ];
+                wp_send_json($response);
+            }
+            
+            $response = [
+                'status' => 'success',
+                'message' => 'The profile has been updated.',
+            ];
+            wp_send_json($response);
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'ACCESS DENIED',
+            ];
+            wp_send_json($response);
+        }
+    }
+    add_action('wp_ajax_lokis_profile_update', 'lokis_profile_update');
+}
