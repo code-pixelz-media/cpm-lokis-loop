@@ -1,4 +1,5 @@
 <?php
+
 //Adds submenu to Post type 'Games'
 function lokis_settings_submenu()
 {
@@ -24,16 +25,13 @@ add_action('admin_init', 'lokis_settings_init');
 function lokis_settings_callback()
 {
     $games_setting_data = get_option('lokis_setting');
-
     settings_fields('lokis_settings_group');
     ?>
 
     <div class="lokis-game-wrap">
         <div class="lookisloop-navbar-item">
-
             <img class="lokisloop-logo" src="<?php echo plugin_dir_url(__DIR__) . 'assets/images/logo1.png'; ?>"
                 alt='lokis-loop logo'>
-
             <legend>
                 <h1>Settings</h1>
             </legend>
@@ -46,6 +44,7 @@ function lokis_settings_callback()
             settings_fields('lokis_settings_group');
             do_settings_sections('lokis_settings');
             ?>
+
             <div class="lokis-inputpage">
                 <label for="login-url"> Login Page :</label>
             </div>
@@ -63,14 +62,14 @@ function lokis_settings_callback()
                     echo $option;
                 }
                 ?>
-
             </select>
+
             <div class="lokis-inputpage">
                 <label for="register-url"> Register Page :</label>
             </div>
+
             <select class="lokis-register" name="lokis_setting[register]">
                 <option value="">Select a page</option>
-
                 <?php
                 $pages = get_pages();
                 foreach ($pages as $page) {
@@ -83,12 +82,13 @@ function lokis_settings_callback()
                 }
                 ?>
             </select>
+
             <div class="lokis-inputpage">
                 <label for="dashboard-url"> Dashboard Page :</label>
             </div>
+
             <select class="lokis-dashboard" name="lokis_setting[dashboard]">
                 <option value="">Select a page</option>
-
                 <?php
                 $pages = get_pages();
                 foreach ($pages as $page) {
@@ -101,14 +101,29 @@ function lokis_settings_callback()
                 }
                 ?>
             </select>
+
+            <div class="lokis-inputpage">
+                <label for="thankyou-url"> Thank You Page :</label>
+            </div>
+            <select class="lokis-thankyou" name="lokis_setting[thankyou]">
+                <option value="">Select a page</option>
+                <?php
+                $pages = get_pages();
+                foreach ($pages as $page) {
+                    $option = '<option value="' . $page->ID . '"';
+                    if (isset($games_setting_data['thankyou']) && $games_setting_data['thankyou'] == $page->ID) {
+                        $option .= ' selected="selected"';
+                    }
+                    $option .= '>' . $page->post_title . '</option>';
+                    echo $option;
+                }
+                ?>
+            </select>
             <?php
             submit_button(null, 'success', 'loki-submit');
             settings_errors();
             ?>
         </form>
-
-
     </div>
-
     <?php
 }
