@@ -31,7 +31,7 @@
   border-radius: 8px;
   border-color: var(--lokis-border);
 }
-/* .......................................CSS FOR PAGINATION............................ */
+/* CSS FOR PAGINATION */
 .lokis-loop-pagination {
   display: inline-block;
 }
@@ -88,7 +88,7 @@ span.page-numbers.current:hover {
   font-size: 20px;
 }
 
-/* ...........................................creating CSS for single-games.php........................................................ */
+/* creating CSS for single-games.php */
 
 @media only screen and (min-width: 822px) {
   :root {
@@ -233,8 +233,8 @@ div#lokis-error-message .lokis-loop-error,
   width: 100%;
 }
 
-/* ...........................End off CSS for single-games.php......................................................... */
-/* ......................creating CSS for game host application form................................................... */
+/* End off CSS for single-games.php */
+/* creating CSS for game host application form */
 .lokis-gamehost-application-container {
   background-color: var(--lokis-bg);
   margin: 10px;
@@ -297,7 +297,7 @@ div#lokis-error-message .lokis-loop-error,
   user-select: text;
 }
 .lokis-formquestion-item .lokis-formquestion-order.lokis-req-field {
-  color: #c12f32;
+  color: var(--lokis-requiredfield-color);
 }
 .lokis-gamehost-application-container button.button:hover,
 .button:active,
@@ -314,8 +314,8 @@ button:active {
   text-decoration-line: none;
   outline-style: none;
   width: fit-content;
-  background-color: #5b4623;
-  border-color: #5b4623;
+  background-color: var(--lokis-btnbg-active-color);
+  border-color: var(--lokis-btnbg-active-color);
   color: var(--lokis-white-color);
   border-radius: 0.25rem;
   padding: 0.625rem 1.25rem;
@@ -792,7 +792,7 @@ li.lokis-active {
 .lokis-modal-header {
   position: relative;
 
-  background-color: #fff;
+  background-color: var(--lokis-white-color);
 
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.06);
 
@@ -873,7 +873,7 @@ button.lokis-modal-close.lokis-modal-toggle {
 }
 .lokis-modal-game-status i.fa.fa-circle.lokis-game-status-active {
   margin: 10px 10px;
-  color: #008000;
+  color: var(--lokisloop-correct-color);
 }
 .lokis-modal-box .lokis-modal-wrapper .lokis-modal-header .lokis-modal-close {
   background-color: transparent;
@@ -882,7 +882,7 @@ button.lokis-modal-close.lokis-modal-toggle {
   margin-right: -20px;
 }
 
-/* CSS for lokis host game .................................*/
+/* CSS for lokis host game */
 
 form.lokis-host-game.g-3.hosta-game {
   display: flex;
@@ -997,13 +997,9 @@ button.btn.btn-primary.mb-3 {
   width: max-content;
 }
 
-/* CSS for lokis host game ends here .................................*/
+/* CSS for lokis host game ends here */
 
-/* Codes by Arpann====================================================================================================================
-
-===================================================================================================================================*/
-
-/*  CUrrent games css=============================================================== */
+/*  CUrrent games css */
 h5 {
   font-size: 24px;
   font-weight: 700;
@@ -1039,7 +1035,7 @@ h5 {
   }
 }
 
-/* lokis loop menus============== */
+/* lokis loop menus */
 .lokisloop-dashboard-container aside {
   width: 25%;
   background-color: transparent;
@@ -1114,9 +1110,7 @@ h5 {
   .lokisloop-hosted-game caption {
     font-size: 1.3em;
   }
-  /* .lookisloop-games tbody tr {
-    display: none;
-  } */
+
   .lokisloop-hosted-game thead {
     border: none;
     clip: rect(0 0 0 0);
@@ -1163,7 +1157,7 @@ h5 {
   font-size: 20px;
 }
 
-/* personal info css================================================================== */
+/* personal info css */
 .lokis-form-item {
   display: flex;
   margin: 10px;
@@ -1248,7 +1242,7 @@ h5 {
   }
 }
 
-/* Host a game csss========================================================================================= */
+/* Host a game csss */
 
 .lokisloop-dashboard-container .lokis-host-game-title > h5 {
   text-align: center;
@@ -1310,8 +1304,6 @@ h5 {
     width: 30%;
   }
 }
-
-/*  arpan css code ends here  */
 
 /*  login form  */
 /* CSS for lokis login form */
@@ -1408,7 +1400,7 @@ input#lokis-rememberme {
   left: 50%;
   transform: translateX(-50%);
   background-color: #333;
-  color: #fff;
+  color: var(--lokis-white-color);
   padding: 8px 12px;
   border-radius: 4px;
   font-size: 14px;
@@ -1424,7 +1416,7 @@ input#lokis-rememberme {
   opacity: 1;
 }
 
-/* CSS for active games............................................ */
+/* responsiveness for active games */
 
 @media screen and (max-width: 600px) {
   .lokisloop-completed-games-container .lookisloop-games table tr {
@@ -1433,6 +1425,7 @@ input#lokis-rememberme {
     margin-bottom: 0.625em;
   }
 }
+/* end off css for active games */
 
 /*  css for qr image */
 
@@ -1440,3 +1433,4 @@ input#lokis-rememberme {
   max-width: 40px;
   max-height: 40px;
 }
+/* end of css for qr image */
