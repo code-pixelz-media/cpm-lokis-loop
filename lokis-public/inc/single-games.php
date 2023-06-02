@@ -1,5 +1,5 @@
 <?php
-get_header();
+wp_head();
 
 //Check if it is the user that is accessing the page
 
@@ -37,6 +37,7 @@ if (is_user_logged_in()) {
                         <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">Check Answer</button>
                     </div>
                 </form>
+                <button id='lokis-fullscreen'>Go Fullscreen</button>
                 <div id='lokis-feedback'></div>
             </div>
         </div>
@@ -46,4 +47,4 @@ if (is_user_logged_in()) {
     // if not logged in, show login form
     cpm_lokis_login_form();
 }
-get_footer();
+wp_footer();

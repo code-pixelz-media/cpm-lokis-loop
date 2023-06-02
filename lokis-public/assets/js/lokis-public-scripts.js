@@ -359,21 +359,44 @@ function htmlEncode(value) {
   return jQuery('<div/>').text(value).html();
 }
 
-jQuery(function () {
-  jQuery(".lokis-generate-qr").click(function () {
-    var qrContent = jQuery(this).siblings(".lokis_qr_content").val();
-    var qrCode = jQuery(this).siblings(".lokis-qr-code");
+jQuery(function ($) {
+  $(".lokis-generate-qr").click(function () {
+    var qrContent = $(this).siblings(".lokis_qr_content").val();
+    var qrCode = $(this).siblings(".lokis-qr-code");
+    var generateButton = $(this);
 
     var qrImageUrl = "https://chart.googleapis.com/chart?cht=qr&chl=" + htmlEncode(qrContent) + "&chs=500x500&chld=L|0";
     qrCode.attr("src", qrImageUrl);
     qrCode.attr("data-qr-url", qrImageUrl); // Set the data-qr-url attribute with the QR code image URL
     qrCode.show(); // Show the QR code after generating it
+    generateButton.css('display', 'none');
+    $('[data-label="QR:"]').css('min-width','131px');
   });
 
-  jQuery(document).on("click", ".lokis-qr-code", function () {
-    var qrUrl = jQuery(this).attr("data-qr-url");
+  $(document).on("click", ".lokis-qr-code", function () {
+    var qrUrl = $(this).attr("data-qr-url");
     if (qrUrl) {
       window.open(qrUrl, "_blank");
+    }
+  });
+});
+
+//Function to make the iframe full screen
+jQuery(document).ready(function ($) {
+  $("#lokis-fullscreen").click(function (event) {
+    const iframe = document.getElementById("game-iframe");
+
+    if (iframe.requestFullscreen) {
+      iframe.requestFullscreen().then(() => {});
+    } else if (iframe.mozRequestFullScreen) {
+      // Firefox
+      iframe.mozRequestFullScreen();
+    } else if (iframe.webkitRequestFullscreen) {
+      // Chrome, Safari, Opera
+      iframe.webkitRequestFullscreen().then(() => {});
+    } else if (iframe.msRequestFullscreen) {
+      // IE/Edge
+      iframe.msRequestFullscreen().then(() => {});
     }
   });
 });
