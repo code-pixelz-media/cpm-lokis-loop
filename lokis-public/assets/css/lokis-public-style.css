@@ -132,11 +132,14 @@ span.page-numbers.current:hover {
 }
 
 /* for lokis-iframe-content */
-
+.lokisloop-iframe-container {
+  background: #f9f9f9;
+  position: relative;
+}
 .iframe-container {
   margin: auto;
-  height: 75%;
-  width: 90%;
+  /* height: 75%;
+  width: 90%; */
 }
 
 .iframe-container .lokis-iframe {
