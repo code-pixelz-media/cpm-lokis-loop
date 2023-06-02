@@ -115,7 +115,7 @@ if (!function_exists('loki_user_registration')) {
         $zipcode = $_POST['zipcode'];
 
         /*Creating username by removing spaces from name*/
-        $username = strtr($name, " ", "");
+        $username = str_replace( " ", "",$name);
 
         if (wp_verify_nonce($_POST['nonce'], -1)) {
             /* Check if the username and email address are unique */
