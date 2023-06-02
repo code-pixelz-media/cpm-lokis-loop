@@ -124,7 +124,7 @@ span.page-numbers.current:hover {
 
 /* for lokis-paragraph-content */
 
-.lokisloop-container .lokis-paragraph-content {
+.lokisloop-iframe-container .lokis-paragraph-content {
   padding: 25px 100px 75px 100px;
   text-align: center;
   margin: auto;
@@ -135,17 +135,23 @@ span.page-numbers.current:hover {
 .lokisloop-iframe-container {
   background: #f9f9f9;
   position: relative;
+  height: 80vh;
 }
+
 .iframe-container {
   margin: auto;
-  /* height: 75%;
-  width: 90%; */
 }
 
 .iframe-container .lokis-iframe {
   margin: auto;
   width: 100%;
   height: 100%;
+}
+
+#loki-game-iframe {
+  height:100%;
+  width:100%;
+  background-color: #ffffff;
 }
 
 /* for lokis post form */

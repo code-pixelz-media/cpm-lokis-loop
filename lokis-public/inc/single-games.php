@@ -8,7 +8,7 @@ if (is_user_logged_in()) {
     if (get_post_type() === 'games') {
         $session_id = lokis_getSessionIDFromURL();
         ?>
-        <div class="lokisloop-container">
+        <div class="lokisloop-iframe-container">
             <!-- creating lokis-loop paragraph-content -->
             <div class="lokis-paragraph-content">
                 <?php
@@ -18,10 +18,10 @@ if (is_user_logged_in()) {
             <!-- creating lokis-loop ifarme -->
             <div class="iframe-container">
                 <div class="lokis-iframe">
-                    <iframe id="game-iframe" src="<?php echo get_post_meta(get_the_ID(), 'lokis_loop_game_url', true); ?>"
+                    <iframe id="loki-game-iframe" src="<?php echo get_post_meta(get_the_ID(), 'lokis_loop_game_url', true); ?>"
                         allow="autoplay; fullscreen; gamepad; xr; gyroscope; accelerometer"
                         sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-same-origin allow-popups-to-escape-sandbox allow-downloads"
-                        scrolling="no" allowfullscreen="true" style="width:100%;height:400px;"></iframe>
+                        scrolling="no" allowfullscreen="true"></iframe>
 
                 </div>
             </div>
