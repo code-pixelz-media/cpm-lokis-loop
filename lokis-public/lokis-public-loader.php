@@ -291,24 +291,6 @@ if (!function_exists('lokis_endpoints')) {
             }
             flush_rewrite_rules();
 
-        } elseif (current_user_can('player')) {
-
-            /*Active Games Endpoint*/
-            array_push($lokis_endpoints, 'active-games');
-            array_push($lokis_endpoint_name, 'Active Games');
-            array_push($lokis_account_icons, 'fa-solid fa-chart-line');
-
-            /*Completed Games Endpoint*/
-            array_push($lokis_endpoints, 'completed-games');
-            array_push($lokis_endpoint_name, 'Completed Games');
-            array_push($lokis_account_icons, 'fa-solid fa-list-check');
-
-            // Register the endpoints
-            foreach ($lokis_endpoints as $endpoint) {
-                add_rewrite_endpoint($endpoint, EP_PAGES);
-            }
-            flush_rewrite_rules();
-
         }
     }
     add_action('init', 'lokis_endpoints');
@@ -329,11 +311,6 @@ if (!function_exists('loki_load_custom_endpoint_template')) {
                     $loki_dashboard_template = locate_template('inc/dashboard/lokis-' . $endpoint . '.php');
                     if (!$loki_dashboard_template) {
                         $loki_dashboard_template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-' . $endpoint . '.php';
-                    }
-                } elseif (current_user_can('player')) {
-                    $loki_dashboard_template = locate_template('inc/dashboard/lokis-user' . $endpoint . '.php');
-                    if (!$loki_dashboard_template) {
-                        $loki_dashboard_template = plugin_dir_path(__FILE__) . 'inc/dashboard/lokis-user' . $endpoint . '.php';
                     }
                 }
             }
