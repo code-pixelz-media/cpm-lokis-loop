@@ -26,11 +26,12 @@ if (!defined('ABSPATH')) {
 
 function cpm_lokis_public_scripts()
 {
+    $lokis_time = date('YmdHis', current_time('timestamp'));
     /* css for plugin  */
-    wp_enqueue_style('cpm-lokis-public', plugin_dir_url(__FILE__) . 'assets/css/lokis-public-style.css', array(), time(), false, 'all');
+    wp_enqueue_style('cpm-lokis-public', plugin_dir_url(__FILE__) . 'assets/css/lokis-public-style.css', array(), $lokis_time, false, 'all');
 
     /* js for plugin  */
-    wp_enqueue_script('cpm-lokis-public-js', plugin_dir_url(__FILE__) . 'assets/js/lokis-public-scripts.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('cpm-lokis-public-js', plugin_dir_url(__FILE__) . 'assets/js/lokis-public-scripts.js', array('jquery'), $lokis_time, true);
     wp_enqueue_style('lokis-fontawesome-css', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css', array(), false, 'all');
     wp_localize_script('cpm-lokis-public-js', 'gamesajax', array('ajaxurl' => admin_url('admin-ajax.php')));
 }
@@ -114,7 +115,7 @@ if (!function_exists('loki_user_registration')) {
         $zipcode = $_POST['zipcode'];
 
         /*Creating username by removing spaces from name*/
-        $username = str_replace(' ', '', $name);
+        $username = strtr($name, " ", "");
 
         if (wp_verify_nonce($_POST['nonce'], -1)) {
             /* Check if the username and email address are unique */

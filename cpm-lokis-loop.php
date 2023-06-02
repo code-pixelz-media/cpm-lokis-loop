@@ -45,8 +45,8 @@ if (!function_exists('lokis_create_tables')) {
         host_id INT NOT NULL,
         game_id INT NOT NULL,
         session_id VARCHAR(18) NOT NULL,
-        expires_in DATETIME NOT NULL,
         started_at DATETIME NOT NULL,
+        expires_in DATETIME NOT NULL,
         gamesession_url VARCHAR(255) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
@@ -55,6 +55,7 @@ if (!function_exists('lokis_create_tables')) {
         player_id INT NOT NULL,
         session_id VARCHAR(18) NOT NULL,
         step INT NOT NULL,
+        game_url VARCHAR(255) NOT NULL,
         completed TINYINT(1) NOT NULL DEFAULT 0
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 

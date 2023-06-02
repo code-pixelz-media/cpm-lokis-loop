@@ -25,8 +25,39 @@ function cpm_lokis_login_function()
 add_filter('login_redirect', 'cpm_login_redirect', 10, 3);
 
 
+/**
+ * This function redirects users to the login page if they try to login without entering a username or
+ * password.
+ * 
+ * @return If the `` variable is empty, the function will return the output of
+ * `wp_login_form()`. Otherwise, nothing is being returned as the function is being used as an action
+ * hook to redirect the user to the login page if the username or password fields are empty.
+ */
+function lokis_redirect_empty_username_password()
+{
+
+    $login_page_id = (get_option('lokis_setting'))['login'];
+    $lokis_login_page = get_permalink($login_page_id);
+
+    if (empty($lokis_login_page)) {
+        $lokis_login_page = wp_login_form();
+        return $lokis_login_page;
+    }
+    if (empty($_POST['log']) || empty($_POST['pwd'])) {
+
+        wp_redirect($lokis_login_page);
+        // echo '<script>window.location.href = "' . $lokis_login_page . '"</script>';
+        exit;
+    }
+}
+// add_action('login_form', 'lokis_redirect_empty_username_password');
+add_action('authenticate', 'lokis_redirect_empty_username_password', 1, 3);
 
 
+/**
+ * This function generates a login form with custom labels and links for password recovery and
+ * registration.
+ */
 function cpm_lokis_login_form()
 {
     echo '<div class="lokis-login-form-container"><h3>Login</h3>';
@@ -38,10 +69,10 @@ function cpm_lokis_login_form()
         array(
             'redirect' => esc_url($_SERVER['REQUEST_URI']),
             // Redirect to the current page
-            'label_username' => 'Username',
-            'label_password' => 'Password',
-            'label_remember' => 'Remember Me',
-            'label_log_in' => 'Log In',
+            'label_username' => __('Username', 'lokis-loop'),
+            'label_password' => __('Password', 'lokis-loop'),
+            'label_remember' => __('Remember Me', 'lokis-loop'),
+            'label_log_in' => __('Log In', 'lokis-loop'),
             'id_username' => 'lokis-username',
             'id_password' => 'lokis-password',
             'id_remember' => 'lokis-rememberme',
@@ -53,11 +84,14 @@ function cpm_lokis_login_form()
     );
     $register_page_id = (get_option('lokis_setting'))['register'];
     $lokis_register_page = get_permalink($register_page_id);
-    echo '<div class="lokis-loginPage"><p class="lokis-forgot-password-link"><a href="' . esc_url(wp_lostpassword_url()) . '">Forgot Password?</a></p> <p class="lokis-register-link"> <a href="' . esc_url($lokis_register_page) . '">Register</a></p></div></div>';
+    echo '<div class="lokis-loginPage"><p class="lokis-forgot-password-link"><a href="' . esc_url(wp_lostpassword_url()) . '">' . __("Forgot Password?", "lokis-loop") . '</a></p> <p class="lokis-register-link"> <a href="' . esc_url($lokis_register_page) . '">' . __("Register", "lokis-loop") . '</a></p></div></div>';
 }
 
 
 
+/**
+ * This function redirects users to different pages based on their role after logging in.
+ */
 function cpm_login_redirect($redirect_to, $request, $user)
 {
     $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
@@ -88,6 +122,9 @@ function cpm_login_redirect($redirect_to, $request, $user)
     return $redirect_to;
 }
 
+/**
+ * The function redirects users to a specified login page after they log out of WordPress.
+ */
 function lokis_logout_redirect($redirect_to, $requested_redirect_to, $user)
 {
     $login_page_id = (get_option('lokis_setting'))['login'];
@@ -105,6 +142,9 @@ function lokis_logout_redirect($redirect_to, $requested_redirect_to, $user)
 }
 add_filter('logout_redirect', 'lokis_logout_redirect', 10, 3);
 
+/**
+ * This PHP function hides the WordPress admin bar.
+ */
 function lokis_hide_admin_bar_settings()
 {
     ?>
@@ -115,6 +155,11 @@ function lokis_hide_admin_bar_settings()
     </style>
     <?php
 }
+
+/**
+ * The function disables the WordPress admin bar for non-administrator users and hides the admin bar
+ * settings on the profile page.
+ */
 function lokis_disable_admin_bar()
 {
     if (!current_user_can('administrator')) {
@@ -146,12 +191,7 @@ function lokis_custom_login_failed()
         // Otherwise, redirect to the home page
         $redirect_to = $lokis_login_page;
     }
-
-    // $login_url = wp_login_url(); // Replace with the URL of your custom login page
-    // wp_redirect($lokis_login_page . '?login=failed');
     wp_redirect(add_query_arg('login', 'failed', $redirect_to));
-
-
     exit;
 }
 add_action('wp_login_failed', 'lokis_custom_login_failed');

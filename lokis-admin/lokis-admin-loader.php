@@ -79,8 +79,8 @@ if (!function_exists('loki_add_and_modify_roles')) {
 }
 
 /*Pull session ID from URL*/
-if (!function_exists('getSessionIDFromURL')) {
-    function getSessionIDFromURL()
+if (!function_exists('lokis_getSessionIDFromURL')) {
+    function lokis_getSessionIDFromURL()
     {
         $url = $_SERVER['REQUEST_URI'];
         $query_params = parse_url($url, PHP_URL_QUERY);
@@ -105,7 +105,7 @@ if (!function_exists('lokis_redirect_after_expiration')) {
         $current_time = date('Y-m-d H:i:s');
         $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
         $lokis_dashboard_page = get_permalink($dashboard_page_id);
-        $session_id = getSessionIDFromURL();
+        $session_id = lokis_getSessionIDFromURL();
         $results = $wpdb->get_results("SELECT expires_in FROM $lokis_host_table_name WHERE session_id = '{$session_id}'");
 
         if ($results) {
@@ -138,7 +138,12 @@ if (!function_exists('lokis_store_session_id')) {
                 $allowed_roles = array('player', 'host');
                 $user = wp_get_current_user();
                 if (in_array($user->roles[0], $allowed_roles)) {
-                    $session_id = getSessionIDFromURL();
+
+                    $lokis_query_url = $_SERVER['QUERY_STRING'];
+                    $lokis_front_url = get_permalink(get_the_ID());
+                    $lokis_single_page_url = $lokis_front_url . '?' . $lokis_query_url;
+
+                    $session_id = lokis_getSessionIDFromURL();
                     $player_id = get_current_user_id();
                     $post_id = get_the_ID();
                     // Insert the session ID into your custom table
@@ -175,18 +180,19 @@ if (!function_exists('lokis_store_session_id')) {
                                 [
                                     'player_id' => $player_id,
                                     'session_id' => $session_id,
-                                    'step' => $post_id
+                                    'step' => $post_id,
+                                    'game_url' => $lokis_single_page_url
                                 ],
                                 [
                                     '%d',
                                     '%s',
-                                    '%d'
+                                    '%d',
+                                    '%s'
                                 ]
                             );
                         } else {
-                            $sql = "UPDATE $lokis_player_table_name SET step = '$post_id'  WHERE player_id = '$player_id' AND session_id = '$session_id' ";
+                            $sql = "UPDATE $lokis_player_table_name SET step = '$post_id' , game_url = '$lokis_single_page_url'   WHERE player_id = '$player_id' AND session_id = '$session_id' ";
                             $wpdb->query($sql);
-
                         }
                     }
                 }

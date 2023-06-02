@@ -6,7 +6,7 @@ get_header();
 if (is_user_logged_in()) {
 
     if (get_post_type() === 'games') {
-        $session_id = getSessionIDFromURL();
+        $session_id = lokis_getSessionIDFromURL();
         ?>
         <div class="lokisloop-container">
             <!-- creating lokis-loop paragraph-content -->
@@ -17,56 +17,33 @@ if (is_user_logged_in()) {
             </div>
             <!-- creating lokis-loop ifarme -->
             <div class="iframe-container">
-
                 <div class="lokis-iframe">
-
-                    <iframe src="<?php echo get_post_meta(get_the_ID(), 'lokis_loop_game_url', true); ?>"
-                        allow="autoplay; fullscreen *; geolocation; microphone; camera; midi; monetization; xr-spatial-tracking; gamepad; gyroscope; accelerometer; xr; keyboard-map *; focus-without-user-activation *; screen-wake-lock; clipboard-read; clipboard-write"
+                    <iframe id="game-iframe" src="<?php echo get_post_meta(get_the_ID(), 'lokis_loop_game_url', true); ?>"
+                        allow="autoplay; fullscreen; gamepad; xr; gyroscope; accelerometer"
                         sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-same-origin allow-popups-to-escape-sandbox allow-downloads"
-                        scrolling="no" allowfullscreen="" style="width:100%;height:400px;">
-
-                    </iframe>
+                        scrolling="no" allowfullscreen="true" style="width:100%;height:400px;"></iframe>
 
                 </div>
-
             </div>
-
             <!-- creating lokis-loop post-form -->
-
             <div class="lokis-post-form">
-
                 <form action="" method="post">
-
-
                     <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
-
                     <input type="hidden" value="<?php echo $session_id; ?>" id="loki-session-id">
-
                     <input type="hidden" value="<?php echo get_current_user_id(); ?>" id="loki-player-id">
-
                     <div class="lokisloop-answer">
-
                         <label for="lokis-answer">Answer:</label>
-
-
                         <input type="text" id="lokis-answer" name="lokis-answer">
-
-
                         <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">Check Answer</button>
-
                     </div>
                 </form>
                 <div id='lokis-feedback'></div>
             </div>
         </div>
         <?php
-
     }
-
 } else {
     // if not logged in, show login form
-
     cpm_lokis_login_form();
-
 }
 get_footer();

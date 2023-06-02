@@ -24,57 +24,6 @@
   --login-loginbackgroud-color: #e8f0fe;
 }
 
-.lokis-gamehost-application-container
-  button.button:not(:hover):not(:active):not(.has-background),
-button:not(:hover):not(:active):not(.has-background) {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
-  border: 0px;
-  vertical-align: middle;
-  margin: 20px;
-  cursor: pointer;
-  text-decoration-line: none;
-  outline-style: none;
-  width: fit-content;
-  background-color: var(--lokis-btnbg-color);
-  border-color: var(--lokis-btnbg-color);
-  color: var(--lokis-white-color);
-  border-radius: 0.25rem;
-  padding: 0.625rem 1.25rem;
-  min-width: 6rem;
-  min-height: 2.5rem;
-  line-height: 1.375rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-.lokis-gamehost-application-container
-  button.button:hover:not(:active):not(.has-background),
-button:not(:hover):active:not(.has-background) {
-  display: inline-flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  justify-content: center;
-  border: 0px;
-  vertical-align: middle;
-  margin: 20px;
-  cursor: pointer;
-  text-decoration-line: none;
-  outline-style: none;
-  width: fit-content;
-  background-color: var(--lokis-btnbg-active-color);
-  border-color: var(--lokis-btnbg-active-color);
-  color: var(--lokis-white-color);
-  border-radius: 0.25rem;
-  padding: 0.625rem 1.25rem;
-  min-width: 6rem;
-  min-height: 2.5rem;
-  line-height: 1.375rem;
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
 .edit-button {
   background-color: var(--lokis-border) !important;
   color: var(--lokis-color) !important;
@@ -104,6 +53,7 @@ button:not(:hover):active:not(.has-background) {
   border: 1px solid var(--lokis-border-color);
   margin: 10px 4px;
   font-size: 20px;
+  background-color: var(--lokis-hostbgbdr-color);
 }
 .lokis-loop-pagination span.page-numbers.current:active {
   color: var(--lokis-black-color);
@@ -167,6 +117,9 @@ span.page-numbers.current:hover {
   .lokis-loop-correct {
     width: 100% !important;
   }
+  .lokisloop-profile-form #lokis-error-message {
+    margin-top: 20px;
+  }
 }
 
 /* for lokis-paragraph-content */
@@ -220,7 +173,7 @@ span.page-numbers.current:hover {
   outline: none;
 }
 .lokis-post-form .lokisloop-answer button#lokis-submit-btn {
-  margin: 20px 50px;
+  margin: 20px 20px;
   background-color: var(--login-loginbackgroud-color);
   border-color: var(--lokis-border-color);
   color: var(--lokis-color);
@@ -246,7 +199,14 @@ button#lokis-submit-btn:hover {
 }
 
 /* For lokis game answer */
+div#lokis-feedback {
+  width: 100%;
+  max-width: 455px;
+  margin: 0 auto;
+  padding-right: 20px;
+}
 
+div#lokis-error-message .lokis-loop-error,
 .lokis-loop-incorrect {
   color: var(--lokisloop-incorrect-color);
   background-color: var(--lokisloop-incorrect-bg-color);
@@ -257,19 +217,20 @@ button#lokis-submit-btn:hover {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin: auto;
-  width: 40%;
+  width: 100%;
 }
 
 .lokis-loop-correct {
   color: var(--lokisloop-correct-color);
   background-color: var(--lokisloop-correct-bg-color);
   border-color: var(--lokisloop-correct-border-color);
+  border-radius: 5px;
+  height: 40px;
+  display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: auto;
-  width: 40%;
-  margin: auto;
+  width: 100%;
 }
 
 /* ...........................End off CSS for single-games.php......................................................... */
@@ -302,27 +263,6 @@ button#lokis-submit-btn:hover {
   clear: both;
   margin-left: 10px;
 }
-/* .lokisloop-selective-box input[type="radio"] {
-  -webkit-appearance: auto;
-  position: relative;
-  width: 20px;
-  height: 20px;
-  outline: none;
-  border: var(--lokis-black-color);
-  background-color: var(--lokis-white-color);
-} */
-/* .lokisloop-selective-box input[type="radio"]:after {
-  content: "";
-  opacity: 1;
-  display: block;
-  left: 3px;
-  top: 3px;
-  position: absolute;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background-color: transparent;
-} */
 
 .lokis-gamehost-application-container input#lokis-submit-button {
   margin-top: 2em;
@@ -386,6 +326,57 @@ button:active {
   font-size: 0.875rem;
 }
 
+.lokis-gamehost-application-container
+  button.button:not(:hover):not(:active):not(.has-background),
+button:not(:hover):not(:active):not(.has-background) {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  border: 0px;
+  vertical-align: middle;
+  margin: 20px;
+  cursor: pointer;
+  text-decoration-line: none;
+  outline-style: none;
+  width: fit-content;
+  background-color: var(--lokis-btnbg-color);
+  border-color: var(--lokis-btnbg-color);
+  color: var(--lokis-white-color);
+  border-radius: 0.25rem;
+  padding: 0.625rem 1.25rem;
+  min-width: 6rem;
+  min-height: 2.5rem;
+  line-height: 1.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.lokis-gamehost-application-container
+  button.button:hover:not(:active):not(.has-background),
+button:not(:hover):active:not(.has-background) {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  border: 0px;
+  vertical-align: middle;
+  margin: 20px;
+  cursor: pointer;
+  text-decoration-line: none;
+  outline-style: none;
+  width: fit-content;
+  background-color: var(--lokis-btnbg-active-color);
+  border-color: var(--lokis-btnbg-active-color);
+  color: var(--lokis-white-color);
+  border-radius: 0.25rem;
+  padding: 0.625rem 1.25rem;
+  min-width: 6rem;
+  min-height: 2.5rem;
+  line-height: 1.375rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
 /* End of CSS for game host application form */
 
 /* Creating CSS for User Dashboard  */
@@ -402,19 +393,25 @@ button:active {
 .lokisloop-dashboard-container aside ul li {
   list-style-type: none;
   margin: 10px 0 10px 0;
-  border-bottom: 1px solid #d3d3d3;
+  border-bottom: 1px solid var(--lokis-border);
   padding-top: 15px;
   font-size: 18px;
 }
-
-.lokisloop-dashboard-container .lokisloop-menu ul li .logout:hover {
-  background-color: var(--lokis-bg);
+.lokisloop-dashboard-container aside ul li a:focus {
+  background: transparent !important;
+  outline: none !important;
 }
 
+.lokisloop-dashboard-container .lokisloop-menu ul li .logout:hover {
+  background-color: var(--lokis-hostbg-color);
+}
+li.lokis-active {
+  background-color: var(--lokis-hostbg-color);
+}
 .lokisloop-hosted-game .lokisloop-container-wrapper,
 .lokisloop-completed-games-container {
   padding: 30px;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .lokisloop-dashboard-container {
@@ -435,7 +432,7 @@ button:active {
 
 .lokisloop-dashboard-container .lokisloop-hosted-game {
   font-size: 16px;
-
+  width: 75%;
   align-items: center;
 
   margin: 0;
@@ -461,6 +458,7 @@ button:active {
   height: 40px;
   font-size: 20px;
   text-align: center;
+  margin-right: 5px;
 }
 
 .lokisloop-dashboard-container ul li a i.fa-solid {
@@ -643,11 +641,11 @@ button:active {
   .lokisloop-profile-form
   input[type="radio"]:checked:after {
   opacity: 1;
-  position: absolute;
+  position: relative;
   content: "";
   display: block;
-  left: 4px;
-  top: 4px;
+  left: 2px;
+  top: 2px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -759,11 +757,7 @@ button:active {
 .lokis-modal-wrapper {
   position: absolute;
 
-  z-index: 9999;
-
-  /* top: 6em; */
-
-  left: 50%;
+  z-index: 10;
 
   width: 32em;
 
@@ -774,18 +768,20 @@ button:active {
   box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
 }
 
-.lokis-modal-transition {
-  transition: all 0.3s 0.12s;
-
-  transform: translateY(-10%);
-
-  opacity: 0;
-}
-
 .lokis-modal-box.is-visible .lokis-modal-transition {
   transform: translateY(0);
-
   opacity: 1;
+  overflow: hidden;
+  color: var(--lokis-black-color);
+  width: 32em;
+  height: 300px;
+  position: absolute;
+  background: var(--lokis-white-color);
+  top: -33%;
+  left: 20%;
+  right: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 .lokis-modal-header,
@@ -844,13 +840,15 @@ button:active {
 button.lokis-modal-close.lokis-modal-toggle {
   background-color: #ffffffe3;
 }
+.lokis-modal-game-status i.fa.fa-circle.lokis-game-status-incomplete {
+  margin-left: 10px;
+  margin-right: 5px;
+}
 
 /* CSS for view player modal box ends here  */
 
 .lokis-action-td,
 .lokis-table-url-wrapper {
-  display: flex;
-
   align-items: center;
   margin: 0 5px;
   justify-content: center;
@@ -871,7 +869,7 @@ button.lokis-modal-close.lokis-modal-toggle {
   align-items: center;
 }
 .lokis-modal-game-status {
-  margin-left: 36px;
+  margin-left: 30px;
 }
 .lokis-modal-game-status i.fa.fa-circle.lokis-game-status-active {
   margin: 10px 10px;
@@ -992,6 +990,12 @@ button.btn.btn-primary.mb-3 {
   background-color: var(--lokis-primarybtn-color) !important;
   border-color: var(--lokis-primarybtn-color) !important;
 }
+.lokis-error-credentials {
+  color: var(--lokisloop-incorrect-color);
+  background-color: var(--lokisloop-incorrect-bg-color);
+  padding: 7px;
+  width: max-content;
+}
 
 /* CSS for lokis host game ends here .................................*/
 
@@ -1062,7 +1066,7 @@ h5 {
   padding: 5px;
   cursor: pointer;
   color: var(--lokis-host-color);
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .lokisloop-dashboard-container aside .lokis-logo a {
   display: none;
@@ -1165,10 +1169,6 @@ h5 {
   margin: 10px;
 }
 
-.lokisloop-dashboard-container aside ul li:hover {
-  background-color: #f8f8f8a1;
-}
-
 @media only screen and (max-width: 600px) {
   .lokisloop-container
     .lokisloop-profile
@@ -1200,16 +1200,6 @@ h5 {
     padding: 0;
   }
 }
-
-/* .lokisloop-container
-  .lokis-gamehost-profileform-container
-  .lokisloop-profile-form
-  .lokis-radio
-  .lokisloop-selective-box
-  input {
-  background-color: var(--lokis-bg);
-} */
-
 .lokisloop-container
   .lokis-gamehost-profileform-container
   .lokisloop-profile-form
@@ -1262,10 +1252,12 @@ h5 {
 
 .lokisloop-dashboard-container .lokis-host-game-title > h5 {
   text-align: center;
-  margin-top: 50px;
+  margin: 20px 0;
+  font-size: 26px;
+  font-weight: 700;
 }
 .lokisloop-dashboard-container .lokisloop-hosted-game .input-group input {
-  padding: 0 !important;
+  padding: 5px !important;
   border-radius: var(--form--border-radius);
   color: var(--form--color-text);
   line-height: var(--global--line-height-body);
@@ -1280,7 +1272,6 @@ h5 {
   row-gap: 20px;
   width: 100%;
   justify-content: center;
-  /* padding: 10px; */
 }
 .lokisloop-dashboard-container .lokis-loop-host-choose-game {
   padding-left: 0;
@@ -1298,6 +1289,10 @@ h5 {
 .lokisloop-dashboard-container .lokisloop-hosted-game .lokis-loop-incorrect {
   margin-top: 15px;
   text-align: center;
+}
+.lokis-loop-alert {
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -1343,7 +1338,7 @@ h5 {
 }
 
 .lokis-login-form-container input {
-  width: 100%;
+  width: 95%;
   outline: none;
   border: 1px solid var(--lokis-hostbgbdr-color) !important;
   margin: 0 2px;
@@ -1360,6 +1355,7 @@ h5 {
   border: 1px solid var(--lokis-hostbgbdr-color);
   color: var(--lokis-color);
 }
+
 .lokis-login-form-container input[type="text"]:focus,
 .lokis-login-form-container input[type="password"]:focus,
 .lokis-login-form-container input[type="checkbox"]:focus {
@@ -1369,6 +1365,11 @@ h5 {
   margin-top: 5px;
   position: relative;
   margin-right: 10px;
+}
+input#lokis-rememberme {
+  appearance: checkbox;
+  display: inline-block;
+  width: 24px;
 }
 
 .lokis-loginPage {
@@ -1400,7 +1401,7 @@ h5 {
   position: relative;
 }
 
-.lokis-table-tooltip::after {
+.lokis-table-tooltip:hover::after {
   content: attr(data-tooltip);
   position: absolute;
   top: 120%;
@@ -1416,11 +1417,13 @@ h5 {
   transition: opacity 0.2s ease-in-out;
   z-index: 1;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  width: max-content;
 }
 
 .lokis-table-tooltip:hover::after {
   opacity: 1;
 }
+
 /* CSS for active games............................................ */
 
 @media screen and (max-width: 600px) {
@@ -1429,4 +1432,11 @@ h5 {
     display: block;
     margin-bottom: 0.625em;
   }
+}
+
+/*  css for qr image */
+
+.lokis-qr-code {
+  max-width: 40px;
+  max-height: 40px;
 }
