@@ -37,7 +37,6 @@ jQuery(document).ready(function ($) {
   });
 });
 
-
 //sending ajax post to wordpress to check answer from given data coming from games post page (single-games.php)
 jQuery(document).ready(function ($) {
   $("#lokis-offline-submit-btn").click(function (event) {
@@ -54,7 +53,6 @@ jQuery(document).ready(function ($) {
         action: "lokis_offline_check_answer",
         post_id: post_id,
         answer: answer,
-
       },
       success: function (response) {
         if (response.message == "correct") {
@@ -73,7 +71,6 @@ jQuery(document).ready(function ($) {
     });
   });
 });
-
 
 //Form validation to check input and email format from registration form shortcode (cpm-lokis-loop-custom-shortcodes.php)
 jQuery(document).ready(function ($) {
@@ -363,7 +360,8 @@ jQuery(document).ready(function ($) {
         characters.charAt(Math.floor(Math.random() * characters.length))
       );
     document.getElementById("loki-new-password").value = password.join("");
-    document.getElementById("loki-new-password-retype").value = document.getElementById("loki-new-password").value;
+    document.getElementById("loki-new-password-retype").value =
+      document.getElementById("loki-new-password").value;
   });
 });
 
@@ -391,10 +389,9 @@ jQuery(document).ready(function ($) {
   setMenuActive();
 });
 
-
-// JS to generate QR code	
+// JS to generate QR code
 function htmlEncode(value) {
-  return jQuery('<div/>').text(value).html();
+  return jQuery("<div/>").text(value).html();
 }
 
 jQuery(function ($) {
@@ -403,12 +400,15 @@ jQuery(function ($) {
     var qrCode = $(this).siblings(".lokis-qr-code");
     var generateButton = $(this);
 
-    var qrImageUrl = "https://chart.googleapis.com/chart?cht=qr&chl=" + htmlEncode(qrContent) + "&chs=500x500&chld=L|0";
+    var qrImageUrl =
+      "https://chart.googleapis.com/chart?cht=qr&chl=" +
+      htmlEncode(qrContent) +
+      "&chs=500x500&chld=L|0";
     qrCode.attr("src", qrImageUrl);
     qrCode.attr("data-qr-url", qrImageUrl); // Set the data-qr-url attribute with the QR code image URL
     qrCode.show(); // Show the QR code after generating it
-    generateButton.css('display', 'none');
-    $('[data-label="QR:"]').css('min-width', '131px');
+    generateButton.css("display", "none");
+    $('[data-label="QR:"]').css("min-width", "131px");
   });
 
   $(document).on("click", ".lokis-qr-code", function () {
@@ -425,23 +425,79 @@ jQuery(document).ready(function ($) {
     const iframe = document.getElementById("loki-game-iframe");
 
     if (iframe.requestFullscreen) {
-      iframe.requestFullscreen().then(() => { });
+      iframe.requestFullscreen().then(() => {});
     } else if (iframe.mozRequestFullScreen) {
       // Firefox
       iframe.mozRequestFullScreen();
     } else if (iframe.webkitRequestFullscreen) {
       // Chrome, Safari, Opera
-      iframe.webkitRequestFullscreen().then(() => { });
+      iframe.webkitRequestFullscreen().then(() => {});
     } else if (iframe.msRequestFullscreen) {
       // IE/Edge
-      iframe.msRequestFullscreen().then(() => { });
+      iframe.msRequestFullscreen().then(() => {});
     }
   });
 });
 
-
 // Check if the query parameter exists
-if (location.search.includes('offlinegame')) {
+if (location.search.includes("offlinegame")) {
   // Display the modal box
-  document.getElementById('lokisOfflineModal').style.display = 'block';
+  document.getElementById("lokisOfflineModal").style.display = "block";
 }
+
+// JavaScript code to show the popup when the page loads
+jQuery(document).ready(function ($) {
+  $("#loki-cookie-accept").click(function (event) {
+    // Hide the cookie consent popup
+    var lokisCookieConsent = document.getElementById("lokisCookieConsent");
+    if (lokisCookieConsent) {
+      lokisCookieConsent.style.display = "none";
+    }
+
+    $.ajax({
+      type: "POST",
+      url: gamesajax.ajaxurl,
+      data: {
+        action: "loki_cookie_maker",
+        consent:'accept'
+      },
+      success: function (response) {
+        if (response.status == "success") {
+          console.log('cookie successfully made');
+          document.cookie =
+            "lokis_game_stage_url=" +
+            window.location.href +
+            "; path=/; expires=" +
+            response.expiry_time +
+            ";";
+        } else {
+          console.log('error occurred');
+        }
+      },
+    });
+  });
+
+  $("#loki-cookie-reject").click(function (event) {
+    // Hide the cookie consent popup
+    var lokisCookieConsent = document.getElementById("lokisCookieConsent");
+    if (lokisCookieConsent) {
+      lokisCookieConsent.style.display = "none";
+    }
+
+    $.ajax({
+      type: "POST",
+      url: gamesajax.ajaxurl,
+      data: {
+        action: "loki_cookie_maker",
+        consent: "reject",
+      },
+      success: function (response) {
+        if (response.status == "reject") {
+          console.log("cookie rejected");
+        } else {
+          console.log("error occurred");
+        }
+      },
+    });
+  });
+});
