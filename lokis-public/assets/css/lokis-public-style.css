@@ -22,6 +22,7 @@
   --lokis-btnbg-color: #75592d;
   --lokis-btnbg-active-color: #5b4623;
   --login-loginbackgroud-color: #e8f0fe;
+  --lokis-paragraphh-bgcolor: #f9f9f9;
 }
 
 .edit-button {
@@ -133,7 +134,7 @@ span.page-numbers.current:hover {
 
 /* for lokis-iframe-content */
 .lokisloop-iframe-container {
-  background: #f9f9f9;
+  background: var(--lokis-paragraphh-bgcolor);
   position: relative;
   height: 80vh;
 }
@@ -151,7 +152,7 @@ span.page-numbers.current:hover {
 #loki-game-iframe {
   height: 100%;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--lokis-white-color);
 }
 
 /* for lokis post form */
@@ -557,7 +558,7 @@ li.lokis-active {
 /* CSS For user profile */
 
 .lokisloop-container {
-  background: #f9f9f9;
+  background: var(--lokis-paragraphh-bgcolor);
 
   padding: 20px;
 

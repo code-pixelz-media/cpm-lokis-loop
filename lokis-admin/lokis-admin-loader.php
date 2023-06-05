@@ -127,80 +127,36 @@ if (!function_exists('lokis_redirect_after_expiration')) {
     }
     add_action('wp_head', 'lokis_redirect_after_expiration', 10);
 }
+
 /*Stores session ID of game*/
-// if (!function_exists('lokis_store_session_id')) {
-//     function lokis_store_session_id()
-//     {
-//         if (is_user_logged_in() && is_single()) {
-//             global $wpdb;
+if (!function_exists('lokis_store_session_id')) {
+    function lokis_store_session_id()
+    {
+        if (is_single() && get_post_type() === 'games') {
+            global $wpdb;
 
-//             if (get_post_type() === 'games') {
-//                 $allowed_roles = array('player', 'host');
-//                 $user = wp_get_current_user();
-//                 if (in_array($user->roles[0], $allowed_roles)) {
+            $session_id = lokis_getSessionIDFromCookie(); // Retrieve session ID from the cookie
 
-//                     $lokis_query_url = $_SERVER['QUERY_STRING'];
-//                     $lokis_front_url = get_permalink(get_the_ID());
-//                     $lokis_single_page_url = $lokis_front_url . '?' . $lokis_query_url;
+            // Check if the session ID exists in the database
+            $existing_Sessionid_entry = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$wpdb->prefix}lokis_game_sessions WHERE session_id = %s",
+                    $session_id
+                )
+            );
 
-//                     $session_id = lokis_getSessionIDFromURL();
-//                     $player_id = get_current_user_id();
-//                     $post_id = get_the_ID();
-//                     // Insert the session ID into your custom table
-//                     $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
-
-//                     $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-
-//                     $existing_Sessionid_entry = $wpdb->get_var(
-//                         $wpdb->prepare(
-//                             "SELECT COUNT(*) FROM $lokis_game_sessions_table_name WHERE session_id = %s",
-//                             $session_id
-//                         )
-//                     );
-
-//                     $existing_entry = $wpdb->get_var(
-
-//                         $wpdb->prepare(
-//                             "SELECT COUNT(*) FROM $lokis_player_table_name WHERE player_id = %d AND session_id = %s",
-//                             $player_id,
-//                             $session_id
-//                         )
-//                     );
-
-//                     // if ($existing_Sessionid_entry == 0) {
-//                     //     // error message 
-//                     //     echo "<script>alert('Invalid session. Please contact the host.');</script>";
-//                     //     echo "<script>window.location.href = '" . site_url() . "';</script>";
-//                     // } else {
-
-//                     //     if ($existing_entry == 0) {
-
-//                     //         $wpdb->insert(
-//                     //             $lokis_player_table_name,
-//                     //             [
-//                     //                 'player_id' => $player_id,
-//                     //                 'session_id' => $session_id,
-//                     //                 'step' => $post_id,
-//                     //                 'game_url' => $lokis_single_page_url
-//                     //             ],
-//                     //             [
-//                     //                 '%d',
-//                     //                 '%s',
-//                     //                 '%d',
-//                     //                 '%s'
-//                     //             ]
-//                     //         );
-//                     //     } else {
-//                     //         $sql = "UPDATE $lokis_player_table_name SET step = '$post_id' , game_url = '$lokis_single_page_url'   WHERE player_id = '$player_id' AND session_id = '$session_id' ";
-//                     //         $wpdb->query($sql);
-//                     //     }
-//                     // }
-//                 }
-//             }
-//         }
-//     }
-//     add_action('wp_head', 'lokis_store_session_id', 20);
-// }
+            if ($existing_Sessionid_entry == 0) {
+                // Invalid session, handle accordingly
+                echo "<script>alert('Invalid session. Please contact the host.');</script>";
+                echo "<script>window.location.href = '" . site_url() . "';</script>";
+            } else {
+                // Store the site URL in the cookie
+                setcookie('lokis_site_url', get_permalink(get_the_ID()), time() + (86400 * 30), '/'); // Set the cookie for 30 days
+            }
+        }
+    }
+    add_action('wp_head', 'lokis_store_session_id', 20);
+}
 
 /*Adds metabox to change page visibility according to user*/
 if (!function_exists('lokis_add_page_metabox')) {
