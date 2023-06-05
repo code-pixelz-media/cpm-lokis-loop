@@ -135,7 +135,7 @@ if (!function_exists('lokis_store_session_id')) {
         if (is_single() && get_post_type() === 'games') {
             global $wpdb;
 
-            $session_id = lokis_getSessionIDFromCookie(); // Retrieve session ID from the cookie
+            $session_id = lokis_getSessionIDFromURL(); // Retrieve session ID from the cookie
 
             // Check if the session ID exists in the database
             $existing_Sessionid_entry = $wpdb->get_var(
@@ -150,8 +150,10 @@ if (!function_exists('lokis_store_session_id')) {
                 echo "<script>alert('Invalid session. Please contact the host.');</script>";
                 echo "<script>window.location.href = '" . site_url() . "';</script>";
             } else {
-                // Store the site URL in the cookie
-                setcookie('lokis_site_url', get_permalink(get_the_ID()), time() + (86400 * 30), '/'); // Set the cookie for 30 days
+                // Store the site URL in the cookie if there is a cookie called 'loki_user_id'
+                if (isset($_COOKIE['loki_user_id'])) {
+                    setcookie('lokis_game_stage_url', get_permalink(get_the_ID()), time() + (86400 * 30), '/'); // Set the cookie for 30 days
+                }
             }
         }
     }
