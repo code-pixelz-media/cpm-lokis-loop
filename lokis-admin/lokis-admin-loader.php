@@ -202,17 +202,6 @@ if (!function_exists('lokis_store_session_id')) {
     add_action('wp_head', 'lokis_store_session_id', 20);
 }
 
-// // Add the "read private pages" capability to the host role
-
-// if (!function_exists('lokis_add_host_role')) {
-//     function lokis_add_host_role()
-//     {
-//         $host = get_role('host');
-//         $host->add_cap('read_private_pages');
-//     }
-//     add_action('init', 'lokis_add_host_role');
-// }
-
 /*Adds metabox to change page visibility according to user*/
 if (!function_exists('lokis_add_page_metabox')) {
     // Add the metabox to the "Add New Page" screen

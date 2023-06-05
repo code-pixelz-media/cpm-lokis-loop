@@ -34,6 +34,9 @@ if (is_user_logged_in()) {
                     $started_at = $row->started_at;
                     $url = $row->gamesession_url;
                     $title = get_the_title($game_id);
+
+                    $lokis_offline_game_url = get_permalink($game_id) . '?offlinegame';
+
                     $expires_at = new DateTime($expires_in);
                     if ($expires_at > new DateTime()) {
                         // Store current game data in the array
@@ -44,7 +47,8 @@ if (is_user_logged_in()) {
                             'game_id' => $game_id,
                             'session_id' => $session_id,
                             'started_at' => $started_at,
-                            'expires_in' => $expires_in
+                            'expires_in' => $expires_in,
+                            'lokis_offline_game_url' => $lokis_offline_game_url
                         ];
                     }
                 }
@@ -110,7 +114,7 @@ if (is_user_logged_in()) {
                                     echo '</form></div></td>';
                                     echo '<td data-label="QR:">';
                                     echo '<div class="lokis-qr-section-container">';
-                                    echo '<input type="hidden" class="form-control lokis_qr_content" value="' . $game['url'] . '">';
+                                    echo '<input type="hidden" class="form-control lokis_qr_content" value="' . $game['lokis_offline_game_url'] . '">';
                                     echo '<img src="" class="lokis-qr-code lokis-table-tooltip" data-tooltip="Open Image in new tab"><button type="button" class="button lokis-table-button  lokis-generate-qr lokis-table-tooltip" data-tooltip="Generate QR"><i class="fa-solid fa-circle-plus"></i></button></div></td>';
                                     echo '</tr>';
                                 }
