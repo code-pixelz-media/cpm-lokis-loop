@@ -101,6 +101,54 @@ if (!function_exists('lokis_check_answer')) {
     add_action('wp_ajax_lokis_check_answer', 'lokis_check_answer');
 }
 
+/*Adding function to check answer of offline single page  given by ajax post with database correct answer*/
+if (!function_exists('lokis_offline_check_answer')) {
+    function lokis_offline_check_answer()
+    {
+        /* Pulling data from Ajax and post meta table */
+        $post_id = $_POST['post_id'];
+        $answer = strtolower($_POST['answer']);
+        $session_id = $_POST['session_id'];
+        $player_id = $_POST['current_user_id'];
+        $correct_answer = strtolower(get_post_meta($post_id, 'lokis_loop_correct_answer', true));
+        $redirect_uri = get_post_meta($post_id, 'lokis_loop_redirect_uri', true);
+        $thankyou_page_id = (get_option('lokis_setting'))['thankyou'];
+        $lokis_thankyou_page = get_permalink($thankyou_page_id);
+
+        if ($answer == $correct_answer) {
+            if ($redirect_uri == $lokis_thankyou_page) {
+                global $wpdb;
+                $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
+                $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
+                $wpdb->query($sql);
+
+                $response = array(
+                    'status' => 'success',
+                    'redirect' => $redirect_uri,
+                    'message' => 'correct'
+                );
+            } else {
+                $response = array(
+                    'status' => 'success',
+                    // 'redirect' => $redirect_uri . '/?offlinegame',
+                    'redirect' => $redirect_uri,
+                    'message' => 'correct'
+                );
+            }
+        } else {
+            $response = array(
+                'status' => 'error',
+                'message' => 'Incorrect answer'
+            );
+        }
+
+        wp_send_json($response);
+    }
+    add_action('wp_ajax_lokis_offline_check_answer', 'lokis_offline_check_answer');
+    add_action('wp_ajax_nopriv_lokis_offline_check_answer', 'lokis_offline_check_answer');
+}
+
+
 /*Function to register user*/
 if (!function_exists('loki_user_registration')) {
     function loki_user_registration()
@@ -115,7 +163,7 @@ if (!function_exists('loki_user_registration')) {
         $zipcode = $_POST['zipcode'];
 
         /*Creating username by removing spaces from name*/
-        $username = str_replace( " ", "",$name);
+        $username = str_replace(" ", "", $name);
 
         if (wp_verify_nonce($_POST['nonce'], -1)) {
             /* Check if the username and email address are unique */
