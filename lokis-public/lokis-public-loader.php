@@ -665,22 +665,45 @@ if (!function_exists('lokis_pull_private_template')) {
 }
 
 //Lightbox for cookies consent
-function lokis_cookies_content_popup()
-{
-    if (!isset($_COOKIE['loki_user_id']) && !isset($_COOKIE['consent'])) {
-        ?>
-    <div id="lokisCookieConsent" class="lokis-cookie-consent">
-        <div class="lokis-cookie-heading">
-            <i class="fa-solid fa-cookie-bite"></i>Cookies Consent
-        </div>
-        <div class="lokis-cookie-message">
-            This website uses cookies to ensure you get the best experience on our website.
-        </div>
-        <div class="lokis-cookie-buttons">
-            <button class="lokis-cookie-btn lokis-cookie-accept" id='loki-cookie-accept'>Accept</button>
-            <button class="lokis-cookie-btn lokis-cookie-reject" id='loki-cookie-reject'>Reject</button>
-        </div>
-    </div>
-<?
+if (!function_exists('lokis_cookies_content_popup')) {
+    function lokis_cookies_content_popup()
+    {
+        if (!isset($_COOKIE['loki_user_id']) && !isset($_COOKIE['consent'])) {
+            ?>
+            <div id="lokisCookieConsent" class="lokis-cookie-consent">
+                <div class="lokis-cookie-heading">
+                    <i class="fa-solid fa-cookie-bite"></i>Cookies Consent
+                </div>
+                <div class="lokis-cookie-message">
+                    This website uses cookies to ensure you get the best experience on our website.
+                </div>
+                <div class="lokis-cookie-buttons">
+                    <button class="lokis-cookie-btn lokis-cookie-accept" id='loki-cookie-accept'>Accept</button>
+                    <button class="lokis-cookie-btn lokis-cookie-reject" id='loki-cookie-reject'>Reject</button>
+                </div>
+            </div>
+        <?
+        }
     }
+}
+
+//Redirect to game according to game url in cookies
+if (!function_exists('lokis_cookie_redirect')) {
+
+
+    function lokis_cookie_redirect()
+    {
+        $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
+            if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL != $_COOKIE['lokis_game_stage_url']) {
+                ?>
+                <script>
+                    window.location.href = '<?php echo $_COOKIE['lokis_game_stage_url']; ?>';
+                </script>
+                <?php
+                exit;
+            }
+        }
+    }
+    add_action('wp', 'lokis_cookie_redirect', 50);
 }

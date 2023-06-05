@@ -24,6 +24,12 @@ jQuery(document).ready(function ($) {
           $("#lokis-feedback").html(
             '<div class="lokis-loop-correct">Answer is correct</div>'
           );
+          document.cookie =
+            "lokis_passed=" +
+            'passed' +
+            "; path=/; expires=" +
+            response.expiry_time +
+            ";";
           setTimeout(function () {
             window.location.href = response.redirect;
           }, 1000);
@@ -467,6 +473,12 @@ jQuery(document).ready(function ($) {
           document.cookie =
             "lokis_game_stage_url=" +
             window.location.href +
+            "; path=/; expires=" +
+            response.expiry_time +
+            ";";
+          document.cookie =
+            "lokis_passed=" +
+            '' +
             "; path=/; expires=" +
             response.expiry_time +
             ";";

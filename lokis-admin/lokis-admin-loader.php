@@ -165,10 +165,11 @@ if (!function_exists('loki_url_cookie')) {
                 $game_permalink = get_permalink(get_the_ID());
                 // Clear the output buffer and set the cookies
                 setcookie('lokis_game_stage_url', $game_permalink . '?game=' . lokis_getSessionIDFromURL(), time() + (86400 * 30), '/');
+                setcookie('lokis_passed', '', time() + (86400 * 30), '/');
             }
         }
     }
-    add_action('wp', 'loki_url_cookie');
+    add_action('wp', 'loki_url_cookie',100);
 }
 
 /*Adds metabox to change page visibility according to user*/
