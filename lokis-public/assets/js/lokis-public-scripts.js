@@ -37,6 +37,44 @@ jQuery(document).ready(function ($) {
   });
 });
 
+
+//sending ajax post to wordpress to check answer from given data coming from games post page (single-games.php)
+jQuery(document).ready(function ($) {
+  $("#lokis-offline-submit-btn").click(function (event) {
+    event.preventDefault();
+
+    //Pulls values from the form
+    var answer = $("#lokis-answer").val();
+    var post_id = $("#loki-post-id").val();
+
+    $.ajax({
+      type: "POST",
+      url: gamesajax.ajaxurl,
+      data: {
+        action: "lokis_offline_check_answer",
+        post_id: post_id,
+        answer: answer,
+
+      },
+      success: function (response) {
+        if (response.message == "correct") {
+          $("#lokis-feedback").html(
+            '<div class="lokis-loop-correct">Answer is correct</div>'
+          );
+          setTimeout(function () {
+            window.location.href = response.redirect;
+          }, 1000);
+        } else {
+          $("#lokis-feedback").html(
+            '<div class="lokis-loop-incorrect">Incorrect answer</div>'
+          );
+        }
+      },
+    });
+  });
+});
+
+
 //Form validation to check input and email format from registration form shortcode (cpm-lokis-loop-custom-shortcodes.php)
 jQuery(document).ready(function ($) {
   $("#lokis-registration-button").click(function (event) {
@@ -316,16 +354,16 @@ jQuery(document).ready(function ($) {
 // generate password button
 jQuery(document).ready(function ($) {
   $("#generate-password").click(function (event) {
-      const passwordLength = 12;
-      const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}\\|;:'\",.<>/?";
-      const password = Array(passwordLength)
-        .fill(0)
-        .map((e, i) =>
-          characters.charAt(Math.floor(Math.random() * characters.length))
-        );
-      document.getElementById("loki-new-password").value = password.join("");
-      document.getElementById("loki-new-password-retype").value = document.getElementById("loki-new-password").value;
+    const passwordLength = 12;
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[{]}\\|;:'\",.<>/?";
+    const password = Array(passwordLength)
+      .fill(0)
+      .map((e, i) =>
+        characters.charAt(Math.floor(Math.random() * characters.length))
+      );
+    document.getElementById("loki-new-password").value = password.join("");
+    document.getElementById("loki-new-password-retype").value = document.getElementById("loki-new-password").value;
   });
 });
 
@@ -370,7 +408,7 @@ jQuery(function ($) {
     qrCode.attr("data-qr-url", qrImageUrl); // Set the data-qr-url attribute with the QR code image URL
     qrCode.show(); // Show the QR code after generating it
     generateButton.css('display', 'none');
-    $('[data-label="QR:"]').css('min-width','131px');
+    $('[data-label="QR:"]').css('min-width', '131px');
   });
 
   $(document).on("click", ".lokis-qr-code", function () {
@@ -384,19 +422,26 @@ jQuery(function ($) {
 //Function to make the iframe full screen
 jQuery(document).ready(function ($) {
   $("#lokis-fullscreen").click(function (event) {
-    const iframe = document.getElementById("game-iframe");
+    const iframe = document.getElementById("loki-game-iframe");
 
     if (iframe.requestFullscreen) {
-      iframe.requestFullscreen().then(() => {});
+      iframe.requestFullscreen().then(() => { });
     } else if (iframe.mozRequestFullScreen) {
       // Firefox
       iframe.mozRequestFullScreen();
     } else if (iframe.webkitRequestFullscreen) {
       // Chrome, Safari, Opera
-      iframe.webkitRequestFullscreen().then(() => {});
+      iframe.webkitRequestFullscreen().then(() => { });
     } else if (iframe.msRequestFullscreen) {
       // IE/Edge
-      iframe.msRequestFullscreen().then(() => {});
+      iframe.msRequestFullscreen().then(() => { });
     }
   });
 });
+
+
+// Check if the query parameter exists
+if (location.search.includes('offlinegame')) {
+  // Display the modal box
+  document.getElementById('lokisOfflineModal').style.display = 'block';
+}
