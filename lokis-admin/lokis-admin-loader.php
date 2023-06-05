@@ -149,15 +149,26 @@ if (!function_exists('lokis_store_session_id')) {
                 // Invalid session, handle accordingly
                 echo "<script>alert('Invalid session. Please contact the host.');</script>";
                 echo "<script>window.location.href = '" . site_url() . "';</script>";
-            } else {
-                // Store the site URL in the cookie if there is a cookie called 'loki_user_id'
-                if (isset($_COOKIE['loki_user_id'])) {
-                    setcookie('lokis_game_stage_url', get_permalink(get_the_ID()), time() + (86400 * 30), '/'); // Set the cookie for 30 days
-                }
             }
         }
     }
     add_action('wp_head', 'lokis_store_session_id', 20);
+}
+
+/* Add game stage url in cookies */
+if (!function_exists('loki_url_cookie')) {
+    function loki_url_cookie()
+    {
+        if (is_single() && get_post_type() === 'games') {
+            // Store the site URL in the cookie if there is a cookie called 'loki_user_id'
+            if (isset($_COOKIE['loki_user_id'])) {
+                $game_permalink = get_permalink(get_the_ID());
+                // Clear the output buffer and set the cookies
+                setcookie('lokis_game_stage_url', $game_permalink . '?game=' . lokis_getSessionIDFromURL(), time() + (86400 * 30), '/');
+            }
+        }
+    }
+    add_action('wp', 'loki_url_cookie');
 }
 
 /*Adds metabox to change page visibility according to user*/
@@ -200,4 +211,34 @@ if (!function_exists('lokis_save_page_checkbox')) {
         update_post_meta($post_id, "lokis_private_page_checkbox", $value);
     }
     add_action("save_post_page", "lokis_save_page_checkbox");
+}
+
+/* Create or reject cookie according to consent */
+if (!function_exists('loki_cookie_maker')) {
+    function loki_cookie_maker()
+    {
+        $consent = $_POST['consent'];
+
+        if ($consent == 'accept') {
+            // User has given consent, generate a new value for the cookie
+            $cookie_value = 'user' . uniqid();
+
+            // Set the cookie with a duration of 30 days
+            setcookie('loki_user_id', $cookie_value, time() + (86400 * 30), '/');
+
+            $response = array(
+                'status' => 'success',
+                'expiry_time' => time() + (86400 * 30)
+            );
+        } else {
+            setcookie('consent', 'rejected', time() + (86400 * 30), '/');
+            $response = array(
+                'status' => 'reject',
+            );
+        }
+
+        wp_send_json($response);
+    }
+    add_action('wp_ajax_loki_cookie_maker', 'loki_cookie_maker');
+    add_action('wp_ajax_nopriv_loki_cookie_maker', 'loki_cookie_maker');
 }

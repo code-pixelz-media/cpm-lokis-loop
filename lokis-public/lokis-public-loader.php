@@ -99,6 +99,7 @@ if (!function_exists('lokis_check_answer')) {
         wp_send_json($response);
     }
     add_action('wp_ajax_lokis_check_answer', 'lokis_check_answer');
+    add_action('wp_ajax_nopriv_lokis_check_answer', 'lokis_check_answer');
 }
 
 /*Adding function to check answer of offline single page  given by ajax post with database correct answer*/
@@ -663,11 +664,11 @@ if (!function_exists('lokis_pull_private_template')) {
     add_filter('template_include', 'lokis_pull_private_template');
 }
 
-
-
+//Lightbox for cookies consent
 function lokis_cookies_content_popup()
 {
-    ?>
+    if (!isset($_COOKIE['loki_user_id']) && !isset($_COOKIE['consent'])) {
+        ?>
     <div id="lokisCookieConsent" class="lokis-cookie-consent">
         <div class="lokis-cookie-heading">
             <i class="fa-solid fa-cookie-bite"></i>Cookies Consent
@@ -676,9 +677,10 @@ function lokis_cookies_content_popup()
             This website uses cookies to ensure you get the best experience on our website.
         </div>
         <div class="lokis-cookie-buttons">
-            <button class="lokis-cookie-btn lokis-cookie-accept" onclick="LokisAcceptCookies()">Accept</button>
-            <button class="lokis-cookie-btn lokis-cookie-reject" onclick="LokisRejectCookies()">Reject</button>
+            <button class="lokis-cookie-btn lokis-cookie-accept" id='loki-cookie-accept'>Accept</button>
+            <button class="lokis-cookie-btn lokis-cookie-reject" id='loki-cookie-reject'>Reject</button>
         </div>
     </div>
 <?
+    }
 }
