@@ -149,8 +149,8 @@ span.page-numbers.current:hover {
 }
 
 #loki-game-iframe {
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
   background-color: #ffffff;
 }
 
@@ -1443,3 +1443,31 @@ input#lokis-rememberme {
   max-height: 40px;
 }
 /* end of css for qr image */
+
+/*  css for offline games modal box */
+
+/* Styles for the modal box */
+.lokis-offline-modal-answer {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  margin-top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.lokis-offline-modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
