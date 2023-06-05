@@ -1446,7 +1446,7 @@ input#lokis-rememberme {
 
 /*  css for offline games modal box */
 
-/* Styles for the modal box */
+/* Styles for the offline modal box */
 .lokis-offline-modal-answer {
   display: none;
   position: fixed;
@@ -1470,4 +1470,17 @@ input#lokis-rememberme {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+   /* CSS styles for cookie consent popup */
+   .lokis-cookie-consent {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 30%;
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
 }

@@ -3,13 +3,18 @@ wp_head();
 
 // Check if the query parameter exists
 if (isset($_GET['offlinegame'])) {
+    $post_id = get_the_ID();
     ?>
     <div class="lokis-offline-modal-answer" id="lokisOfflineModal">
         <div class="lokis-offline-modal-content">
             <div class="lokis-post-form">
-
                 <form action="" method="post">
-                    <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
+                    <input type="hidden" value="<?php echo $post_id; ?>" id="loki-post-id">
+                    <div class="lokis-offline-modal-title">
+                        <h3>
+                            <?php echo get_the_title($post_id); ?>
+                        </h3>
+                    </div>
                     <div class="lokisloop-answer">
                         <label for="lokis-answer">Answer:</label>
                         <input type="text" id="lokis-answer" name="lokis-answer">
@@ -19,6 +24,7 @@ if (isset($_GET['offlinegame'])) {
                 </form>
 
                 <div id="lokis-feedback"></div>
+
             </div>
         </div>
     </div>
@@ -67,6 +73,8 @@ if (isset($_GET['offlinegame'])) {
                     </form>
                     <button id='lokis-fullscreen'>Go Fullscreen</button>
                     <div id='lokis-feedback'></div>
+                    <!-- Cookie Consent Popup -->
+                    <?php lokis_cookies_content_popup() ?>
                 </div>
             </div>
             <?php
@@ -76,4 +84,39 @@ if (isset($_GET['offlinegame'])) {
         cpm_lokis_login_form();
     }
 }
+?>
+
+<script>
+    // JavaScript code to show the popup when the page loads
+    window.addEventListener('DOMContentLoaded', function () {
+        var cookiePopup = document.getElementById('lokisCookieConsent');
+        cookiePopup.style.display = 'block';
+    });
+
+    function LokisAcceptCookies() {
+        // Store the user's cookie consent preference
+        // You can use JavaScript or AJAX to send the preference to the server for storage.
+        // Example: localStorage.setItem('lokisCookieConsent', 'accepted');
+
+        // Hide the cookie consent popup
+        var lokisCookieConsent = document.getElementById('lokisCookieConsent');
+        if (lokisCookieConsent) {
+            lokisCookieConsent.style.display = 'none';
+        }
+    }
+
+    function LokisRejectCookies() {
+        // Store the user's cookie consent preference
+        // You can use JavaScript or AJAX to send the preference to the server for storage.
+        // Example: localStorage.setItem('lokisCookieConsent', 'rejected');
+
+        // Hide the cookie consent popup
+        var lokisCookieConsent = document.getElementById('lokisCookieConsent');
+        if (lokisCookieConsent) {
+            lokisCookieConsent.style.display = 'none';
+        }
+    }
+</script>
+
+<?php
 wp_footer();
