@@ -1000,6 +1000,7 @@ button.btn.btn-primary.mb-3 {
   background-color: var(--lokis-primarybtn-color) !important;
   border-color: var(--lokis-primarybtn-color) !important;
 }
+
 .lokis-error-credentials {
   color: var(--lokisloop-incorrect-color);
   background-color: var(--lokisloop-incorrect-bg-color);
@@ -1473,15 +1474,14 @@ input#lokis-rememberme {
   align-items: center;
 }
 
-
-   /* CSS styles for cookie consent popup */
-   .lokis-cookie-consent {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 30%;
-    background-color: #f2f2f2;
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 10px;
+/* CSS styles for cookie consent popup */
+.lokis-cookie-consent {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
 }
