@@ -1192,7 +1192,13 @@ h5 {
     input {
     padding: 0;
   }
-
+  .lokis-gamehost-profileform-container
+    .lokisloop-profile-form
+    .lokis-radio
+    input[type="radio"]:after {
+    left: 4px;
+    top: 4px;
+  }
   .lokisloop-container
     .lokisloop-profile
     .lokisloop-profile-form
