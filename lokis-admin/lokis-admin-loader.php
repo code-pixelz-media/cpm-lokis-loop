@@ -140,11 +140,12 @@ if (!function_exists('lokis_store_session_id')) {
                     $session_id
                 )
             );
-
-            if ($existing_Sessionid_entry == 0) {
-                // Invalid session, handle accordingly
-                echo "<script>alert('Invalid session. Please contact the host.');</script>";
-                echo "<script>window.location.href = '" . site_url() . "';</script>";
+            if (isset($_GET['game'])) {
+                if ($existing_Sessionid_entry == 0) {
+                    // Invalid session, handle accordingly
+                    echo "<script>alert('Invalid session. Please contact the host.ffff');</script>";
+                    echo "<script>window.location.href = '" . site_url() . "';</script>";
+                }
             }
         }
     }
@@ -279,14 +280,27 @@ if (!function_exists('lokis_cookie_redirect')) {
     {
         if (is_single() && get_post_type() === 'games') {
             $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
             if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
-                if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL != $_COOKIE['lokis_game_stage_url']) {
-                    ?>
-                    <script>
-                        window.location.href = '<?php echo $_COOKIE['lokis_game_stage_url']; ?>';
-                    </script>
-                    <?php
-                    exit;
+                if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL !== $_COOKIE['lokis_game_stage_url']) {
+                    $serializedURLs = $_COOKIE['lokis_game_stage_url'];
+
+                    // Unserialize the array of URLs
+                    $urls = $serializedURLs ? unserialize($serializedURLs) : array();
+
+                    $session_id = lokis_getSessionIDFromURL();
+
+                    // Check if the session ID exists in the array
+                    if (isset($urls[$session_id])) {
+                        // Redirect to the URL of the matching key
+                        $redirectURL = $urls[$session_id];
+                        ?>
+                        <script>
+                            window.location.href = '<?php echo $redirectURL; ?>';
+                        </script>
+                        <?php
+                        exit;
+                    }
                 }
             }
         }

@@ -454,30 +454,39 @@ jQuery(document).ready(function ($) {
       lokisCookieConsent.style.display = "none";
     }
 
+    var session_id = window.location.href.split("?game=")[1];
+
+    // Assign the session ID as the key and current URL as the value in the object
+    var urlObj = {};
+    urlObj[session_id] = window.location.href;
+
+    //Serialize the url
+    var serializedURLs = JSON.stringify(urlObj);
+
     $.ajax({
       type: "POST",
       url: gamesajax.ajaxurl,
       data: {
         action: "loki_cookie_maker",
-        consent: 'accept'
+        consent: "accept",
       },
       success: function (response) {
         if (response.status == "success") {
-          console.log('cookie successfully made');
+          console.log("cookie successfully made " + session_id + " test user");
           document.cookie =
             "lokis_game_stage_url=" +
-            window.location.href +
+            serializedURLs +
             "; path=/; expires=" +
             response.expiry_time +
             ";";
           document.cookie =
             "lokis_passed=" +
-            '' +
+            "" +
             "; path=/; expires=" +
             response.expiry_time +
             ";";
         } else {
-          console.log('error occurred');
+          console.log("error occurred");
         }
       },
     });
