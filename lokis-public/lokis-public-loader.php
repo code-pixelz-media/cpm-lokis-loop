@@ -200,6 +200,24 @@ if (!function_exists('loki_user_registration')) {
                 wp_send_json($response);
             }
 
+            if ($country == "United States") {
+                if (!preg_match('/^\d{5}(-\d{4})?$/', $zipcode)) {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'The zipcode is not a valid US zipcode.'
+                    ];
+                    wp_send_json($response);
+                }
+            } elseif ($country == 'Canada') {
+                if (!preg_match('/^[A-Z]\d[A-Z] ?\d[A-Z]\d$/', $zipcode)) {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'The zipcode is not a valid Canada zipcode.'
+                    ];
+                    wp_send_json($response);
+                }
+            }
+
             /*Creating new user*/
             $user_id = register_new_user($username, $email);
 
@@ -287,21 +305,6 @@ if (!function_exists('lokis_shortcode_display')) {
         }
     }
     add_action('the_content', 'lokis_shortcode_display');
-}
-
-/*updates user meta 'last_visited'*/
-if (!function_exists('lokis_last_visited')) {
-    function lokis_last_visited()
-    {
-        $post_id = get_the_ID();
-        $user_id = get_current_user_id();
-        $last_visited = get_user_meta($user_id, 'lokis_last_visited', true);
-
-        if ($post_id && get_post_type($post_id) === 'games') {
-            update_user_meta($user_id, 'lokis_last_visited', $post_id, $last_visited);
-        }
-    }
-    add_action('wp_head', 'lokis_last_visited');
 }
 
 /* Creates endpoints, endpoint name and icon arrays */

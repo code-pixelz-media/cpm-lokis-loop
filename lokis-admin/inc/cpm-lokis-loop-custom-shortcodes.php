@@ -86,8 +86,11 @@ function lokis_loop_register_form()
                 <div class="lokis-formquestion-item">
                     <label for="loki-country" class="lokisloop-label"><span class="lokis-formquestion-order">5. </span>Country
                         <span class="lokis-req-field">*</span></label>
-                    <input aria label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-country'
-                        placeholder="Enter your country's name">
+                    <select id="loki-country" class="lokis-input form-control">
+                        <option value=''>Select a Value</option>
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                    </select>
                 </div>
                 <div class="lokis-formquestion-item">
                     <label for="loki-zipcode" class="lokisloop-label">
