@@ -537,7 +537,7 @@ li.lokis-active {
   border-color: var(--lokis-border-color);
   /* text-align: center; */
 
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
 
   border: 1px solid;
 }
@@ -1267,10 +1267,12 @@ h5 {
   color: var(--form--color-text);
   line-height: var(--global--line-height-body);
   max-width: 100%;
-  border: 1px solid #ced4da;
+  border: 1px solid var(--lokis-hostbgbdr-color);
   width: 60%;
 }
-
+input#lokisLoop_expiration:focus {
+  outline: none;
+}
 .lokisloop-dashboard-container .lokisloop-hosted-game form {
   display: flex;
   column-gap: 20px;

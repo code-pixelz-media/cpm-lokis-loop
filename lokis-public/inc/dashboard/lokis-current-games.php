@@ -13,6 +13,7 @@ if (is_user_logged_in()) {
 
         <div class="lokisloop-hosted-game">
             <?php
+
             global $wpdb;
             $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
             $host_id = get_current_user_id();
@@ -79,6 +80,7 @@ if (is_user_logged_in()) {
                         <tbody>
                             <?php
                             if (!empty($current_games)) {
+
                                 //Number of game data per post
                                 $games_per_page = 2;
                                 //Calculate starting index for specific page
