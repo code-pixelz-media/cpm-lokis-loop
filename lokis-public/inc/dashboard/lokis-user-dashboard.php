@@ -15,7 +15,6 @@ function lokis_loop_user_dashboard()
                 <div class="lokis-logo">
                     <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
                 </div>
-
                 <?php lokis_account_menu(); ?>
             </aside>
             <!-- for user profile -->
@@ -58,7 +57,6 @@ function lokis_loop_user_dashboard()
 
                                             <?php
                                             $preselected_value = get_user_meta($user_id, 'loki_organization_type', true);
-
                                             echo '<div class="lokis-form-item lokis-radio">
                                                     <label for="organizational_name" class="form_control"> What best describes your organization: </label>
                                                     <div class="lokisloop-selective-box">
@@ -137,13 +135,8 @@ function lokis_loop_user_dashboard()
 
         <script>
             window.location.href = '<?php echo wp_login_url(); ?>';
-
         </script>
-
         <?php
-
     }
-
 }
-
 add_shortcode('lokis_loop_user_dashboard', 'lokis_loop_user_dashboard');

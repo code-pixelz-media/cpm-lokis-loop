@@ -119,7 +119,6 @@ if (is_user_logged_in()) {
 
     <script>
         window.location.href = '<?php echo wp_login_url(); ?>';
-
     </script>
 
     <?php
