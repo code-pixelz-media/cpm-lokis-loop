@@ -152,48 +152,6 @@ if (!function_exists('lokis_store_session_id')) {
     add_action('wp_head', 'lokis_store_session_id', 20);
 }
 
-/*Adds metabox to change page visibility according to user*/
-if (!function_exists('lokis_add_page_metabox')) {
-    // Add the metabox to the "Add New Page" screen
-    function lokis_add_page_metabox()
-    {
-        add_meta_box("custom_checkbox_metabox", "Page Visibility", "lokis_render_checkbox_metabox", "page", "side", "core");
-    }
-    add_action("add_meta_boxes_page", "lokis_add_page_metabox");
-}
-
-/*Adds metabox to change page visibility according to the user*/
-if (!function_exists('lokis_render_checkbox_metabox')) {
-    // Render the metabox HTML
-    function lokis_render_checkbox_metabox($post)
-    {
-        // Retrieve the current value of the meta field
-        $checked = get_post_meta($post->ID, "lokis_private_page_checkbox", true);
-
-        // Output the checkbox
-        echo '<label>';
-        echo '<input type="checkbox" name="lokis_private_page_checkbox" value="1" ' . checked($checked, 1, false) . ' />';
-        echo 'Only to Admin and Host';
-        echo '</label>';
-    }
-}
-
-/*Function to save the data from the metabox*/
-if (!function_exists('lokis_save_page_checkbox')) {
-    // Save the checkbox value when the page is saved
-    function lokis_save_page_checkbox($post_id)
-    {
-        // Update the meta field with the new value
-        if (isset($_POST['lokis_private_page_checkbox'])) {
-            $value = 1;
-        } else {
-            $value = 0;
-        }
-        update_post_meta($post_id, "lokis_private_page_checkbox", $value);
-    }
-    add_action("save_post_page", "lokis_save_page_checkbox");
-}
-
 /* Create or reject cookie according to consent */
 if (!function_exists('loki_cookie_maker')) {
     function loki_cookie_maker()
