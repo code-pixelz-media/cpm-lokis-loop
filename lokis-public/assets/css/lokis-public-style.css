@@ -1360,7 +1360,9 @@ input#lokisLoop_expiration:focus {
   border: 1px solid var(--lokis-hostbgbdr-color);
   color: var(--lokis-color);
 }
-
+.login-submit input#lokis-submit:focus {
+  outline: none;
+}
 .lokis-login-form-container input[type="text"]:focus,
 .lokis-login-form-container input[type="password"]:focus,
 .lokis-login-form-container input[type="checkbox"]:focus {
@@ -1376,7 +1378,9 @@ input#lokis-rememberme {
   display: inline-block;
   width: 24px;
 }
-
+.login-remember input[type="checkbox"]:after {
+  border: none;
+}
 .lokis-loginPage {
   display: flex;
   justify-content: space-between;
