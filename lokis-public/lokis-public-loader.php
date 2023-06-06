@@ -689,19 +689,19 @@ if (!function_exists('lokis_cookies_content_popup')) {
 
 //Redirect to game according to game url in cookies
 if (!function_exists('lokis_cookie_redirect')) {
-
-
     function lokis_cookie_redirect()
     {
-        $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
-            if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL != $_COOKIE['lokis_game_stage_url']) {
-                ?>
-                <script>
-                    window.location.href = '<?php echo $_COOKIE['lokis_game_stage_url']; ?>';
-                </script>
-                <?php
-                exit;
+        if (is_single() && get_post_type() === 'games') {
+            $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
+                if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL != $_COOKIE['lokis_game_stage_url']) {
+                    ?>
+                    <script>
+                        window.location.href = '<?php echo $_COOKIE['lokis_game_stage_url']; ?>';
+                    </script>
+                    <?php
+                    exit;
+                }
             }
         }
     }
