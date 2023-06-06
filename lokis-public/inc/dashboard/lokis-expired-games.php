@@ -122,36 +122,34 @@ if (is_user_logged_in()) {
                                 echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                             }
 
-                            // The code snippet generates customized pagination links for expired games in WordPress.
-                            $pagination_args = array(
-                                'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
-                                'format' => '',
-                                'prev_text' => '&laquo;',
-                                'next_text' => '&raquo;',
-                                'total' => $total_expired_pages,
-                                'current' => $expired_paged,
-                                'mid_size' => 2,
-                            );
-                            echo '<div class="lokis-loop-pagination">';
-                            echo paginate_links($pagination_args);
-                            echo '</div>';
+
                         } else {
                             echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                         }
-                        echo '</tbody></table></div>';
+
+                        echo '</tbody></table>';
+                        // The code snippet generates customized pagination links for expired games in WordPress.
+                        $pagination_args = array(
+                            'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
+                            'format' => '',
+                            'prev_text' => '&laquo;',
+                            'next_text' => '&raquo;',
+                            'total' => $total_expired_pages,
+                            'current' => $expired_paged,
+                            'mid_size' => 2,
+                        );
+                        echo '<div class="lokis-loop-pagination">';
+                        echo paginate_links($pagination_args);
+                        echo '</div>';
+                        echo '</div>';
                         ?>
             </div>
         </div>
         <?php get_footer();
 } else {
     ?>
-
         <script>
             window.location.href = '<?php echo wp_login_url(); ?>';
-
         </script>
-
         <?php
-
 }
-?>

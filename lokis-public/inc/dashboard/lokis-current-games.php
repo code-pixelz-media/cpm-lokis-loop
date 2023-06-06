@@ -111,7 +111,6 @@ if (is_user_logged_in()) {
                                     echo '<button type="submit" class="button end-session lokis-table-tooltip" data-tooltip="End Session"></button></form>';
                                     echo '<form method="POST" action="">';
                                     echo '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
-                                    echo '<input type="hidden" name="lokis_session_id" value="' . $game['session_id'] . '">';
                                     echo '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
                                     echo '</form></div></td>';
                                     echo '<td data-label="QR:">';

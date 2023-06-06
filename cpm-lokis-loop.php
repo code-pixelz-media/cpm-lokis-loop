@@ -38,7 +38,6 @@ if (!function_exists('lokis_create_tables')) {
     {
         global $wpdb;
         $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-        $lokis_player_sessions_table_name = $wpdb->prefix . 'lokis_player_sessions';
 
         $lokis_game_sessions_sql = "CREATE TABLE IF NOT EXISTS $lokis_game_sessions_table_name (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -50,19 +49,8 @@ if (!function_exists('lokis_create_tables')) {
         gamesession_url VARCHAR(255) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
-        $lokis_player_sessions_sql = "CREATE TABLE IF NOT EXISTS $lokis_player_sessions_table_name (
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        player_id INT NOT NULL,
-        session_id VARCHAR(18) NOT NULL,
-        step INT NOT NULL,
-        game_url VARCHAR(255) NOT NULL,
-        completed TINYINT(1) NOT NULL DEFAULT 0
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
-
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
         dbDelta($lokis_game_sessions_sql);
-        dbDelta($lokis_player_sessions_sql);
     }
     register_activation_hook(__FILE__, 'lokis_create_tables');
 }

@@ -513,7 +513,6 @@ if (!function_exists('lokis_loop_modal_box')) {
                                         /* displays user name */
                                         $player_full_name = get_user_meta($user_id, 'loki_fullname', true);
                                         $player_email_address = $user_info->user_email;
-                                        // $user_name = $user_info->display_name;
                                         if (strpos($avatar, 'gravatar.com') !== false) {
                                             echo '<div class="lokis-user-modal-wrapper">';
                                             echo '<div class="lokis-user-details-wrapper">';
@@ -606,35 +605,16 @@ if (!function_exists('lokis_Delete_game_table_data')) {
     {
         global $wpdb;
         $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-        $lokis_game_players_table_name = $wpdb->prefix . 'lokis_player_sessions';
         if (isset($_POST['delete_session_data'])) {
             $id = $_POST['delete_session_data'];
-            $session_id = $_POST['lokis_session_id'];
             // Perform the deletion query using the game ID
             $wpdb->delete($lokis_game_sessions_table_name, ['id' => $id]);
-            $wpdb->delete($lokis_game_players_table_name, ['session_id' => $session_id]);
             // Redirect to the same page to update the displayed data
             echo '<script>window.location.href = window.location.href;</script>';
         }
     }
 }
 
-/*function to delete data from player session table in  database*/
-if (!function_exists('lokis_delete_player_table_data')) {
-    function lokis_delete_player_table_data()
-    {
-        global $wpdb;
-        $lokis_game_players_table_name = $wpdb->prefix . 'lokis_player_sessions';
-        if (isset($_POST['delete_player_data'])) {
-            $id = $_POST['delete_player_data'];
-            // Perform the deletion query using the player ID
-            $wpdb->delete($lokis_game_players_table_name, ['id' => $id]);
-            // Redirect to the same page to update the displayed data
-            echo '<script>window.location.href = window.location.href;</script>';
-
-        }
-    }
-}
 
 /*Function to show template on files with lokis_private_page_checkbox value of 1*/
 if (!function_exists('lokis_pull_private_template')) {
