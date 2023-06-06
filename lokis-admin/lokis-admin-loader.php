@@ -112,15 +112,11 @@ if (!function_exists('lokis_redirect_after_expiration')) {
             foreach ($results as $row) {
                 $expiration_time = $row->expires_in;
                 if ($current_time >= $expiration_time) {
-                    if (empty($lokis_dashboard_page)) {
-                        // Redirect to the home page
-                        wp_redirect(site_url());
-                        exit;
-                    } else {
-                        // Redirect to the dashboard page
-                        echo "<script>window.location.href = '{$lokis_dashboard_page}';</script>";
-                        exit();
-                    }
+                    // Redirect to the dashboard page
+                    echo "<script>alert('Session expired. Please contact the host.');</script>";
+                    echo "<script>window.location.href = '" . site_url() . "';</script>";
+                    exit();
+
                 }
             }
         }
@@ -243,15 +239,14 @@ if (!function_exists('loki_url_cookie')) {
                 if (!isset($_COOKIE['lokis_game_stage_url'])) {
                     // Set the cookie with an empty array
                     setcookie('lokis_game_stage_url', serialize(array()), time() + (86400 * 30));
-                }
-                else{
+                } else {
                     // Retrieve the serialized URLs from the cookie
                     $serializedURLs = isset($_COOKIE['lokis_game_stage_url']) ? $_COOKIE['lokis_game_stage_url'] : '';
 
                     //Unserialize the array
                     $urls = $serializedURLs ? unserialize($serializedURLs) : array();
 
-                     // Check if the session ID exists in the array
+                    // Check if the session ID exists in the array
                     if (isset($urls[$lokis_current_session_id])) {
                         // Check if the URL is different
                         if ($urls[$lokis_current_session_id] !== $lokis_game_permalink) {
