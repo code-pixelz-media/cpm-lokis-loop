@@ -89,7 +89,6 @@ jQuery(document).ready(function ($) {
       "input[name=loki_organization_type]:checked"
     ).val();
     var country_name = $("#loki-country").val();
-    var role = $("input[name=role]:checked").val();
     var zipcode = $("#loki-zipcode").val();
     var nonce = $("#loki_registration_nonce").val();
     var errors = [];
@@ -121,10 +120,6 @@ jQuery(document).ready(function ($) {
 
     if (country_name == "") {
       errors.push("Country is required.");
-    }
-
-    if (role == undefined) {
-      errors.push("Please select your role.");
     }
 
     if (zipcode == "") {
@@ -163,7 +158,6 @@ jQuery(document).ready(function ($) {
           organization_name: organization_name,
           organization_type: organization_type,
           country_name: country_name,
-          role: role,
           zipcode: zipcode,
           nonce: nonce,
         },
@@ -178,12 +172,12 @@ jQuery(document).ready(function ($) {
             for (var i = 0; i < radio1.length; i++) {
               radio1[i].checked = false;
             }
-            var radio2 = document.getElementsByName("role");
+            // var radio2 = document.getElementsByName("role");
 
-            // Loop through the radio buttons and unset the checked property
-            for (var i = 0; i < radio2.length; i++) {
-              radio2[i].checked = false;
-            }
+            // // Loop through the radio buttons and unset the checked property
+            // for (var i = 0; i < radio2.length; i++) {
+            //   radio2[i].checked = false;
+            // }
 
             //Resetting cleared value of submit button
             $("#lokis-registration-button").val("Submit");
@@ -431,16 +425,16 @@ jQuery(document).ready(function ($) {
     const iframe = document.getElementById("loki-game-iframe");
 
     if (iframe.requestFullscreen) {
-      iframe.requestFullscreen().then(() => {});
+      iframe.requestFullscreen().then(() => { });
     } else if (iframe.mozRequestFullScreen) {
       // Firefox
       iframe.mozRequestFullScreen();
     } else if (iframe.webkitRequestFullscreen) {
       // Chrome, Safari, Opera
-      iframe.webkitRequestFullscreen().then(() => {});
+      iframe.webkitRequestFullscreen().then(() => { });
     } else if (iframe.msRequestFullscreen) {
       // IE/Edge
-      iframe.msRequestFullscreen().then(() => {});
+      iframe.msRequestFullscreen().then(() => { });
     }
   });
 });
@@ -465,7 +459,7 @@ jQuery(document).ready(function ($) {
       url: gamesajax.ajaxurl,
       data: {
         action: "loki_cookie_maker",
-        consent:'accept'
+        consent: 'accept'
       },
       success: function (response) {
         if (response.status == "success") {

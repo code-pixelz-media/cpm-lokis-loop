@@ -12,71 +12,68 @@ if (is_user_logged_in()) {
         <div class="lokisloop-hosted-game">
             <!-- here is the modal box code -->
             <div class="lokis_show_modal_box"></div>
-            <?php
-            global $wpdb;
-            $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-            $host_id = get_current_user_id();
-            // Query to retrieve data for a specific host ID
-            $query = $wpdb->prepare("SELECT * FROM $lokis_game_sessions_table_name WHERE host_id = %d", $host_id);
-            // Run the query
-            $results = $wpdb->get_results($query);
-            // Check if any rows were returned
-        
-            if ($wpdb->num_rows > 0) {
-                $expired_games = []; // Array to store expired games
-        
-                // Loop through the results and access the data
-        
-                foreach ($results as $row) {
-                    // Access individual fields using object notation
-        
-                    $id = $row->id;
-                    $host_id = $row->host_id;
-                    $game_id = $row->game_id;
-                    $session_id = $row->session_id;
-                    $expires_in = $row->expires_in;
-                    $started_at = $row->started_at;
-                    $url = $row->gamesession_url;
-                    $title = get_the_title($game_id);
-                    $expires_at = new DateTime($expires_in);
-                    if ($expires_at < new DateTime()) {
-                        // Store expired game data in the array
-        
-                        $expired_games[] = [
-                            'id' => $id,
-                            'title' => $title,
-                            'url' => $url,
-                            "game_id" => $game_id,
-                            "session_id" => $session_id,
-                            'started_at' => $started_at,
-                            'expires_in' => $expires_in
-                        ];
-                    }
+            <div class="lokisloop-container-wrapper">
+                <h5> Expired Games</h5>
+                <table id="expired-games" class="lookisloop-games">
+                    <div class="thead">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Url</th>
+                            <th scope="col">Started</th>
+                            <th scope="col">Expired</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </div>
+                    <tbody>
+                        <?php
+                        global $wpdb;
+                        $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
+                        $host_id = get_current_user_id();
+                        // Query to retrieve data for a specific host ID
+                        $query = $wpdb->prepare("SELECT * FROM $lokis_game_sessions_table_name WHERE host_id = %d", $host_id);
+                        // Run the query
+                        $results = $wpdb->get_results($query);
+                        // Check if any rows were returned
+                    
+                        if ($wpdb->num_rows > 0) {
+                            $expired_games = []; // Array to store expired games
+                    
+                            // Loop through the results and access the data
+                    
+                            foreach ($results as $row) {
+                                // Access individual fields using object notation
+                    
+                                $id = $row->id;
+                                $host_id = $row->host_id;
+                                $game_id = $row->game_id;
+                                $session_id = $row->session_id;
+                                $expires_in = $row->expires_in;
+                                $started_at = $row->started_at;
+                                $url = $row->gamesession_url;
+                                $title = get_the_title($game_id);
+                                $expires_at = new DateTime($expires_in);
+                                if ($expires_at < new DateTime()) {
+                                    // Store expired game data in the array
+                    
+                                    $expired_games[] = [
+                                        'id' => $id,
+                                        'title' => $title,
+                                        'url' => $url,
+                                        "game_id" => $game_id,
+                                        "session_id" => $session_id,
+                                        'started_at' => $started_at,
+                                        'expires_in' => $expires_in
+                                    ];
+                                }
 
-                }
-                // Sort the current games array by the "id" field in ascending order
-                usort($expired_games, function ($a, $b) {
-                    return $b['id'] - $a['id'];
-                });
-                // Display expired games
-        
-
-                ?>
-                <div class="lokisloop-container-wrapper">
-                    <h5> Expired Games</h5>
-                    <table id="expired-games" class="lookisloop-games">
-                        <div class="thead">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Url</th>
-                                <th scope="col">Started</th>
-                                <th scope="col">Expired</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </div>
-                        <tbody>
-                            <?php
+                            }
+                            // Sort the current games array by the "id" field in ascending order
+                            usort($expired_games, function ($a, $b) {
+                                return $b['id'] - $a['id'];
+                            });
+                            // Display expired games
+                    
                             //Set number of games per page
                             if (!empty($expired_games)) {
                                 $games_per_page = 3;
@@ -121,28 +118,28 @@ if (is_user_logged_in()) {
                                 // this function is responsible to delete the game table data
                                 lokis_Delete_game_table_data();
 
-                                // The code snippet generates customized pagination links for expired games in WordPress.
-                                $pagination_args = array(
-                                    'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
-                                    'format' => '',
-                                    'prev_text' => '&laquo;',
-                                    'next_text' => '&raquo;',
-                                    'total' => $total_expired_pages,
-                                    'current' => $expired_paged,
-                                    'mid_size' => 2,
-                                );
-
-
                             } else {
                                 echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                             }
-                            echo '</tbody>
-                        </table></div>';
+
+                            // The code snippet generates customized pagination links for expired games in WordPress.
+                            $pagination_args = array(
+                                'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
+                                'format' => '',
+                                'prev_text' => '&laquo;',
+                                'next_text' => '&raquo;',
+                                'total' => $total_expired_pages,
+                                'current' => $expired_paged,
+                                'mid_size' => 2,
+                            );
                             echo '<div class="lokis-loop-pagination">';
                             echo paginate_links($pagination_args);
                             echo '</div>';
-            }
-            ?>
+                        } else {
+                            echo "<tr><td colspan='6'>No expired games found.</td></tr>";
+                        }
+                        echo '</tbody></table></div>';
+                        ?>
             </div>
         </div>
         <?php get_footer();

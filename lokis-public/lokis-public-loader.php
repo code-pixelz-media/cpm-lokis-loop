@@ -160,7 +160,6 @@ if (!function_exists('loki_user_registration')) {
         $organization_name = $_POST['organization_name'];
         $organization_type = $_POST['organization_type'];
         $country = $_POST['country_name'];
-        $role = $_POST['role'];
         $zipcode = $_POST['zipcode'];
 
         /*Creating username by removing spaces from name*/
@@ -226,7 +225,8 @@ if (!function_exists('loki_user_registration')) {
                 $user->remove_role('subscriber');
 
                 /* Add role */
-                $user->add_role($role);
+                // $user->add_role($role);
+                $user->add_role('host');
 
                 $response = [
                     'status' => 'success',
@@ -685,25 +685,4 @@ if (!function_exists('lokis_cookies_content_popup')) {
         <?
         }
     }
-}
-
-//Redirect to game according to game url in cookies
-if (!function_exists('lokis_cookie_redirect')) {
-    function lokis_cookie_redirect()
-    {
-        if (is_single() && get_post_type() === 'games') {
-            $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-            if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
-                if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL != $_COOKIE['lokis_game_stage_url']) {
-                    ?>
-                    <script>
-                        window.location.href = '<?php echo $_COOKIE['lokis_game_stage_url']; ?>';
-                    </script>
-                    <?php
-                    exit;
-                }
-            }
-        }
-    }
-    add_action('wp', 'lokis_cookie_redirect', 50);
 }

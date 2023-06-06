@@ -4,8 +4,8 @@
 function lokis_loop_register_form()
 {
     if (is_user_logged_in()) {
- ob_start();
-         $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
+        ob_start();
+        $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
         $lokis_dashboard_page = get_permalink($dashboard_page_id);
 
         if (empty($lokis_dashboard_page)) {
@@ -88,16 +88,6 @@ function lokis_loop_register_form()
                         <span class="lokis-req-field">*</span></label>
                     <input aria label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-country'
                         placeholder="Enter your country's name">
-                </div>
-                <div class="lokis-formquestion-item">
-                    <label for="role" class="lokisloop-label"><span class="lokis-formquestion-order">6. </span>Role <span
-                            class="lokis-req-field">*</span> </label>
-                    <div class="lokisloop-selective-box"> <input type="radio" id="host" name="role" value="host">
-                        <label for="host">Host</label>
-                    </div>
-                    <div class="lokisloop-selective-box"> <input type="radio" id="player" name="role" value="player">
-                        <label for="player">Player</label>
-                    </div>
                 </div>
                 <div class="lokis-formquestion-item">
                     <label for="loki-zipcode" class="lokisloop-label">
