@@ -186,7 +186,7 @@ span.page-numbers.current:hover {
   outline: none;
 }
 .lokis-post-form .lokisloop-answer button#lokis-submit-btn {
-  margin: 20px 20px;
+  margin: 20px 15px;
   background-color: var(--login-loginbackgroud-color);
   border-color: var(--lokis-border-color);
   color: var(--lokis-color);
@@ -197,10 +197,20 @@ span.page-numbers.current:hover {
   line-height: 1.5;
   outline: none;
 }
-.lokis-post-form .lokisloop-answer button#lokis-submit-btn:active,
+.lokis-post-form button#lokis-fullscreen {
+  border: none;
+  color: var(--lokis-white-color);
+  padding: 8px 0;
+  border-radius: 4px;
+  background: var(--lokis-primarybtn-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 10%;
+}
+
 button#lokis-submit-btn:hover {
   margin: 20px 50px;
-  background-color: var(--login-loginbackgroud-color);
+  background-color: var(--lokis-primarybtn-color);
   border-color: var(--lokis-border-color);
   color: var(--lokis-color);
   padding: 10px 25px;
@@ -1501,7 +1511,7 @@ input#lokis-rememberme {
   right: 20px;
   max-width: 345px;
   width: 100%;
-  background: #fff;
+  background: var(--lokis-white-color);
   border-radius: 8px;
   padding: 15px 25px 22px;
   transition: right 0.3s ease;
@@ -1519,19 +1529,24 @@ input#lokis-rememberme {
 }
 .lokis-cookie-buttons button#loki-cookie-accept {
   border: none;
-  color: #fff;
+  color: var(--lokis-white-color);
   padding: 8px 0;
   border-radius: 4px;
-  background: #4070f4;
+  background: var(--lokis-primarybtn-color);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .lokis-cookie-buttons button#loki-cookie-reject {
-  border: 2px solid #4070f4;
-  background-color: #fff;
-  color: #4070f4;
+  border: 2px solid var(--lokis-primarybtn-color);
+  background-color: var(--lokis-white-color);
+  color: var(--lokis-primarybtn-color);
 }
 .lokis-cookie-buttons button#loki-cookie-reject:hover {
-  background-color: #4070f4;
-  color: #fff;
+  background-color: var(--lokis-primarybtn-color);
+  color: var(--lokis-white-color);
+}
+@media only screen and (min-width: 1068px) {
+  .lokis-post-form {
+    display: block;
+  }
 }
