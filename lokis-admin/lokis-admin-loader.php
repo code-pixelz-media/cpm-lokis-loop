@@ -231,7 +231,6 @@ if (!function_exists('loki_url_cookie')) {
         if (is_single() && get_post_type() === 'games') {
             // Store the site URL in the cookie if there is a cookie called 'loki_user_id'
             if (isset($_COOKIE['loki_user_id'])) {
-
                 $lokis_permalink = get_permalink(get_the_ID());
                 $lokis_current_session_id = lokis_getSessionIDFromURL();
                 $lokis_game_permalink = $lokis_permalink . '?game=' . $lokis_current_session_id;
@@ -254,11 +253,6 @@ if (!function_exists('loki_url_cookie')) {
                             // Replace the URL for the session ID
                             $urls[$lokis_current_session_id] = $lokis_game_permalink;
                         }
-                    } else {
-                        // Check if the session ID exists in the 'lokis_game_sessions' and is valid
-
-                        // Code to add the new URL with the session ID as the key
-                        $urls[$lokis_current_session_id] = $lokis_game_permalink;
                     }
 
                     // Serialize the updated URLs
@@ -287,7 +281,6 @@ if (!function_exists('lokis_cookie_redirect')) {
 
                     // Unserialize the array of URLs
                     $urls = $serializedURLs ? unserialize($serializedURLs) : array();
-
                     $session_id = lokis_getSessionIDFromURL();
 
                     // Check if the session ID exists in the array

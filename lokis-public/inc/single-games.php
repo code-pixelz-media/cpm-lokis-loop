@@ -55,7 +55,6 @@ if (isset($_GET['offlinegame'])) {
                 <form action="" method="post">
                     <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
                     <input type="hidden" value="<?php echo $session_id; ?>" id="loki-session-id">
-                    <input type="hidden" value="<?php echo get_current_user_id(); ?>" id="loki-player-id">
                     <div class="lokisloop-answer">
                         <label for="lokis-answer">Answer:</label>
                         <input type="text" id="lokis-answer" name="lokis-answer">

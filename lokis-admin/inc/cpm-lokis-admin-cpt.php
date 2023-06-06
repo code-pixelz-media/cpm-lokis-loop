@@ -45,21 +45,6 @@ class lokis_loop_game_info
             'menu_icon' => 'dashicons-games',
             'show_in_rest' => true,
             'rewrite' => array('slug' => 'games'),
-            'capabilities' => array(
-                'edit_post' => 'edit_game',
-                'read_post' => 'read_game',
-                'delete_post' => 'delete_game',
-                'edit_posts' => 'edit_games',
-                'edit_others_posts' => 'edit_others_games',
-                'publish_posts' => 'publish_games',
-                'read_private_posts' => 'read_private_games',
-                'edit_published_posts' => 'edit_published_games',
-                'delete_published_posts' => 'delete_published_games',
-                'delete_posts' => 'delete_games',
-                'edit_private_posts' => 'edit_private_games',
-                'create_posts' => 'create_games',
-                'delete_others_posts' => 'delete_others_games'
-            )
         );
         register_post_type('games', $args);
     }
