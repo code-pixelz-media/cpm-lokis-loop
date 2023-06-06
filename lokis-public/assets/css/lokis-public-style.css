@@ -1355,13 +1355,17 @@ input#lokisLoop_expiration:focus {
 }
 .lokis-login-form-container .login-submit input#lokis-submit {
   margin: 0 auto;
-  width: 100%;
+  width: 96%;
   background-color: var(--login-loginbackgroud-color);
   border: 1px solid var(--lokis-hostbgbdr-color);
   color: var(--lokis-color);
 }
 .login-submit input#lokis-submit:focus {
   outline: none;
+}
+.login-submit input#lokis-submit:hover {
+  background-color: var(--lokis-primarybtn-color) !important;
+  color: var(--lokis-white-color) !important;
 }
 .lokis-login-form-container input[type="text"]:focus,
 .lokis-login-form-container input[type="password"]:focus,
