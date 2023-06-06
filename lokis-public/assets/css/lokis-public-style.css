@@ -454,7 +454,8 @@ li.lokis-active {
   text-align: center;
 }
 
-.lokisloop-dashboard-container .lokisloop-hosted-game h5,
+.lokisloop-dashboard-container h5,
+.lokisloop-hosted-game h5,
 .lokisloop-main-top h5 {
   text-align: center;
   margin: 20px 0;

@@ -16,18 +16,18 @@ if (is_user_logged_in()) {
         </aside>
 
         <div class="lokisloop-container">
-            <h3>
+            <h5>
                 <?php echo get_the_title(); ?>
-            </h3>
+            </h5>
             <?php echo get_the_content(); ?>
 
         </div>
 
     </div>
 
-    <?php get_footer(); 
+    <?php get_footer();
 
-    } else {
+} else {
     ?>
 
     <script>
