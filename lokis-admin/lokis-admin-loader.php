@@ -155,23 +155,6 @@ if (!function_exists('lokis_store_session_id')) {
     add_action('wp_head', 'lokis_store_session_id', 20);
 }
 
-/* Add game stage url in cookies */
-if (!function_exists('loki_url_cookie')) {
-    function loki_url_cookie()
-    {
-        if (is_single() && get_post_type() === 'games') {
-            // Store the site URL in the cookie if there is a cookie called 'loki_user_id'
-            if (isset($_COOKIE['loki_user_id'])) {
-                $game_permalink = get_permalink(get_the_ID());
-                // Clear the output buffer and set the cookies
-                setcookie('lokis_game_stage_url', $game_permalink . '?game=' . lokis_getSessionIDFromURL(), time() + (86400 * 30), '/');
-                setcookie('lokis_passed', '', time() + (86400 * 30), '/');
-            }
-        }
-    }
-    add_action('wp', 'loki_url_cookie',100);
-}
-
 /*Adds metabox to change page visibility according to user*/
 if (!function_exists('lokis_add_page_metabox')) {
     // Add the metabox to the "Add New Page" screen
@@ -242,4 +225,76 @@ if (!function_exists('loki_cookie_maker')) {
     }
     add_action('wp_ajax_loki_cookie_maker', 'loki_cookie_maker');
     add_action('wp_ajax_nopriv_loki_cookie_maker', 'loki_cookie_maker');
+}
+
+/* Add game stage url in cookies */
+if (!function_exists('loki_url_cookie')) {
+    function loki_url_cookie()
+    {
+        if (is_single() && get_post_type() === 'games') {
+            // Store the site URL in the cookie if there is a cookie called 'loki_user_id'
+            if (isset($_COOKIE['loki_user_id'])) {
+
+                $lokis_permalink = get_permalink(get_the_ID());
+                $lokis_current_session_id = lokis_getSessionIDFromURL();
+                $lokis_game_permalink = $lokis_permalink . '?game=' . $lokis_current_session_id;
+
+                // Set the cookies
+                if (!isset($_COOKIE['lokis_game_stage_url'])) {
+                    // Set the cookie with an empty array
+                    setcookie('lokis_game_stage_url', serialize(array()), time() + (86400 * 30));
+                }
+                else{
+                    // Retrieve the serialized URLs from the cookie
+                    $serializedURLs = isset($_COOKIE['lokis_game_stage_url']) ? $_COOKIE['lokis_game_stage_url'] : '';
+
+                    //Unserialize the array
+                    $urls = $serializedURLs ? unserialize($serializedURLs) : array();
+
+                     // Check if the session ID exists in the array
+                    if (isset($urls[$lokis_current_session_id])) {
+                        // Check if the URL is different
+                        if ($urls[$lokis_current_session_id] !== $lokis_game_permalink) {
+                            // Replace the URL for the session ID
+                            $urls[$lokis_current_session_id] = $lokis_game_permalink;
+                        }
+                    } else {
+                        // Check if the session ID exists in the 'lokis_game_sessions' and is valid
+
+                        // Code to add the new URL with the session ID as the key
+                        $urls[$lokis_current_session_id] = $lokis_game_permalink;
+                    }
+
+                    // Serialize the updated URLs
+                    $updatedSerializedURLs = serialize($urls);
+
+                    // Set the cookie with the updated serialized URLs
+                    setcookie('lokis_game_stage_url', $updatedSerializedURLs, time() + (86400 * 30), '/');
+                }
+                setcookie('lokis_passed', '', time() + (86400 * 30), '/');
+            }
+        }
+    }
+    add_action('wp', 'loki_url_cookie', 100);
+}
+
+/*Redirect to game according to game url in cookies */
+if (!function_exists('lokis_cookie_redirect')) {
+    function lokis_cookie_redirect()
+    {
+        if (is_single() && get_post_type() === 'games') {
+            $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
+                if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL != $_COOKIE['lokis_game_stage_url']) {
+                    ?>
+                    <script>
+                        window.location.href = '<?php echo $_COOKIE['lokis_game_stage_url']; ?>';
+                    </script>
+                    <?php
+                    exit;
+                }
+            }
+        }
+    }
+    add_action('wp', 'lokis_cookie_redirect', 50);
 }
