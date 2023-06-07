@@ -134,6 +134,7 @@ span.page-numbers.current:hover {
   background: var(--lokis-primarybtn-color);
   transition: all 0.2s ease;
   width: 10%;
+  font-size: 25px;
 }
 
 button#lokis-submit-btn:hover {
@@ -1237,15 +1238,20 @@ input#lokis-rememberme {
 /* CSS styles for cookie consent popup */
 .lokis-cookie-consent {
   position: fixed;
-  bottom: 50px;
-  right: 20px;
-  max-width: 345px;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  background: var(--lokis-white-color);
-  border-radius: 8px;
-  padding: 15px 25px 22px;
-  transition: right 0.3s ease;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  background: #eee;
+  z-index: 1030;
+  color: #000;
+  font-size: 14px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.lokis-cookie-message {
+  margin-top: 25px;
 }
 .lokis-cookie-heading .fa-cookie-bite::before {
   margin-right: 20px;
@@ -1258,22 +1264,20 @@ input#lokis-rememberme {
   text-transform: none;
 }
 .lokis-cookie-buttons button#loki-cookie-accept {
-  border: none;
   color: var(--lokis-white-color);
-  padding: 8px 0;
-  border-radius: 4px;
   background: var(--lokis-primarybtn-color);
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-radius: 5px;
+  padding: 7px 15px;
+  margin-left: 15px;
 }
 .lokis-cookie-buttons button#loki-cookie-reject {
-  border: 2px solid var(--lokis-primarybtn-color);
-  background-color: var(--lokis-white-color);
+  background-color: transparent;
   color: var(--lokis-primarybtn-color);
 }
 .lokis-cookie-buttons button#loki-cookie-reject:hover {
   background-color: var(--lokis-primarybtn-color);
   color: var(--lokis-white-color);
+  text-decoration: underline;
 }
 
 /* css for media query */
