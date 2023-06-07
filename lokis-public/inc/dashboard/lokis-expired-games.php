@@ -1,7 +1,8 @@
 <?php
+get_header();
 if (is_user_logged_in()) {
 
-    get_header(); ?>
+    ?>
     <div class="lokisloop-dashboard-container">
         <aside>
             <div class="lokis-logo">
@@ -76,6 +77,10 @@ if (is_user_logged_in()) {
                     
                             //Set number of games per page
                             if (!empty($expired_games)) {
+
+                                $total_expired_pages = '0'; // or any other initial value you need
+                                $expired_paged = '0'; // or any other initial value you need
+                    
                                 $games_per_page = 3;
                                 //Calculate starting index for specific page
                     
@@ -117,37 +122,35 @@ if (is_user_logged_in()) {
                                     $expire_content .= '</form></div></td></div></tr>';
                                     echo $expire_content;
                                 }
+
                                 // this function is responsible to delete the game table data
                                 lokis_Delete_game_table_data();
+
+                                // The code snippet generates customized pagination links for expired games in WordPress.
+                                $pagination_args = array(
+                                    'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
+                                    'format' => '',
+                                    'prev_text' => '&laquo;',
+                                    'next_text' => '&raquo;',
+                                    'total' => $total_expired_pages,
+                                    'current' => $expired_paged,
+                                    'mid_size' => 2,
+                                );
+                                echo '<div class="lokis-loop-pagination">';
+                                echo paginate_links($pagination_args);
+                                echo '</div>';
 
                             } else {
                                 echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                             }
-
-
                         } else {
                             echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                         }
-
-                        echo '</tbody></table>';
-                        // The code snippet generates customized pagination links for expired games in WordPress.
-                        $pagination_args = array(
-                            'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
-                            'format' => '',
-                            'prev_text' => '&laquo;',
-                            'next_text' => '&raquo;',
-                            'total' => $total_expired_pages,
-                            'current' => $expired_paged,
-                            'mid_size' => 2,
-                        );
-                        echo '<div class="lokis-loop-pagination">';
-                        echo paginate_links($pagination_args);
-                        echo '</div>';
-                        echo '</div>';
+                        echo '</tbody></table></div>';
                         ?>
             </div>
         </div>
-        <?php get_footer();
+        <?php
 } else {
     ?>
         <script>
@@ -155,3 +158,4 @@ if (is_user_logged_in()) {
         </script>
         <?php
 }
+get_footer();

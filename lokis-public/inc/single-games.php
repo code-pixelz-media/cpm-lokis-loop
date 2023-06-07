@@ -61,7 +61,9 @@ if (isset($_GET['offlinegame'])) {
                         <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">Check Answer</button>
                     </div>
                 </form>
-                <button id='lokis-fullscreen'>Go Fullscreen</button>
+                <button id='lokis-fullscreen'><i class="fa-solid fa-expand"></i>
+                </button>
+
                 <div id='lokis-feedback'></div>
                 <!-- Cookie Consent Popup -->
                 <?php lokis_cookies_content_popup() ?>
