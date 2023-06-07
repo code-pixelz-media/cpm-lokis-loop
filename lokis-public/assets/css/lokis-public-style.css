@@ -169,7 +169,8 @@ div#lokis-feedback {
 .lokis-loop-error {
   margin: 0;
 }
-.lokis-loop-correct {
+.lokis-loop-correct,
+.lokis-loop-success {
   color: var(--lokisloop-correct-color);
   background-color: var(--lokisloop-correct-bg-color);
   border-color: var(--lokisloop-correct-border-color);
@@ -180,8 +181,14 @@ div#lokis-feedback {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: 15px;
 }
-
+.lokis-loop-success {
+  margin-left: -84px;
+  padding: 12px;
+  margin-top: -3px;
+  width: max-content;
+}
 /* End off CSS for single-games.php */
 /* creating CSS for game host application form */
 .lokis-gamehost-application-container {
@@ -944,23 +951,16 @@ button.btn.btn-primary.mb-3 {
   color: var(--lokisloop-incorrect-color);
   background-color: var(--lokisloop-incorrect-bg-color);
   padding: 7px;
-  width: max-content;
+  max-width: 95%;
+  text-align: center;
 }
-
 /* CSS for lokis host game ends here */
-
 /*  CUrrent games css */
-h5 {
-  font-size: 24px;
-  font-weight: 700;
-}
-
 .lokisloop-container-wrapper .lookisloop-games a.lokisloop-visit-url {
   cursor: pointer;
   color: var(--lokis-black-color);
   text-decoration: none;
 }
-
 /* -----current-games-copy-icon----- */
 .lookisloop-games td a.lokisloop-url-copy {
   margin-left: 10px;
@@ -1001,7 +1001,7 @@ h5 {
 }
 .lokisloop-dashboard-container ul li a {
   padding-left: 5px;
-  padding-top:15px;
+  padding-top: 15px;
   display: block;
   cursor: pointer;
   color: var(--lokis-host-color);
