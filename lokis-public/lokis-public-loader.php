@@ -503,13 +503,13 @@ if (!function_exists('lokis_loop_modal_box')) {
                             //     foreach ($results as $row) {
                             //         $user_id = $row->player_id;
                             //         $gameStatus = $row->completed;
-
+                    
                             //         if ($gameStatus == 1) {
                             //             $gameStatus = '<i class="fa fa-circle lokis-game-status-complete"></i>Completed';
                             //         } else {
                             //             $gameStatus = '<i class="fa fa-circle lokis-game-status-incomplete"></i>Incomplete';
                             //         }
-
+                    
                             //         $avatar = get_avatar($user_id);
                             //         $user_info = get_userdata($user_id);
                             //         if ($user_info) {
@@ -654,9 +654,9 @@ if (!function_exists('lokis_cookies_content_popup')) {
         if (!isset($_COOKIE['loki_user_id']) && !isset($_COOKIE['consent'])) {
             ?>
             <div id="lokisCookieConsent" class="lokis-cookie-consent">
-                <div class="lokis-cookie-heading">
+                <!-- <div class="lokis-cookie-heading">
                     <i class="fa-solid fa-cookie-bite"></i>Cookies Consent
-                </div>
+                </div> -->
                 <div class="lokis-cookie-message">
                     This website uses cookies to ensure you get the best experience on our website.
                 </div>
