@@ -72,6 +72,11 @@ span.page-numbers.current:hover {
 
 /* creating CSS for single-games.php */
 /* for lokis-iframe-content */
+.iframe-container {
+  width: 75%;
+  margin: auto;
+  padding: 20px;
+}
 #loki-game-iframe {
   height: 70%;
   width: 100%;
@@ -82,7 +87,7 @@ span.page-numbers.current:hover {
 /* for lokis post form */
 .lokis-post-form {
   display: flex;
-  margin-left: 23px;
+  margin-left: 193px;
 }
 
 /* .lokisloop-container .lokis-post-form {
