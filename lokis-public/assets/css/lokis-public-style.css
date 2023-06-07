@@ -341,7 +341,6 @@ button:not(:hover):active:not(.has-background) {
   list-style-type: none;
   margin: 10px 0 10px 0;
   border-bottom: 1px solid var(--lokis-border);
-  padding-top: 15px;
   font-size: 18px;
 }
 .lokisloop-dashboard-container aside ul li a:focus {
@@ -1003,7 +1002,9 @@ h5 {
 }
 
 .lokisloop-dashboard-container ul li a {
-  padding: 5px;
+  padding-left: 5px;
+  padding-top:15px;
+  display: block;
   cursor: pointer;
   color: var(--lokis-host-color);
   text-decoration: none !important;
