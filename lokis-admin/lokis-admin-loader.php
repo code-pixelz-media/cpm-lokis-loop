@@ -156,18 +156,22 @@ if (!function_exists('lokis_store_session_id')) {
 if (!function_exists('loki_cookie_maker')) {
     function loki_cookie_maker()
     {
-        $consent = $_POST['consent'];
+        $lokis_consent = $_POST['consent'];
+        $lokis_serialized = $_POST['jsonserializedurl'];
+        $lokis_url_array = json_decode(stripslashes($lokis_serialized), true);
 
-        if ($consent == 'accept') {
+        if ($lokis_consent == 'accept') {
             // User has given consent, generate a new value for the cookie
             $cookie_value = 'user' . uniqid();
 
             // Set the cookie with a duration of 30 days
             setcookie('loki_user_id', $cookie_value, time() + (86400 * 30), '/');
+            setcookie('lokis_game_stage_url', serialize($lokis_url_array), time() + (86400 * 30), '/');
 
             $response = array(
                 'status' => 'success',
-                'expiry_time' => time() + (86400 * 30)
+                'expiry_time' => time() + (86400 * 30),
+                'array' => $lokis_url_array
             );
         } else {
             setcookie('consent', 'rejected', time() + (86400 * 30), '/');
@@ -200,9 +204,8 @@ if (!function_exists('loki_url_cookie')) {
                 } else {
                     // Retrieve the serialized URLs from the cookie
                     $serializedURLs = isset($_COOKIE['lokis_game_stage_url']) ? $_COOKIE['lokis_game_stage_url'] : '';
-
                     //Unserialize the array
-                    $urls = $serializedURLs ? unserialize($serializedURLs) : array();
+                    $urls = $serializedURLs ? unserialize(stripslashes($serializedURLs)) : array();
 
                     // Check if the session ID exists in the array
                     if (isset($urls[$lokis_current_session_id])) {
@@ -234,23 +237,25 @@ if (!function_exists('lokis_cookie_redirect')) {
             $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
             if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
-                if (isset($_COOKIE['lokis_game_stage_url']) && $currentURL !== $_COOKIE['lokis_game_stage_url']) {
+                if (isset($_COOKIE['lokis_game_stage_url'])) {
                     $serializedURLs = $_COOKIE['lokis_game_stage_url'];
 
                     // Unserialize the array of URLs
-                    $urls = $serializedURLs ? unserialize($serializedURLs) : array();
+                    $urls = $serializedURLs ? unserialize(stripslashes($serializedURLs)) : array();
                     $session_id = lokis_getSessionIDFromURL();
 
                     // Check if the session ID exists in the array
                     if (isset($urls[$session_id])) {
-                        // Redirect to the URL of the matching key
-                        $redirectURL = $urls[$session_id];
-                        ?>
-                        <script>
-                            window.location.href = '<?php echo $redirectURL; ?>';
-                        </script>
-                        <?php
-                        exit;
+                        //check current url against url with key of the session IS
+                        if ($currentURL !== $urls[$session_id]) {
+                            // Redirect to the URL of the matching key
+                            $redirectURL = $urls[$session_id];
+                            ?>
+                            <script>     window.location.href = '<?php echo $redirectURL; ?>';
+                            </script>
+                            <?php
+                            exit;
+                        }
                     }
                 }
             }
