@@ -12,74 +12,72 @@ if (is_user_logged_in()) {
         </aside>
 
         <div class="lokisloop-hosted-game">
-            <?php
+            <div class="lokisloop-container-wrapper">
+                <!-- here is the modal box code -->
+                <div class="lokis_show_modal_box"></div>
+                <div class="lokisloop-main-top">
+                    <h5>Current Games</h5>
+                </div>
+                <table id="current-games" class="lookisloop-games">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Url</th>
+                            <th scope="col">Started At</th>
+                            <th scope="col">Expires In</th>
+                            <th scope="col">Action</th>
+                            <th scope="col">QR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
 
-            global $wpdb;
-            $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-            $host_id = get_current_user_id();
-            // Query to retrieve data for a specific host ID
-            $query = $wpdb->prepare("SELECT * FROM $lokis_game_sessions_table_name WHERE host_id = %d", $host_id);
-            // Run the query
-            $results = $wpdb->get_results($query);
-            // Check if any rows were returned
-            if ($wpdb->num_rows > 0) {
-                $current_games = []; // Array to store current games
-                // Loop through the results and access the data
-                foreach ($results as $row) {
-                    // Access individual fields using object notation
-                    $id = $row->id;
-                    $host_id = $row->host_id;
-                    $game_id = $row->game_id;
-                    $session_id = $row->session_id;
-                    $expires_in = $row->expires_in;
-                    $started_at = $row->started_at;
-                    $url = $row->gamesession_url;
-                    $title = get_the_title($game_id);
+                        global $wpdb;
+                        $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
+                        $host_id = get_current_user_id();
+                        // Query to retrieve data for a specific host ID
+                        $query = $wpdb->prepare("SELECT * FROM $lokis_game_sessions_table_name WHERE host_id = %d", $host_id);
+                        // Run the query
+                        $results = $wpdb->get_results($query);
+                        // Check if any rows were returned
+                        if ($wpdb->num_rows > 0) {
+                            $current_games = []; // Array to store current games
+                            // Loop through the results and access the data
+                            foreach ($results as $row) {
+                                // Access individual fields using object notation
+                                $id = $row->id;
+                                $host_id = $row->host_id;
+                                $game_id = $row->game_id;
+                                $session_id = $row->session_id;
+                                $expires_in = $row->expires_in;
+                                $started_at = $row->started_at;
+                                $url = $row->gamesession_url;
+                                $title = get_the_title($game_id);
 
-                    $lokis_offline_game_url = get_permalink($game_id) . '?offlinegame=' . $session_id;
+                                $lokis_offline_game_url = get_permalink($game_id) . '?offlinegame=' . $session_id;
 
-                    $expires_at = new DateTime($expires_in);
-                    if ($expires_at > new DateTime()) {
-                        // Store current game data in the array
-                        $current_games[] = [
-                            'id' => $id,
-                            'title' => $title,
-                            'url' => $url,
-                            'game_id' => $game_id,
-                            'session_id' => $session_id,
-                            'started_at' => $started_at,
-                            'expires_in' => $expires_in,
-                            'lokis_offline_game_url' => $lokis_offline_game_url,
-                            'qr_code_image_url' => $row->qr_code_image_url,
-                        ];
-                    }
-                }
+                                $expires_at = new DateTime($expires_in);
+                                if ($expires_at > new DateTime()) {
+                                    // Store current game data in the array
+                                    $current_games[] = [
+                                        'id' => $id,
+                                        'title' => $title,
+                                        'url' => $url,
+                                        'game_id' => $game_id,
+                                        'session_id' => $session_id,
+                                        'started_at' => $started_at,
+                                        'expires_in' => $expires_in,
+                                        'lokis_offline_game_url' => $lokis_offline_game_url,
+                                        'qr_code_image_url' => $row->qr_code_image_url,
+                                    ];
+                                }
+                            }
 
-                // Sort the current games array by the "id" field in ascending order
-                usort($current_games, function ($a, $b) {
-                    return $b['id'] - $a['id'];
-                });
-                ?>
-                <div class="lokisloop-container-wrapper">
-                    <!-- here is the modal box code -->
-                    <div class="lokis_show_modal_box"></div>
-                    <div class="lokisloop-main-top">
-                        <h5>Current Games</h5>
-                    </div>
-                    <table id="current-games" class="lookisloop-games">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Url</th>
-                                <th scope="col">Started At</th>
-                                <th scope="col">Expires In</th>
-                                <th scope="col">Action</th>
-                                <th scope="col">QR</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
+                            // Sort the current games array by the "id" field in ascending order
+                            usort($current_games, function ($a, $b) {
+                                return $b['id'] - $a['id'];
+                            });
                             if (!empty($current_games)) {
 
                                 //Number of game data per post
@@ -171,7 +169,10 @@ if (is_user_logged_in()) {
                                 echo '<tr><td colspan="7"><p class="lokis-user-empty-games">No currently active games session found.Please start a new game session.</p></td></tr>';
                             }
                             echo '<tbody></table>';
-            } ?>
+                        } else {
+                            echo '<tr><td colspan="7"><p class="lokis-user-empty-games">No games session found.Please start a new game session.</p></td></tr>';
+                        }
+                        echo '<tbody></table>'; ?>
         </div>
     </div>
     <?php get_footer();
