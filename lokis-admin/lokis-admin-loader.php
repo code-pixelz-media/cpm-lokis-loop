@@ -215,6 +215,9 @@ if (!function_exists('loki_url_cookie')) {
                             $urls[$lokis_current_session_id] = $lokis_game_permalink;
                         }
                     }
+                    else{
+                        $urls[$lokis_current_session_id] = $lokis_game_permalink;
+                    }
 
                     // Serialize the updated URLs
                     $updatedSerializedURLs = serialize($urls);
