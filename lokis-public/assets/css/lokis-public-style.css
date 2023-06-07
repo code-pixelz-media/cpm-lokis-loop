@@ -24,7 +24,7 @@
   --login-loginbackgroud-color: #e8f0fe;
   --lokis-paragraphh-bgcolor: #f9f9f9;
 }
-
+/* CSS for edit button */
 .edit-button {
   background-color: var(--lokis-border) !important;
   color: var(--lokis-color) !important;
@@ -45,7 +45,8 @@
   margin: 10px 4px;
   font-size: 20px;
 }
-.lokis-loop-pagination span.page-numbers.current {
+.lokis-loop-pagination span.page-numbers.current,
+.lokis-loop-pagination span.page-numbers.dots {
   color: var(--lokis-black-color);
   float: left;
   padding: 8px 16px;
@@ -55,26 +56,6 @@
   margin: 10px 4px;
   font-size: 20px;
   background-color: var(--lokis-hostbgbdr-color);
-}
-.lokis-loop-pagination span.page-numbers.current:active {
-  color: var(--lokis-black-color);
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color 0.5s;
-  border: 1px solid var(--lokis-border-color);
-  background-color: var(--lokis-border-color);
-  margin: 10px 4px;
-  font-size: 20px;
-}
-.lokis-loop-pagination span.page-numbers.dots {
-  color: var(--lokis-black-color);
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color 0.5s;
-  margin: 10px 4px;
-  font-size: 20px;
 }
 .lokis-loop-pagination a.page-numbers:active {
   background-color: var(--lokis-btnbg-color);
@@ -90,49 +71,25 @@ span.page-numbers.current:hover {
 }
 
 /* creating CSS for single-games.php */
-
-/* for lokis-paragraph-content */
-
-.lokisloop-iframe-container .lokis-paragraph-content {
-  padding: 25px 100px 75px 100px;
-  text-align: center;
-  margin: auto;
-  padding: 5px;
-}
-
 /* for lokis-iframe-content */
-.lokisloop-iframe-container {
-  background: var(--lokis-paragraphh-bgcolor);
-  position: relative;
-  height: 80vh;
-}
-
-.iframe-container {
-  margin: auto;
-}
-
-.iframe-container .lokis-iframe {
-  margin: auto;
-  width: 100%;
-  height: 100%;
-}
-
 #loki-game-iframe {
   height: 100%;
   width: 100%;
   background-color: var(--lokis-white-color);
+  margin: auto;
 }
 
 /* for lokis post form */
 .lokis-post-form {
   display: flex;
+  margin-left: 23px;
 }
 
-.lokisloop-container .lokis-post-form {
+/* .lokisloop-container .lokis-post-form {
   margin: auto;
   text-align: center;
   margin-top: 10px;
-}
+} */
 
 .lokisloop-container .lokis-post-form .lokisloop-answer {
   display: flex;
@@ -159,7 +116,6 @@ span.page-numbers.current:hover {
   border-color: var(--lokis-border-color);
   color: var(--lokis-color);
   padding: 10px 25px;
-  cursor: pointer;
   font-weight: 500;
   text-decoration: none;
   line-height: 1.5;
@@ -168,10 +124,9 @@ span.page-numbers.current:hover {
 .lokis-post-form button#lokis-fullscreen {
   border: none;
   color: var(--lokis-white-color);
+  margin-left: 5px;
   padding: 8px 0;
-  border-radius: 4px;
   background: var(--lokis-primarybtn-color);
-  cursor: pointer;
   transition: all 0.2s ease;
   width: 10%;
 }
@@ -197,7 +152,7 @@ div#lokis-feedback {
   padding-right: 20px;
 }
 
-div#lokis-error-message .lokis-loop-error,
+.lokis-loop-error,
 .lokis-loop-incorrect {
   color: var(--lokisloop-incorrect-color);
   background-color: var(--lokisloop-incorrect-bg-color);
@@ -209,6 +164,7 @@ div#lokis-error-message .lokis-loop-error,
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-top: 15px;
 }
 
 .lokis-loop-correct {
@@ -1117,14 +1073,14 @@ input#lokisLoop_expiration:focus {
   border-radius: 5px 0 0 5px;
 }
 
-.lokisloop-dashboard-container .lokisloop-hosted-game .lokis-loop-correct,
+/* .lokisloop-dashboard-container .lokisloop-hosted-game .lokis-loop-correct,
 .lokisloop-dashboard-container .lokisloop-hosted-game .lokis-loop-incorrect {
   margin-top: 15px;
   text-align: center;
-}
+} */
 .lokis-loop-alert {
   margin-top: 10px;
-  margin-left: 10px;
+  margin-left: 44px;
 }
 
 /*  login form  */
@@ -1545,9 +1501,9 @@ input#lokis-rememberme {
     );
   }
 }
-@media only screen and (min-width: 1068px) {
-  /* CSS styles for cookie consent popup */
+
+@media only screen and (max-width: 1074px) {
   .lokis-post-form {
-    display: block;
+    display: grid;
   }
 }
