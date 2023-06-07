@@ -125,7 +125,7 @@ if (is_user_logged_in()) {
 
                                 // this function is responsible to delete the game table data
                                 lokis_Delete_game_table_data();
-
+                                echo '</tbody></table>';
                                 // The code snippet generates customized pagination links for expired games in WordPress.
                                 $pagination_args = array(
                                     'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
@@ -146,7 +146,7 @@ if (is_user_logged_in()) {
                         } else {
                             echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                         }
-                        echo '</tbody></table></div>';
+                        echo '</div>';
                         ?>
             </div>
         </div>
