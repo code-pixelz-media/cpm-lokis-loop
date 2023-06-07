@@ -110,7 +110,7 @@ if (!class_exists('lokis_loop_game_info')) {
         public function lokis_loop_checkbox_field()
         {
             // Retrieve the current value of the meta field
-            $checked = get_post_meta(get_the_ID(), 'lokis_checkbox', true);
+            $checked = get_post_meta(get_the_ID(), 'lokis_primary_game_checkbox', true);
 
             // Output the checkbox
             echo '<label>';
