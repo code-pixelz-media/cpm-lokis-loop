@@ -26,7 +26,7 @@ jQuery(document).ready(function ($) {
           );
           document.cookie =
             "lokis_passed=" +
-            'passed' +
+            "passed" +
             "; path=/; expires=" +
             response.expiry_time +
             ";";
@@ -37,6 +37,11 @@ jQuery(document).ready(function ($) {
           $("#lokis-feedback").html(
             '<div class="lokis-loop-incorrect">Incorrect answer</div>'
           );
+
+          // Fade out the error message after one second
+          setTimeout(function () {
+            $(".lokis-loop-incorrect").fadeOut(2000);
+          }, 1000);
         }
       },
     });
@@ -72,6 +77,11 @@ jQuery(document).ready(function ($) {
           $("#lokis-feedback").html(
             '<div class="lokis-loop-incorrect">Incorrect answer</div>'
           );
+
+          // Fade out the error message after one second
+          setTimeout(function () {
+            $(".lokis-loop-incorrect").fadeOut(2000);
+          }, 1000);
         }
       },
     });
@@ -141,6 +151,10 @@ jQuery(document).ready(function ($) {
       $("#lokis-error-message").css("height", "auto");
       $("#lokis-error-message").html(error_message);
       $("#lokis-error-message").show();
+      // Fade out the error message after one second
+      setTimeout(function () {
+        $("#lokis-error-message").fadeOut(2000);
+      }, 1000);
 
       // Scroll to the top of the page
       $("html, body").animate({ scrollTop: 0 }, "fast");
@@ -172,12 +186,6 @@ jQuery(document).ready(function ($) {
             for (var i = 0; i < radio1.length; i++) {
               radio1[i].checked = false;
             }
-            // var radio2 = document.getElementsByName("role");
-
-            // // Loop through the radio buttons and unset the checked property
-            // for (var i = 0; i < radio2.length; i++) {
-            //   radio2[i].checked = false;
-            // }
 
             //Resetting cleared value of submit button
             $("#lokis-registration-button").val("Submit");
@@ -194,7 +202,11 @@ jQuery(document).ready(function ($) {
             $("#lokis-feedback").html(
               "<div class='lokis-loop-error'>" + response.message + "</div>"
             );
-            $("#lokis-feedback").show();
+
+            // Fade out the error message after one second
+            setTimeout(function () {
+              $(".lokis-loop-error").fadeOut(2000);
+            }, 1000);
           }
         },
       });
@@ -439,23 +451,22 @@ jQuery(function ($) {
   });
 });
 
-
 //Function to make the iframe full screen
 jQuery(document).ready(function ($) {
   $("#lokis-fullscreen").click(function (event) {
     const iframe = document.getElementById("loki-game-iframe");
 
     if (iframe.requestFullscreen) {
-      iframe.requestFullscreen().then(() => { });
+      iframe.requestFullscreen().then(() => {});
     } else if (iframe.mozRequestFullScreen) {
       // Firefox
       iframe.mozRequestFullScreen();
     } else if (iframe.webkitRequestFullscreen) {
       // Chrome, Safari, Opera
-      iframe.webkitRequestFullscreen().then(() => { });
+      iframe.webkitRequestFullscreen().then(() => {});
     } else if (iframe.msRequestFullscreen) {
       // IE/Edge
-      iframe.msRequestFullscreen().then(() => { });
+      iframe.msRequestFullscreen().then(() => {});
     }
   });
 });
@@ -487,7 +498,7 @@ jQuery(document).ready(function ($) {
       data: {
         action: "loki_cookie_maker",
         consent: "accept",
-        jsonserializedurl: JSON.stringify(urlObj)
+        jsonserializedurl: JSON.stringify(urlObj),
       },
       success: function (response) {
         if (response.status == "success") {

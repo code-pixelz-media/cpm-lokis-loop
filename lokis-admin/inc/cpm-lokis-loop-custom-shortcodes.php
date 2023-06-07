@@ -94,7 +94,7 @@ function lokis_loop_register_form()
                 </div>
                 <div class="lokis-formquestion-item">
                     <label for="loki-zipcode" class="lokisloop-label">
-                        <span class="lokis-formquestion-order">7. </span>Zipcode(US and Canada only)<span
+                        <span class="lokis-formquestion-order">6. </span>Zipcode(US and Canada only)<span
                             class="lokis-req-field">*</span>
                     </label>
                     <input aria label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-zipcode'

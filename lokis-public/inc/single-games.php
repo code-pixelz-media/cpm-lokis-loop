@@ -22,9 +22,7 @@ if (isset($_GET['offlinegame'])) {
                             Answer</button>
                     </div>
                 </form>
-
                 <div id="lokis-feedback"></div>
-
             </div>
         </div>
     </div>
@@ -63,11 +61,10 @@ if (isset($_GET['offlinegame'])) {
                 </form>
                 <button id='lokis-fullscreen'><i class="fa-solid fa-expand"></i>
                 </button>
-
-                <div id='lokis-feedback'></div>
                 <!-- Cookie Consent Popup -->
                 <?php lokis_cookies_content_popup() ?>
             </div>
+            <div id='lokis-feedback'></div>
         </div>
         <?php
     }
