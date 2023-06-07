@@ -46,7 +46,8 @@ if (!function_exists('lokis_create_tables')) {
         session_id VARCHAR(18) NOT NULL,
         started_at DATETIME NOT NULL,
         expires_in DATETIME NOT NULL,
-        gamesession_url VARCHAR(255) NOT NULL
+        gamesession_url VARCHAR(255) NOT NULL,
+        qr_code_image_url VARCHAR(255) DEFAULT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;";
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');

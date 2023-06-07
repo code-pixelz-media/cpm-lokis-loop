@@ -101,19 +101,21 @@ if (is_user_logged_in()) {
                                     $expiredDateString = $game['expires_in'];
                                     $formattedStartedDate = date('F d, Y, g:i a', strtotime($startedDateString));
                                     $formattedExpirationDate = date('F d, Y, g:i a', strtotime($expiredDateString));
-                                    echo '<tr><td  data-label="ID:">' . $game['id'] . '</td>';
-                                    echo '<td data-label="Name:"><p class="lokis-table-tooltip" data-tooltip="' . $game['session_id'] . '">' . $game['title'] . '</td>';
-                                    echo '<td  data-label="URL:"><div class="lokis-view-copy-btn"><a class="lokisloop-visit-url lokis-table-tooltip" target="_blank" href="' . $game['url'] . '" title="' . $game['url'] . '" data-tooltip="Visit Url"></a>';
-                                    echo '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy lokis-table-tooltip" data-tooltip="Copy"><i class="fa-regular fa-copy"></i></a></td>';
-                                    echo '<td data-label="Started At:">' . $formattedStartedDate . '</td>';
-                                    echo '<td data-label="Expires In:">' . $formattedExpirationDate . '</td>';
-                                    echo '<td class="lokis-action-td-wrapper" data-label="Action:"><div class="lokis-action-td">';
-                                    echo '<form method="POST" action="">';
-                                    echo '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
-                                    echo '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Player"></button>';
-                                    echo '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
-                                    echo '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
-                                    echo '</form></div></td></div></tr>';
+                                    $expire_content = '';
+                                    $expire_content .= '<tr><td  data-label="ID:">' . $game['id'] . '</td>';
+                                    $expire_content .= '<td data-label="Name:"><p class="lokis-table-tooltip" data-tooltip="' . $game['session_id'] . '">' . $game['title'] . '</td>';
+                                    $expire_content .= '<td  data-label="URL:"><div class="lokis-view-copy-btn"><a class="lokisloop-visit-url lokis-table-tooltip" target="_blank" href="' . $game['url'] . '" title="' . $game['url'] . '" data-tooltip="Visit Url"></a>';
+                                    $expire_content .= '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy lokis-table-tooltip" data-tooltip="Copy"><i class="fa-regular fa-copy"></i></a></td>';
+                                    $expire_content .= '<td data-label="Started At:">' . $formattedStartedDate . '</td>';
+                                    $expire_content .= '<td data-label="Expires In:">' . $formattedExpirationDate . '</td>';
+                                    $expire_content .= '<td class="lokis-action-td-wrapper" data-label="Action:"><div class="lokis-action-td">';
+                                    $expire_content .= '<form method="POST" action="">';
+                                    $expire_content .= '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
+                                    $expire_content .= '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Player"></button>';
+                                    $expire_content .= '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
+                                    $expire_content .= '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
+                                    $expire_content .= '</form></div></td></div></tr>';
+                                    echo $expire_content;
                                 }
                                 // this function is responsible to delete the game table data
                                 lokis_Delete_game_table_data();

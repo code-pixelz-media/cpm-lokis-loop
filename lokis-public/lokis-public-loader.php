@@ -72,10 +72,10 @@ if (!function_exists('lokis_check_answer')) {
 
         if ($answer == $correct_answer) {
             if ($redirect_uri == $lokis_thankyou_page) {
-                global $wpdb;
-                $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
-                $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
-                $wpdb->query($sql);
+                // global $wpdb;
+                // $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
+                // $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
+                // $wpdb->query($sql);
 
                 $response = array(
                     'status' => 'success',
@@ -118,10 +118,10 @@ if (!function_exists('lokis_offline_check_answer')) {
 
         if ($answer == $correct_answer) {
             if ($redirect_uri == $lokis_thankyou_page) {
-                global $wpdb;
-                $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
-                $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
-                $wpdb->query($sql);
+                // global $wpdb;
+                // $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
+                // $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
+                // $wpdb->query($sql);
 
                 $response = array(
                     'status' => 'success',
@@ -465,8 +465,8 @@ if (!function_exists('lokis_loop_modal_box')) {
         $host_session_id = $_POST['session_id'];
 
         // Query the custom table to fetch user IDs matching the session ID
-        $table_name = $wpdb->prefix . 'lokis_player_sessions';
-        $results = $wpdb->get_results("SELECT player_id,completed FROM $table_name WHERE session_id = '{$host_session_id}'");
+        // $table_name = $wpdb->prefix . 'lokis_player_sessions';
+        // $results = $wpdb->get_results("SELECT player_id,completed FROM $table_name WHERE session_id = '{$host_session_id}'");
         ?>
 
         <!-- The Modal -->
@@ -499,43 +499,43 @@ if (!function_exists('lokis_loop_modal_box')) {
                     <div class="lokis-modal-content">
                         <p>
                             <?php
-                            if ($results) {
-                                foreach ($results as $row) {
-                                    $user_id = $row->player_id;
-                                    $gameStatus = $row->completed;
+                            // if ($results) {
+                            //     foreach ($results as $row) {
+                            //         $user_id = $row->player_id;
+                            //         $gameStatus = $row->completed;
 
-                                    if ($gameStatus == 1) {
-                                        $gameStatus = '<i class="fa fa-circle lokis-game-status-complete"></i>Completed';
-                                    } else {
-                                        $gameStatus = '<i class="fa fa-circle lokis-game-status-incomplete"></i>Incomplete';
-                                    }
+                            //         if ($gameStatus == 1) {
+                            //             $gameStatus = '<i class="fa fa-circle lokis-game-status-complete"></i>Completed';
+                            //         } else {
+                            //             $gameStatus = '<i class="fa fa-circle lokis-game-status-incomplete"></i>Incomplete';
+                            //         }
 
-                                    $avatar = get_avatar($user_id);
-                                    $user_info = get_userdata($user_id);
-                                    if ($user_info) {
-                                        /* displays user name */
-                                        $player_full_name = get_user_meta($user_id, 'loki_fullname', true);
-                                        $player_email_address = $user_info->user_email;
-                                        if (strpos($avatar, 'gravatar.com') !== false) {
-                                            echo '<div class="lokis-user-modal-wrapper">';
-                                            echo '<div class="lokis-user-details-wrapper">';
-                                            echo '<div class="lokis-user-avatar">' . $avatar . '</div>';
-                                            echo '<div class="lokis-modal-details">';
-                                            echo '<div class="lokis-modal-fullName">' . $player_full_name . '</div>';
-                                            echo '<div class="lokis-modal-userEmail">' . $player_email_address . '</div>';
-                                            echo '</div></div>';
-                                            echo '<div class="lokis-modal-game-status">Game Status:' . $gameStatus . '</div>';
-                                            echo '</div>';
-                                        } else {
-                                            // Avatar doesn't exist, display a placeholder image
-                                            $placeholder_image_url = plugin_dir_url(__FILE__) . 'assets/images/placeholder.png';
-                                            echo '<img src="' . $placeholder_image_url . '" alt="Placeholder-Image">' . $player_full_name;
-                                        }
-                                    }
-                                }
-                            } else {
-                                echo "<div class='lokis-user-not-found'><p>No user found.</p></div>";
-                            }
+                            //         $avatar = get_avatar($user_id);
+                            //         $user_info = get_userdata($user_id);
+                            //         if ($user_info) {
+                            //             /* displays user name */
+                            //             $player_full_name = get_user_meta($user_id, 'loki_fullname', true);
+                            //             $player_email_address = $user_info->user_email;
+                            //             if (strpos($avatar, 'gravatar.com') !== false) {
+                            //                 echo '<div class="lokis-user-modal-wrapper">';
+                            //                 echo '<div class="lokis-user-details-wrapper">';
+                            //                 echo '<div class="lokis-user-avatar">' . $avatar . '</div>';
+                            //                 echo '<div class="lokis-modal-details">';
+                            //                 echo '<div class="lokis-modal-fullName">' . $player_full_name . '</div>';
+                            //                 echo '<div class="lokis-modal-userEmail">' . $player_email_address . '</div>';
+                            //                 echo '</div></div>';
+                            //                 echo '<div class="lokis-modal-game-status">Game Status:' . $gameStatus . '</div>';
+                            //                 echo '</div>';
+                            //             } else {
+                            //                 // Avatar doesn't exist, display a placeholder image
+                            //                 $placeholder_image_url = plugin_dir_url(__FILE__) . 'assets/images/placeholder.png';
+                            //                 echo '<img src="' . $placeholder_image_url . '" alt="Placeholder-Image">' . $player_full_name;
+                            //             }
+                            //         }
+                            //     }
+                            // } else {
+                            //     echo "<div class='lokis-user-not-found'><p>No user found.</p></div>";
+                            // }
                             ?>
                         </p>
                     </div>
@@ -669,3 +669,27 @@ if (!function_exists('lokis_cookies_content_popup')) {
         }
     }
 }
+
+
+
+
+function lokis_save_qr_code_callback()
+{
+    if (isset($_POST["qrImageUrl"])) {
+        // die("data base");
+        global $wpdb;
+        $qrImageUrl = $_POST["qrImageUrl"];
+        $lokis_game_id = $_POST["lokis_game_id"];
+        $lokis_game_table_name = $wpdb->prefix . 'lokis_game_sessions';
+
+        $sql = "UPDATE $lokis_game_table_name SET qr_code_image_url = '$qrImageUrl' WHERE id = '$lokis_game_id'";
+        $wpdb->query($sql);
+
+        wp_send_json_success();
+    } else {
+        wp_send_json_error("Invalid data");
+    }
+}
+
+add_action("wp_ajax_lokis_save_qr_code", "lokis_save_qr_code_callback");
+add_action("wp_ajax_nopriv_lokis_save_qr_code", "lokis_save_qr_code_callback");

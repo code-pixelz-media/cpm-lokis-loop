@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
     var answer = $("#lokis-answer").val();
     var post_id = $("#loki-post-id").val();
     var session_id = $("#loki-session-id").val();
+    var current_user_id = $("#loki-player-id").val();
 
     $.ajax({
       type: "POST",
@@ -15,7 +16,8 @@ jQuery(document).ready(function ($) {
         action: "lokis_check_answer",
         post_id: post_id,
         answer: answer,
-        session_id: session_id
+        session_id: session_id,
+        current_user_id: current_user_id,
       },
       success: function (response) {
         if (response.message == "correct") {
@@ -41,7 +43,7 @@ jQuery(document).ready(function ($) {
   });
 });
 
-//sending ajax post to wordpress to check answer from given data coming from offline games post page (single-games.php)
+//sending ajax post to wordpress to check answer from given data coming from games post page (single-games.php)
 jQuery(document).ready(function ($) {
   $("#lokis-offline-submit-btn").click(function (event) {
     event.preventDefault();
@@ -170,6 +172,12 @@ jQuery(document).ready(function ($) {
             for (var i = 0; i < radio1.length; i++) {
               radio1[i].checked = false;
             }
+            // var radio2 = document.getElementsByName("role");
+
+            // // Loop through the radio buttons and unset the checked property
+            // for (var i = 0; i < radio2.length; i++) {
+            //   radio2[i].checked = false;
+            // }
 
             //Resetting cleared value of submit button
             $("#lokis-registration-button").val("Submit");
@@ -220,11 +228,11 @@ jQuery("body").on("click", ".lokis-modal-close", function (e) {
 // code for view-player Modal-box
 jQuery(document).ready(function () {
   jQuery("body").on("click", "#lokisLoopModalBox", function (event) {
-    event.preventDefault();
-
+    event.preventDefault(); // Prevent the default action
     var game_id = jQuery(this).data("game-id"); // Get the URL from the data attribute
     var session_id = jQuery(this).data("session-id"); // Get the URL from the data attribute
 
+    // console.log(game_id);
     jQuery.ajax({
       url: gamesajax.ajaxurl,
       type: "POST",
@@ -245,7 +253,6 @@ jQuery(document).ready(function () {
 // Function to update profile
 jQuery(document).ready(function ($) {
   $("#lokis-profile-update-button").click(function (event) {
-    
     event.preventDefault();
 
     //Pull data from the form
@@ -390,6 +397,7 @@ function htmlEncode(value) {
 jQuery(function ($) {
   $(".lokis-generate-qr").click(function () {
     var qrContent = $(this).siblings(".lokis_qr_content").val();
+    var lokis_game_id = $(this).siblings(".lokis_game_id").val();
     var qrCode = $(this).siblings(".lokis-qr-code");
     var generateButton = $(this);
 
@@ -398,10 +406,29 @@ jQuery(function ($) {
       htmlEncode(qrContent) +
       "&chs=500x500&chld=L|0";
     qrCode.attr("src", qrImageUrl);
-    qrCode.attr("data-qr-url", qrImageUrl); // Set the data-qr-url attribute with the QR code image URL
-    qrCode.show(); // Show the QR code after generating it
+    qrCode.attr("data-qr-url", qrImageUrl);
+    qrCode.show();
     generateButton.css("display", "none");
     $('[data-label="QR:"]').css("min-width", "131px");
+
+    // Send AJAX request to save QR code image URL in the database
+    var postData = {
+      action: "lokis_save_qr_code",
+      qrImageUrl: qrImageUrl,
+      lokis_game_id: lokis_game_id,
+    };
+
+    $.ajax({
+      url: gamesajax.ajaxurl, // Replace ajaxurl with the actual URL to your server-side script
+      method: "POST",
+      data: postData,
+      success: function (response) {
+        console.log("QR code image URL saved in the database");
+      },
+      error: function (xhr, status, error) {
+        console.error("Error saving QR code image URL in the database:", error);
+      },
+    });
   });
 
   $(document).on("click", ".lokis-qr-code", function () {
@@ -411,6 +438,7 @@ jQuery(function ($) {
     }
   });
 });
+
 
 //Function to make the iframe full screen
 jQuery(document).ready(function ($) {
@@ -453,31 +481,17 @@ jQuery(document).ready(function ($) {
     var urlObj = {};
     urlObj[session_id] = window.location.href;
 
-    //Serialize the url
-    var serializedURLs = JSON.stringify(urlObj);
-
     $.ajax({
       type: "POST",
       url: gamesajax.ajaxurl,
       data: {
         action: "loki_cookie_maker",
         consent: "accept",
+        jsonserializedurl: JSON.stringify(urlObj)
       },
       success: function (response) {
         if (response.status == "success") {
           console.log("cookie successfully made " + session_id + " test user");
-          document.cookie =
-            "lokis_game_stage_url=" +
-            serializedURLs +
-            "; path=/; expires=" +
-            response.expiry_time +
-            ";";
-          document.cookie =
-            "lokis_passed=" +
-            "" +
-            "; path=/; expires=" +
-            response.expiry_time +
-            ";";
         } else {
           console.log("error occurred");
         }

@@ -36,7 +36,7 @@ if (is_user_logged_in()) {
                     $url = $row->gamesession_url;
                     $title = get_the_title($game_id);
 
-                    $lokis_offline_game_url = get_permalink($game_id) . '?offlinegame';
+                    $lokis_offline_game_url = get_permalink($game_id) . '?offlinegame=' . $session_id;
 
                     $expires_at = new DateTime($expires_in);
                     if ($expires_at > new DateTime()) {
@@ -49,7 +49,8 @@ if (is_user_logged_in()) {
                             'session_id' => $session_id,
                             'started_at' => $started_at,
                             'expires_in' => $expires_in,
-                            'lokis_offline_game_url' => $lokis_offline_game_url
+                            'lokis_offline_game_url' => $lokis_offline_game_url,
+                            'qr_code_image_url' => $row->qr_code_image_url,
                         ];
                     }
                 }
@@ -99,25 +100,38 @@ if (is_user_logged_in()) {
                                     $expiredDateString = $game['expires_in'];
                                     $formattedStartedDate = date('F d, Y, g:i a', strtotime($startedDateString));
                                     $formattedExpirationDate = date('F d, Y, g:i a', strtotime($expiredDateString));
-                                    echo '<tr><td  data-label="ID:">' . $game['id'] . '</td><td data-label="Name:"> <p class="lokis-table-tooltip" data-tooltip="' . $game['session_id'] . '">' . $game['title'] . '</p></td>';
-                                    echo '<td  data-label="URL:"><div class="lokis-table-url-wrapper"><a class="lokisloop-visit-url lokis-table-tooltip" target="_blank" href="' . $game['url'] . '" data-tooltip="' . $game['url'] . '"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>';
-                                    echo '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy lokis-table-tooltip" data-tooltip="Copy"><i class="fa-regular fa-copy"></i></a></div></td>';
-                                    echo '<td data-label="Started At:">' . $formattedStartedDate . '</td>';
-                                    echo '<td data-label="Expires In:">' . $formattedExpirationDate . '</td>';
-                                    echo '<td class="lokis-action-td-wrapper" data-label="Action:"><div class="lokis-action-td">';
-                                    echo '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Players"></button>';
-                                    echo '<form method="POST" action="">';
-                                    echo '<input type="hidden" name="end_session" value="' . $game['id'] . '">';
-                                    echo '<button type="submit" class="button end-session lokis-table-tooltip" data-tooltip="End Session"></button></form>';
-                                    echo '<form method="POST" action="">';
-                                    echo '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
-                                    echo '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
-                                    echo '</form></div></td>';
-                                    echo '<td data-label="QR:">';
-                                    echo '<div class="lokis-qr-section-container">';
-                                    echo '<input type="hidden" class="form-control lokis_qr_content" value="' . $game['lokis_offline_game_url'] . '">';
-                                    echo '<img src="" class="lokis-qr-code lokis-table-tooltip" data-tooltip="Open Image in new tab"><button type="button" class="button lokis-table-button  lokis-generate-qr lokis-table-tooltip" data-tooltip="Generate QR"><i class="fa-solid fa-circle-plus"></i></button></div></td>';
-                                    echo '</tr>';
+                                    $lokis_content = '';
+                                    $lokis_content .= '<tr><td  data-label="ID:">' . $game['id'] . '</td><td data-label="Name:"> <p class="lokis-table-tooltip" data-tooltip="' . $game['session_id'] . '">' . $game['title'] . '</p></td>';
+                                    $lokis_content .= '<td  data-label="URL:"><div class="lokis-table-url-wrapper"><a class="lokisloop-visit-url lokis-table-tooltip" target="_blank" href="' . $game['url'] . '" data-tooltip="' . $game['url'] . '"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>';
+                                    $lokis_content .= '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy lokis-table-tooltip" data-tooltip="Copy"><i class="fa-regular fa-copy"></i></a></div></td>';
+                                    $lokis_content .= '<td data-label="Started At:">' . $formattedStartedDate . '</td>';
+                                    $lokis_content .= '<td data-label="Expires In:">' . $formattedExpirationDate . '</td>';
+                                    $lokis_content .= '<td class="lokis-action-td-wrapper" data-label="Action:"><div class="lokis-action-td">';
+                                    $lokis_content .= '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Players"></button>';
+                                    $lokis_content .= '<form method="POST" action="">';
+                                    $lokis_content .= '<input type="hidden" name="end_session" value="' . $game['id'] . '">';
+                                    $lokis_content .= '<button type="submit" class="button end-session lokis-table-tooltip" data-tooltip="End Session"></button></form>';
+                                    $lokis_content .= '<form method="POST" action="">';
+                                    $lokis_content .= '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
+                                    $lokis_content .= '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
+                                    $lokis_content .= '</form></div></td>';
+                                    $lokis_content .= '<td data-label="QR:">';
+                                    $lokis_content .= '<div class="lokis-qr-section-container">';
+                                    $lokis_content .= '<input type="hidden" class="form-control lokis_qr_content" value="' . $game['lokis_offline_game_url'] . '">';
+                                    $lokis_content .= '<input type="hidden" class="lokis_game_id" name="lokis_game_id" value="' . $game['id'] . '">';
+
+                                    // Check if the QR code image URL is already available
+                                    if (!empty($game['qr_code_image_url'])) {
+
+                                        $lokis_content .= '<a href="' . $game['qr_code_image_url'] . '" target="_blank"><img src="' . $game['qr_code_image_url'] . '" class="lokis-qr-code"></a>';
+
+                                    } else {
+                                        $lokis_content .= '<img src="" class="lokis-qr-code lokis-table-tooltip" data-tooltip="Open Image in new tab" style="display: none;">';
+                                        $lokis_content .= '<button type="button" class="button lokis-table-button lokis-generate-qr lokis-table-tooltip" data-tooltip="Generate QR"><i class="fa-solid fa-circle-plus"></i></button>';
+                                    }
+                                    $lokis_content .= '</div></td></tr>';
+
+                                    echo $lokis_content;
                                 }
 
                                 // Delete the game session data
@@ -164,8 +178,7 @@ if (is_user_logged_in()) {
 } else {
     ?>
 
-    <script>
-        window.location.href = '<?php echo wp_login_url(); ?>';
+    <script>     window.location.href = '<?php echo wp_login_url(); ?>';
 
     </script>
 
