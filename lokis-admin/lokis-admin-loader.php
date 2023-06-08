@@ -103,8 +103,6 @@ if (!function_exists('lokis_redirect_after_expiration')) {
         // Check if the session has expired
         $lokis_host_table_name = $wpdb->prefix . 'lokis_game_sessions';
         $current_time = date('Y-m-d H:i:s');
-        $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
-        $lokis_dashboard_page = get_permalink($dashboard_page_id);
         $session_id = lokis_getSessionIDFromURL();
         $results = $wpdb->get_results("SELECT expires_in FROM $lokis_host_table_name WHERE session_id = '{$session_id}'");
 
@@ -124,32 +122,32 @@ if (!function_exists('lokis_redirect_after_expiration')) {
     add_action('wp_head', 'lokis_redirect_after_expiration', 10);
 }
 
-/*Stores session ID of game*/
-if (!function_exists('lokis_store_session_id')) {
-    function lokis_store_session_id()
+/*Check session ID of game*/
+if (!function_exists('lokis_check_session_id')) {
+    function lokis_check_session_id()
     {
         if (is_single() && get_post_type() === 'games') {
             global $wpdb;
 
             $session_id = lokis_getSessionIDFromURL(); // Retrieve session ID from the cookie
-
+            $lokis_host_table_name = $wpdb->prefix . 'lokis_game_sessions';
             // Check if the session ID exists in the database
             $existing_Sessionid_entry = $wpdb->get_var(
                 $wpdb->prepare(
-                    "SELECT COUNT(*) FROM {$wpdb->prefix}lokis_game_sessions WHERE session_id = %s",
+                    "SELECT COUNT(*) FROM $lokis_host_table_name WHERE session_id = %s",
                     $session_id
                 )
             );
             if (isset($_GET['game'])) {
                 if ($existing_Sessionid_entry == 0) {
                     // Invalid session, handle accordingly
-                    echo "<script>alert('Invalid session. Please contact the host.ffff');</script>";
+                    echo "<script>alert('Invalid session. Please contact the host.');</script>";
                     echo "<script>window.location.href = '" . site_url() . "';</script>";
                 }
             }
         }
     }
-    add_action('wp_head', 'lokis_store_session_id', 20);
+    add_action('wp_head', 'lokis_check_session_id', 20);
 }
 
 /* Create or reject cookie according to consent */
@@ -167,6 +165,9 @@ if (!function_exists('loki_cookie_maker')) {
             // Set the cookie with a duration of 30 days
             setcookie('loki_user_id', $cookie_value, time() + (86400 * 30), '/');
             setcookie('lokis_game_stage_url', serialize($lokis_url_array), time() + (86400 * 30), '/');
+
+            //Add player unique id cookie to transient
+            set_transient('lokis_transient', $cookie_value, 3600);
 
             $response = array(
                 'status' => 'success',
@@ -214,8 +215,7 @@ if (!function_exists('loki_url_cookie')) {
                             // Replace the URL for the session ID
                             $urls[$lokis_current_session_id] = $lokis_game_permalink;
                         }
-                    }
-                    else{
+                    } else {
                         $urls[$lokis_current_session_id] = $lokis_game_permalink;
                     }
 
