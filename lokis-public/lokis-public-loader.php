@@ -462,10 +462,23 @@ if (!function_exists('lokis_loop_modal_box')) {
         global $wpdb;
         $get_game_id = $_POST['game_id'];
         $host_session_id = $_POST['session_id'];
+        $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
 
-        // Query the custom table to fetch user IDs matching the session ID
-        // $table_name = $wpdb->prefix . 'lokis_player_sessions';
-        // $results = $wpdb->get_results("SELECT player_id,completed FROM $table_name WHERE session_id = '{$host_session_id}'");
+        $players_count = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT players_count FROM $lokis_game_sessions_table_name WHERE session_id = %s",
+                $host_session_id
+            )
+        );
+
+        $players_count_array = !empty($players_count) ? json_decode($players_count, true) : [];
+        $count = count($players_count_array);
+        if ($count > 0) {
+            $lokis_player_result = ("Number of players: " . $count);
+        } else {
+            $lokis_player_result = "No players found";
+        }
+
         ?>
 
         <!-- The Modal -->
@@ -498,43 +511,7 @@ if (!function_exists('lokis_loop_modal_box')) {
                     <div class="lokis-modal-content">
                         <p>
                             <?php
-                            // if ($results) {
-                            //     foreach ($results as $row) {
-                            //         $user_id = $row->player_id;
-                            //         $gameStatus = $row->completed;
-                    
-                            //         if ($gameStatus == 1) {
-                            //             $gameStatus = '<i class="fa fa-circle lokis-game-status-complete"></i>Completed';
-                            //         } else {
-                            //             $gameStatus = '<i class="fa fa-circle lokis-game-status-incomplete"></i>Incomplete';
-                            //         }
-                    
-                            //         $avatar = get_avatar($user_id);
-                            //         $user_info = get_userdata($user_id);
-                            //         if ($user_info) {
-                            //             /* displays user name */
-                            //             $player_full_name = get_user_meta($user_id, 'loki_fullname', true);
-                            //             $player_email_address = $user_info->user_email;
-                            //             if (strpos($avatar, 'gravatar.com') !== false) {
-                            //                 echo '<div class="lokis-user-modal-wrapper">';
-                            //                 echo '<div class="lokis-user-details-wrapper">';
-                            //                 echo '<div class="lokis-user-avatar">' . $avatar . '</div>';
-                            //                 echo '<div class="lokis-modal-details">';
-                            //                 echo '<div class="lokis-modal-fullName">' . $player_full_name . '</div>';
-                            //                 echo '<div class="lokis-modal-userEmail">' . $player_email_address . '</div>';
-                            //                 echo '</div></div>';
-                            //                 echo '<div class="lokis-modal-game-status">Game Status:' . $gameStatus . '</div>';
-                            //                 echo '</div>';
-                            //             } else {
-                            //                 // Avatar doesn't exist, display a placeholder image
-                            //                 $placeholder_image_url = plugin_dir_url(__FILE__) . 'assets/images/placeholder.png';
-                            //                 echo '<img src="' . $placeholder_image_url . '" alt="Placeholder-Image">' . $player_full_name;
-                            //             }
-                            //         }
-                            //     }
-                            // } else {
-                            //     echo "<div class='lokis-user-not-found'><p>No user found.</p></div>";
-                            // }
+                            echo $lokis_player_result;
                             ?>
                         </p>
                     </div>
