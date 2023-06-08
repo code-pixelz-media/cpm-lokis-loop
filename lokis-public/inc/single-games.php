@@ -46,24 +46,25 @@ if (isset($_GET['offlinegame'])) {
                         sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-presentation allow-scripts allow-same-origin allow-popups-to-escape-sandbox allow-downloads"
                         scrolling="no" allowfullscreen="true"></iframe>
 
+                    <!-- creating lokis-loop post-form -->
+                    <div class="lokis-post-form">
+                        <form action="" method="post">
+                            <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
+                            <input type="hidden" value="<?php echo $session_id; ?>" id="loki-session-id">
+                            <div class="lokisloop-answer">
+                                <label for="lokis-answer">Answer:</label>
+                                <input type="text" id="lokis-answer" name="lokis-answer">
+                                <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">Check
+                                    Answer</button>
+                            </div>
+                        </form>
+                        <i id='lokis-fullscreen' class="fa-solid fa-expand"></i>
+                    </div>
                 </div>
             </div>
-            <!-- creating lokis-loop post-form -->
-            <div class="lokis-post-form">
-                <form action="" method="post">
-                    <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
-                    <input type="hidden" value="<?php echo $session_id; ?>" id="loki-session-id">
-                    <div class="lokisloop-answer">
-                        <label for="lokis-answer">Answer:</label>
-                        <input type="text" id="lokis-answer" name="lokis-answer">
-                        <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">Check Answer</button>
-                    </div>
-                </form>
-                <i id='lokis-fullscreen' class="fa-solid fa-expand"></i>
-                <!-- Cookie Consent Popup -->
-                <?php lokis_cookies_content_popup() ?>
-            </div>
             <div id='lokis-feedback'></div>
+            <!-- Cookie Consent Popup -->
+            <?php lokis_cookies_content_popup() ?>
         </div>
         <?php
     }

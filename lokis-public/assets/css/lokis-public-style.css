@@ -87,7 +87,7 @@ span.page-numbers.current:hover {
 /* for lokis post form */
 .lokis-post-form {
   display: flex;
-  margin-left: 193px;
+  justify-content: space-between;
 }
 
 /* .lokisloop-container .lokis-post-form {
@@ -563,9 +563,9 @@ li.lokis-active {
   width: 100%;
 }
 
-.lokisloop-container .rightbox .profile input:focus {
+/* .lokisloop-container .rightbox .profile input:focus {
   outline: none;
-}
+} */
 
 .lokis-gamehost-profileform-container
   .lokisloop-profile-form
@@ -618,7 +618,15 @@ li.lokis-active {
   .lokisloop-profile-form
   .lokis-radio
   input[type="radio"]:focus,
-.lokisloop-profile-form button.edit-button:focus {
+.lokisloop-profile-form button.edit-button:focus,
+.lokis-cookie-btn .lokis-cookie-reject:focus,
+.lokisloop-container .rightbox .profile input:focus,
+input#lokisLoop_expiration:focus,
+.lokisloop-hosted-game #id_game:focus,
+.login-submit input#lokis-submit:focus,
+.lokis-login-form-container input[type="text"]:focus,
+.lokis-login-form-container input[type="password"]:focus,
+.lokis-login-form-container input[type="checkbox"]:focus {
   outline: none;
 }
 
@@ -1056,9 +1064,10 @@ button.btn.btn-primary.mb-3 {
   border: 1px solid var(--lokis-hostbgbdr-color);
   width: 60%;
 }
-input#lokisLoop_expiration:focus {
+/* input#lokisLoop_expiration:focus,
+.lokisloop-hosted-game #id_game:focus {
   outline: none;
-}
+} */
 .lokisloop-dashboard-container .lokisloop-hosted-game form {
   display: flex;
   column-gap: 20px;
@@ -1130,18 +1139,18 @@ input#lokisLoop_expiration:focus {
   border: 1px solid var(--lokis-hostbgbdr-color);
   color: var(--lokis-color);
 }
-.login-submit input#lokis-submit:focus {
+/* .login-submit input#lokis-submit:focus {
   outline: none;
-}
+} */
 .login-submit input#lokis-submit:hover {
   background-color: var(--lokis-primarybtn-color) !important;
   color: var(--lokis-white-color) !important;
 }
-.lokis-login-form-container input[type="text"]:focus,
+/* .lokis-login-form-container input[type="text"]:focus,
 .lokis-login-form-container input[type="password"]:focus,
 .lokis-login-form-container input[type="checkbox"]:focus {
   outline: none;
-}
+} */
 .lokis-login-form-container p.login-remember label input {
   margin-top: 5px;
   position: relative;
