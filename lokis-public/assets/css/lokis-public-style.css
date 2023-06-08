@@ -89,13 +89,15 @@ span.page-numbers.current:hover {
   display: flex;
   justify-content: space-between;
 }
-
-/* .lokisloop-container .lokis-post-form {
-  margin: auto;
-  text-align: center;
-  margin-top: 10px;
-} */
-
+i#lokis-fullscreen {
+  margin-top: 30px;
+  font-size: 30px;
+}
+i#lokis-fullscreen:hover {
+  margin-top: 25px;
+  font-size: 35px;
+  color: var(--lokis-primarybtn-color);
+}
 .lokisloop-container .lokis-post-form .lokisloop-answer {
   display: flex;
   align-items: center;
