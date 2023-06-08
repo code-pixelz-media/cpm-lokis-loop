@@ -110,7 +110,6 @@ if (!function_exists('lokis_offline_check_answer')) {
         $post_id = $_POST['post_id'];
         $answer = strtolower($_POST['answer']);
         $session_id = $_POST['session_id'];
-        $player_id = $_POST['current_user_id'];
         $correct_answer = strtolower(get_post_meta($post_id, 'lokis_loop_correct_answer', true));
         $redirect_uri = get_post_meta($post_id, 'lokis_loop_redirect_uri', true);
         $thankyou_page_id = (get_option('lokis_setting'))['thankyou'];
@@ -131,8 +130,8 @@ if (!function_exists('lokis_offline_check_answer')) {
             } else {
                 $response = array(
                     'status' => 'success',
-                    // 'redirect' => $redirect_uri . '/?offlinegame',
-                    'redirect' => $redirect_uri,
+                    'redirect' => $redirect_uri . '/?offlinegame=' . $session_id,
+                    // 'redirect' => $redirect_uri,
                     'message' => 'correct'
                 );
             }
@@ -607,13 +606,55 @@ if (!function_exists('lokis_Delete_game_table_data')) {
     function lokis_Delete_game_table_data()
     {
         global $wpdb;
-        $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-        if (isset($_POST['delete_session_data'])) {
-            $id = $_POST['delete_session_data'];
-            // Perform the deletion query using the game ID
-            $wpdb->delete($lokis_game_sessions_table_name, ['id' => $id]);
+        $lokis_delete_message = '';
+        // delete_expired_games
+        if (isset($_POST['delete_game'])) {
+            $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
+            $delete_id = (int) $_POST['delete_session_data'];
+            // Delete data in mysql from row that has this id 
+            $result = $wpdb->delete($lokis_game_sessions_table_name, array('id' => $delete_id));
+
+            // if successfully deleted
+            if ($result) {
+                $lokis_delete_message = '<div class="lokis-delete-success-box">Deleted Game ID-> ' . $delete_id . ' Successfully</div>';
+            } else {
+                $lokis_delete_message = '<div class="lokis-delete-error-box"> Data could not Deleted ! Please Try again</div>';
+            }
+
+            if ($lokis_delete_message) {
+                echo $lokis_delete_message;
+            }
+        }
+    }
+}
+
+/**
+ * The function updates the expires_in value in the database and displays a success or error message
+ * based on the result.
+ */
+if (!function_exists('lokis_end_game_session')) {
+    function lokis_end_game_session()
+    {
+        if (isset($_POST['end_session'])) {
+            global $wpdb;
+            $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
+            $id = $_POST['end_session'];
+            $lokis_end_session_message = '';
+            $current_time = date('Y-m-d H:i:s');
+            // Update the expires_in value in the database
+            $result = $wpdb->update($lokis_game_sessions_table_name, ['expires_in' => $current_time], ['id' => $id]);
             // Redirect to the same page to update the displayed data
-            echo '<script>window.location.href = window.location.href;</script>';
+
+            // if successfully deleted
+            if ($result) {
+                $lokis_end_session_message = '<div class="lokis-delete-success-box">Game Session with Game ID-> ' . $id . ' Ended</div>';
+            } else {
+                $lokis_end_session_message = '<div class="lokis-delete-error-box">Game Session Couldnot be ended ! Please Try again</div>';
+            }
+
+            if ($lokis_end_session_message) {
+                echo $lokis_end_session_message;
+            }
         }
     }
 }
@@ -647,7 +688,7 @@ if (!function_exists('lokis_pull_private_template')) {
     add_filter('template_include', 'lokis_pull_private_template');
 }
 
-//Lightbox for cookies consent
+// Lightbox function for cookies consent
 if (!function_exists('lokis_cookies_content_popup')) {
     function lokis_cookies_content_popup()
     {
@@ -668,26 +709,70 @@ if (!function_exists('lokis_cookies_content_popup')) {
     }
 }
 
+/**
+ * The function saves a QR code image URL to a database table for a specific game session ID.
+ */
+if (!function_exists('lokis_save_qr_code_callback')) {
+    function lokis_save_qr_code_callback()
+    {
+        if (isset($_POST["qrImageUrl"])) {
+            // die("data base");
+            global $wpdb;
+            $qrImageUrl = $_POST["qrImageUrl"];
+            $lokis_game_id = $_POST["lokis_game_id"];
+            $lokis_game_table_name = $wpdb->prefix . 'lokis_game_sessions';
 
+            $sql = "UPDATE $lokis_game_table_name SET qr_code_image_url = '$qrImageUrl' WHERE id = '$lokis_game_id'";
+            $wpdb->query($sql);
 
-
-function lokis_save_qr_code_callback()
-{
-    if (isset($_POST["qrImageUrl"])) {
-        // die("data base");
-        global $wpdb;
-        $qrImageUrl = $_POST["qrImageUrl"];
-        $lokis_game_id = $_POST["lokis_game_id"];
-        $lokis_game_table_name = $wpdb->prefix . 'lokis_game_sessions';
-
-        $sql = "UPDATE $lokis_game_table_name SET qr_code_image_url = '$qrImageUrl' WHERE id = '$lokis_game_id'";
-        $wpdb->query($sql);
-
-        wp_send_json_success();
-    } else {
-        wp_send_json_error("Invalid data");
+            wp_send_json_success();
+        } else {
+            wp_send_json_error("Invalid data");
+        }
     }
 }
 
 add_action("wp_ajax_lokis_save_qr_code", "lokis_save_qr_code_callback");
 add_action("wp_ajax_nopriv_lokis_save_qr_code", "lokis_save_qr_code_callback");
+
+//Add players unique id in the player_count column in games_session table
+if (!function_exists('loki_add_player_unique_id')) {
+    function loki_add_player_unique_id()
+    {
+        global $wpdb;
+
+        $session_id = lokis_getSessionIDFromURL();
+        $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
+
+        $existing_players_count = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT players_count FROM $lokis_game_sessions_table_name WHERE session_id = %s",
+                $session_id
+            )
+        );
+
+        // Decode the existing players count from JSON
+        $players_count_array = !empty($existing_players_count) ? json_decode($existing_players_count, true) : [];
+
+        $unique_id = isset($_COOKIE['loki_user_id']) ? $_COOKIE['loki_user_id'] : get_transient('lokis_transient');
+
+        if ($unique_id !== null && !in_array($unique_id, $players_count_array)) {
+            // Add the unique ID to the players_count array
+            $players_count_array[] = $unique_id;
+
+            // Remove empty values from the array
+            $players_count_array = array_filter($players_count_array);
+
+            // Update the players_count column with the updated array
+            $updated_players_count = !empty($players_count_array) ? json_encode($players_count_array) : '';
+
+            $wpdb->update(
+                $lokis_game_sessions_table_name,
+                array('players_count' => $updated_players_count),
+                array('session_id' => $session_id)
+            );
+        }
+    }
+    add_action('wp_footer', 'loki_add_player_unique_id');
+    add_action('init', 'loki_add_player_unique_id');
+}

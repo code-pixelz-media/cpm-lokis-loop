@@ -1,8 +1,7 @@
 <?php
+get_header();
 if (is_user_logged_in()) {
-
-    get_header(); ?>
-
+    ?>
     <div class="lokisloop-dashboard-container">
         <aside>
             <div class="lokis-logo">
@@ -18,6 +17,12 @@ if (is_user_logged_in()) {
                 <div class="lokisloop-main-top">
                     <h5>Current Games</h5>
                 </div>
+                <?php
+                // this function is responsible to delete the game table data
+                lokis_Delete_game_table_data();
+                // this function is responsible to end the game session
+                lokis_end_game_session();
+                ?>
                 <table id="current-games" class="lookisloop-games">
                     <thead>
                         <tr>
@@ -26,8 +31,8 @@ if (is_user_logged_in()) {
                             <th scope="col">Url</th>
                             <th scope="col">Started At</th>
                             <th scope="col">Expires In</th>
-                            <th scope="col">Action</th>
                             <th scope="col">QR</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +59,7 @@ if (is_user_logged_in()) {
                                 $started_at = $row->started_at;
                                 $url = $row->gamesession_url;
                                 $title = get_the_title($game_id);
+                                $gm_merge_delete_message = '';
 
                                 $lokis_offline_game_url = get_permalink($game_id) . '?offlinegame=' . $session_id;
 
@@ -104,16 +110,8 @@ if (is_user_logged_in()) {
                                     $lokis_content .= '<a data-url="' . $game['url'] . '" class="lokisloop-url-copy lokis-table-tooltip" data-tooltip="Copy"><i class="fa-regular fa-copy"></i></a></div></td>';
                                     $lokis_content .= '<td data-label="Started At:">' . $formattedStartedDate . '</td>';
                                     $lokis_content .= '<td data-label="Expires In:">' . $formattedExpirationDate . '</td>';
-                                    $lokis_content .= '<td class="lokis-action-td-wrapper" data-label="Action:"><div class="lokis-action-td">';
-                                    $lokis_content .= '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Players"></button>';
-                                    $lokis_content .= '<form method="POST" action="">';
-                                    $lokis_content .= '<input type="hidden" name="end_session" value="' . $game['id'] . '">';
-                                    $lokis_content .= '<button type="submit" class="button end-session lokis-table-tooltip" data-tooltip="End Session"></button></form>';
-                                    $lokis_content .= '<form method="POST" action="">';
-                                    $lokis_content .= '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
-                                    $lokis_content .= '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
-                                    $lokis_content .= '</form></div></td>';
                                     $lokis_content .= '<td data-label="QR:">';
+
                                     $lokis_content .= '<div class="lokis-qr-section-container">';
                                     $lokis_content .= '<input type="hidden" class="form-control lokis_qr_content" value="' . $game['lokis_offline_game_url'] . '">';
                                     $lokis_content .= '<input type="hidden" class="lokis_game_id" name="lokis_game_id" value="' . $game['id'] . '">';
@@ -127,24 +125,26 @@ if (is_user_logged_in()) {
                                         $lokis_content .= '<img src="" class="lokis-qr-code lokis-table-tooltip" data-tooltip="Open Image in new tab" style="display: none;">';
                                         $lokis_content .= '<button type="button" class="button lokis-table-button lokis-generate-qr lokis-table-tooltip" data-tooltip="Generate QR"><i class="fa-solid fa-circle-plus"></i></button>';
                                     }
-                                    $lokis_content .= '</div></td></tr>';
+                                    $lokis_content .= '</div></td>';
+
+                                    $lokis_content .= '<td class="lokis-action-td-wrapper" data-label="Action:"><div class="lokis-action-td">';
+                                    $lokis_content .= '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Players"></button>';
+
+                                    $lokis_content .= '<form method="POST" action="">';
+                                    $lokis_content .= '<input type="hidden" name="end_session" value="' . $game['id'] . '">';
+                                    $lokis_content .= '<button type="submit" class="button end-session lokis-table-tooltip" data-tooltip="End Session"></button></form>';
+
+                                    $lokis_content .= '<form method="POST" action="">';
+                                    $lokis_content .= '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
+                                    $lokis_content .= '<button type="submit" name="delete_game" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
+                                    $lokis_content .= '</form></div></td>';
+                                    $lokis_content .= '</tr>';
 
                                     echo $lokis_content;
                                 }
 
-                                // Delete the game session data
-                                if (isset($_POST['delete_session_data'])) {
-                                    lokis_Delete_game_table_data();
-                                }
 
-                                if (isset($_POST['end_session'])) {
-                                    $id = $_POST['end_session'];
-                                    $current_time = date('Y-m-d H:i:s');
-                                    // Update the expires_in value in the database
-                                    $wpdb->update($lokis_game_sessions_table_name, ['expires_in' => $current_time], ['id' => $id]);
-                                    echo '<script>window.location.href = window.location.href;</script>';
-                                    // Redirect to the same page to update the displayed data
-                                }
+
                                 ?>
                             </tbody>
                         </table>
@@ -163,6 +163,11 @@ if (is_user_logged_in()) {
                             echo paginate_links($pagination_args);
                             ?>
                         </div>
+                        <?php
+                        if ($gm_merge_delete_message) {
+                            echo $gm_merge_delete_message;
+                        }
+                        ?>
                     </div>
                     <?php
                             } else {
@@ -175,14 +180,12 @@ if (is_user_logged_in()) {
                         echo '<tbody></table>'; ?>
         </div>
     </div>
-    <?php get_footer();
+    <?php
 } else {
     ?>
-
-    <script>     window.location.href = '<?php echo wp_login_url(); ?>';
-
+    <script>
+        window.location.href = '<?php echo wp_login_url(); ?>';
     </script>
-
     <?php
 }
-?>
+get_footer();

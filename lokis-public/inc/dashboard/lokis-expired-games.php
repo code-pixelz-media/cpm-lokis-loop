@@ -1,7 +1,6 @@
 <?php
 get_header();
 if (is_user_logged_in()) {
-
     ?>
     <div class="lokisloop-dashboard-container">
         <aside>
@@ -15,6 +14,10 @@ if (is_user_logged_in()) {
             <div class="lokis_show_modal_box"></div>
             <div class="lokisloop-container-wrapper">
                 <h5> Expired Games</h5>
+                <?php
+                // this function is responsible to delete the game table data
+                lokis_Delete_game_table_data();
+                    ?>
                 <table id="expired-games" class="lookisloop-games">
                     <div class="thead">
                         <tr>
@@ -36,15 +39,11 @@ if (is_user_logged_in()) {
                         // Run the query
                         $results = $wpdb->get_results($query);
                         // Check if any rows were returned
-                    
                         if ($wpdb->num_rows > 0) {
                             $expired_games = []; // Array to store expired games
-                    
                             // Loop through the results and access the data
-                    
                             foreach ($results as $row) {
                                 // Access individual fields using object notation
-                    
                                 $id = $row->id;
                                 $host_id = $row->host_id;
                                 $game_id = $row->game_id;
@@ -56,7 +55,6 @@ if (is_user_logged_in()) {
                                 $expires_at = new DateTime($expires_in);
                                 if ($expires_at < new DateTime()) {
                                     // Store expired game data in the array
-                    
                                     $expired_games[] = [
                                         'id' => $id,
                                         'title' => $title,
@@ -74,7 +72,7 @@ if (is_user_logged_in()) {
                                 return $b['id'] - $a['id'];
                             });
                             // Display expired games
-                    
+
                             //Set number of games per page
                             if (!empty($expired_games)) {
 
@@ -97,6 +95,7 @@ if (is_user_logged_in()) {
                                 // Retrieve the subset of games for the expired page
                     
                                 $expired_page_games = array_slice($expired_games, $expired_offset, $games_per_page);
+
                                 foreach ($expired_page_games as $index => $game) {
                                     // Perform actions with the retrieved data
                     
@@ -118,14 +117,13 @@ if (is_user_logged_in()) {
                                     $expire_content .= '<input type="hidden" name="game_id" value="' . $game['game_id'] . '">';
                                     $expire_content .= '<button id="lokisLoopModalBox" class="button view-player modal-toggle lokis-table-tooltip" name="view_player" data-game-id="' . $game['game_id'] . '" data-session-id="' . $game['session_id'] . '" data-tooltip="View Player"></button>';
                                     $expire_content .= '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
-                                    $expire_content .= '<button type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
+                                    $expire_content .= '<button name="delete_game" type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
                                     $expire_content .= '</form></div></td></div></tr>';
+                                    
                                     echo $expire_content;
                                 }
-
-                                // this function is responsible to delete the game table data
-                                lokis_Delete_game_table_data();
                                 echo '</tbody></table>';
+
                                 // The code snippet generates customized pagination links for expired games in WordPress.
                                 $pagination_args = array(
                                     'base' => esc_url_raw(add_query_arg('expired-games', '%#%')),
@@ -146,15 +144,15 @@ if (is_user_logged_in()) {
                         } else {
                             echo "<tr><td colspan='6'>No expired games found.</td></tr>";
                         }
-                        echo '</div>';
+                        echo '<tbody></table></div>';
+
                         ?>
             </div>
         </div>
         <?php
 } else {
     ?>
-        <script>
-            window.location.href = '<?php echo wp_login_url(); ?>';
+        <script>         window.location.href = '<?php echo wp_login_url(); ?>';
         </script>
         <?php
 }
