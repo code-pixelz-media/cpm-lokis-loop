@@ -4,29 +4,40 @@ if (is_user_logged_in()) {
     ?>
     <div class="lokisloop-dashboard-container">
         <aside>
-            <div class="lokis-logo">
-                <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
-            </div>
             <?php lokis_account_menu(); ?>
         </aside>
         <div class="lokisloop-hosted-game">
             <!-- here is the modal box code -->
             <div class="lokis_show_modal_box"></div>
             <div class="lokisloop-container-wrapper">
-                <h5> Expired Games</h5>
+                <h5>
+                    <?php _e("Expired Games", "lokis-loop") ?>
+                </h5>
                 <?php
                 // this function is responsible to delete the game table data
                 lokis_Delete_game_table_data();
-                    ?>
+                ?>
                 <table id="expired-games" class="lookisloop-games">
                     <div class="thead">
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Url</th>
-                            <th scope="col">Started</th>
-                            <th scope="col">Expired</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">
+                                <?php _e("ID", "lokis-loop") ?>
+                            </th>
+                            <th scope="col">
+                                <?php _e("Name", "lokis-loop") ?>
+                            </th>
+                            <th scope="col">
+                                <?php _e("Url", "lokis-loop") ?>
+                            </th>
+                            <th scope="col">
+                                <?php _e("Started", "lokis-loop") ?>
+                            </th>
+                            <th scope="col">
+                                <?php _e("Expired", "lokis-loop") ?>
+                            </th>
+                            <th scope="col">
+                                <?php _e("Action", "lokis-loop") ?>
+                            </th>
                         </tr>
                     </div>
                     <tbody>
@@ -72,7 +83,7 @@ if (is_user_logged_in()) {
                                 return $b['id'] - $a['id'];
                             });
                             // Display expired games
-
+                    
                             //Set number of games per page
                             if (!empty($expired_games)) {
 
@@ -119,7 +130,7 @@ if (is_user_logged_in()) {
                                     $expire_content .= '<input type="hidden" name="delete_session_data" value="' . $game['id'] . '">';
                                     $expire_content .= '<button name="delete_game" type="submit" class="button lokis-table-button lokis-table-tooltip" data-tooltip="Delete"><i class="fa fa-trash"></i></button>';
                                     $expire_content .= '</form></div></td></div></tr>';
-                                    
+
                                     echo $expire_content;
                                 }
                                 echo '</tbody></table>';
@@ -139,10 +150,10 @@ if (is_user_logged_in()) {
                                 echo '</div>';
 
                             } else {
-                                echo "<tr><td colspan='6'>No expired games found.</td></tr>";
+                                echo "<tr><td colspan='6'>" . esc_html__('No expired games found.', 'lokis-loop') . "</td></tr>";
                             }
                         } else {
-                            echo "<tr><td colspan='6'>No expired games found.</td></tr>";
+                            echo "<tr><td colspan='6'>" . esc_html__('No expired games found.', 'lokis-loop') . "</td></tr>";
                         }
                         echo '<tbody></table></div>';
 
