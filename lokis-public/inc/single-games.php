@@ -7,7 +7,7 @@ if (isset($_GET['offlinegame'])) {
     ?>
     <div class="lokis-offline-modal-answer" id="lokisOfflineModal">
         <div class="lokis-offline-modal-content">
-            <div class="lokis-post-form">
+            <div class="lokis-offline-post-form">
                 <form action="" method="post">
                     <input type="hidden" value="<?php echo $post_id; ?>" id="loki-post-id">
                     <div class="lokis-offline-modal-title">
@@ -15,7 +15,7 @@ if (isset($_GET['offlinegame'])) {
                             <?php echo get_the_title($post_id); ?>
                         </h3>
                     </div>
-                    <div class="lokisloop-answer">
+                    <div class="lokisloop-offline-answer">
                         <label for="lokis-answer">Answer:</label>
                         <input type="text" id="lokis-answer" name="lokis-answer">
                         <button type="submit" id="lokis-offline-submit-btn" class="button lokis-submit-btn">Check

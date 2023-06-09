@@ -1,20 +1,19 @@
 <?php
+get_header();
+
 if (is_user_logged_in()) {
-
-    get_header(); ?>
-
+    $textdomain = "lokis-loop";
+    ?>
     <div class="lokisloop-dashboard-container">
         <aside>
-            <div class="lokis-logo">
-                <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
-            </div>
             <?php lokis_account_menu(); ?>
         </aside>
 
-
         <div class="lokisloop-hosted-game">
             <div class="lokis-host-game-title">
-                <h5>Host a game</h5>
+                <h5>
+                    <?php echo __("Host a game", $textdomain); ?>
+                </h5>
                 <?php
                 $session_id = bin2hex(random_bytes(9));
                 ?>
@@ -61,11 +60,15 @@ if (is_user_logged_in()) {
                             <!-- <label for="lokisLoop_expiration" class="visually-hidden">Expiration Time (hours)</label> -->
                             <input type="number" class="lokis-form-control" value="1" placeholder="Expiration Time (hours)"
                                 id="lokisLoop_expiration" name="expiration">
-                            <span class="input-group-text">hour(s)</span>
+                            <span class="input-group-text">
+                                <?php echo __("hour(s)", $textdomain); ?>
+                            </span>
                         </div>
                     </div>
                     <div class="lokis-loop-host-start-game">
-                        <button type="submit" class="btn btn-primary mb-3">Start Game Session</button>
+                        <button type="submit" class="btn btn-primary mb-3">
+                            <?php echo __("Start Game Session", $textdomain); ?>
+                        </button>
                     </div>
                 </form>
 
@@ -101,9 +104,12 @@ if (is_user_logged_in()) {
                         $wpdb->insert($lokis_game_sessions_table_name, $data);
 
                         // sucess message 
-                        echo '<div class="lokis-loop-alert" role="alert"><p class="lokis-loop-alert-title">Game Session created successfully </p>  <p> URL :  <a href="' . $game_url . '">' . $game_url . '</p></a></div>';
+                        echo '<div class="lokis-loop-alert" role="alert"><p class="lokis-loop-alert-title">' . __("Game Session created successfully", "$textdomain") . '</p> <p>' . __(
+                            "URL:",
+                            "$textdomain"
+                        ) . '<a href="' . $game_url . '">' . $game_url . '</p></a></div>';
                     } else {
-                        echo '<div class="lokis-loop-incorrect" role="alert">Session ID already exists.</div>';
+                        echo '<div class="lokis-loop-incorrect" role="alert">' . __("Session ID already exists.", "$textdomain") . '</div>';
                     }
                 }
                 ?>
