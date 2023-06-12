@@ -790,7 +790,7 @@ if (!function_exists('loki_add_player_unique_id')) {
         // Decode the existing players count from JSON
         $players_count_array = !empty($existing_players_count) ? json_decode($existing_players_count, true) : [];
 
-        $unique_id = isset($_COOKIE['loki_user_id']) ? $_COOKIE['loki_user_id'] : get_transient('lokis_transient');
+        $unique_id = isset($_COOKIE['loki_user_id']) ? $_COOKIE['loki_user_id'] : '';
 
         if ($unique_id !== null && !in_array($unique_id, $players_count_array)) {
             // Add the unique ID to the players_count array

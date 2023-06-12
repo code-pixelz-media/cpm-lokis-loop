@@ -154,26 +154,58 @@ if (!function_exists('lokis_check_session_id')) {
 if (!function_exists('loki_cookie_maker')) {
     function loki_cookie_maker()
     {
+        global $wpdb;
+
         $lokis_consent = $_POST['consent'];
         $lokis_serialized = $_POST['jsonserializedurl'];
         $lokis_url_array = json_decode(stripslashes($lokis_serialized), true);
+        $lokis_session_id = $_POST['lokis_session_id'];
 
         if ($lokis_consent == 'accept') {
             // User has given consent, generate a new value for the cookie
-            $cookie_value = 'user' . uniqid();
+            $lokis_cookie_value = 'user' . uniqid();
 
             // Set the cookie with a duration of 30 days
-            setcookie('loki_user_id', $cookie_value, time() + (86400 * 30), '/');
+            setcookie('loki_user_id', $lokis_cookie_value, time() + (86400 * 30), '/');
             setcookie('lokis_game_stage_url', serialize($lokis_url_array), time() + (86400 * 30), '/');
 
-            //Add player unique id cookie to transient
-            set_transient('lokis_transient', $cookie_value, 3600);
+            $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
 
-            $response = array(
-                'status' => 'success',
-                'expiry_time' => time() + (86400 * 30),
-                'array' => $lokis_url_array
+            //Pull existing players
+            $existing_players_count = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT players_count FROM $lokis_game_sessions_table_name WHERE session_id = %s",
+                    $lokis_session_id
+                )
             );
+
+            // Decode the existing players count from JSON
+            $players_count_array = !empty($existing_players_count) ? json_decode($existing_players_count, true) : [];
+
+            if ($lokis_cookie_value !== null && !in_array($lokis_cookie_value, $players_count_array)) {
+                // Add the unique ID to the players_count array
+                $players_count_array[] = $lokis_cookie_value;
+
+                // Remove empty values from the array
+                $players_count_array = array_filter($players_count_array);
+
+                // Update the players_count column with the updated array
+                $updated_players_count = !empty($players_count_array) ? json_encode($players_count_array) : '';
+
+                $wpdb->update(
+                    $lokis_game_sessions_table_name,
+                    array('players_count' => $updated_players_count),
+                    array('session_id' => $lokis_session_id)
+                );
+
+                $response = array(
+                    'status' => 'success',
+                    'expiry_time' => time() + (86400 * 30),
+                    'user_id' => $lokis_cookie_value
+                );
+            }
+
+
         } else {
             setcookie('consent', 'rejected', time() + (86400 * 30), '/');
             $response = array(

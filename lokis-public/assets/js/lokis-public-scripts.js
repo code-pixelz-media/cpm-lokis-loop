@@ -499,10 +499,11 @@ jQuery(document).ready(function ($) {
         action: "loki_cookie_maker",
         consent: "accept",
         jsonserializedurl: JSON.stringify(urlObj),
+        lokis_session_id: session_id
       },
       success: function (response) {
         if (response.status == "success") {
-          console.log("cookie successfully made " + session_id + " test user");
+          console.log("cookie successfully made for " + session_id + " with user id:" + response.user_id);
         } else {
           console.log("error occurred");
         }
