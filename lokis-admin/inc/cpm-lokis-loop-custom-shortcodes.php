@@ -3,18 +3,18 @@
 //Creating a shortcode for register form
 function lokis_loop_register_form()
 {
-    // if (is_user_logged_in()) {
-    //     ob_start();
-    //     $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
-    //     $lokis_dashboard_page = get_permalink($dashboard_page_id);
+    if (is_user_logged_in()) {
+        ob_start();
+        $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
+        $lokis_dashboard_page = get_permalink($dashboard_page_id);
 
-    //     if (empty($lokis_dashboard_page)) {
-    //         $lokis_dashboard_page = site_url();
-    //         return $lokis_dashboard_page;
-    //     }
-    //     echo '<script>window.location.href = "' . $lokis_dashboard_page . '";</script>';
+        if (empty($lokis_dashboard_page)) {
+            $lokis_dashboard_page = site_url();
+            return $lokis_dashboard_page;
+        }
+        echo '<script>window.location.href = "' . $lokis_dashboard_page . '";</script>';
 
-    // } else {
+    } else {
         ob_start();
         ?>
         <!-- creating game host application form -->
@@ -105,6 +105,6 @@ function lokis_loop_register_form()
         </div>
         <?php
         return ob_get_clean();
-    // }
+    }
 }
 add_shortcode('lokis_loop_register_form', 'lokis_loop_register_form');

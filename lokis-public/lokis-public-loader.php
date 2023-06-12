@@ -268,40 +268,99 @@ if (!function_exists('lokis_shortcode_display')) {
     function lokis_shortcode_display($content)
     {
         /* Display Registration form */
+        // if (isset((get_option('lokis_setting'))['register'])) {
+        //     $register = (get_option('lokis_setting'))['register'];
+        // }
+
+        // if (!empty($register)) {
+        //     if (get_the_ID() === (int) $register) {
+        //         $content .= do_shortcode('[lokis_loop_register_form]');
+        //         return $content;
+        //     }
+        // }
+
+
         if (isset((get_option('lokis_setting'))['register'])) {
             $register = (get_option('lokis_setting'))['register'];
-        }
 
-        if (!empty($register)) {
-            if (get_the_ID() === (int) $register) {
+            // Get the current language
+            $current_lang = function_exists('pll_current_language') ? pll_current_language() : '';
+
+            // Get the post ID for the current language
+            $register_post_id = function_exists('pll_get_post') ? pll_get_post($register, $current_lang) : '';
+
+            if (!empty($register_post_id) && get_the_ID() === (int) $register_post_id) {
+                $content .= do_shortcode('[lokis_loop_register_form]');
+                return $content;
+            } else if (!empty($register) && get_the_ID() === (int) $register) {
                 $content .= do_shortcode('[lokis_loop_register_form]');
                 return $content;
             }
         }
 
+
         /* Display Dashboard */
+        // if (isset((get_option('lokis_setting'))['dashboard'])) {
+        //     $dashboard = (get_option('lokis_setting'))['dashboard'];
+        // }
+
+        // if (!empty($dashboard)) {
+        //     if (get_the_ID() === (int) $dashboard) {
+        //         $content .= do_shortcode('[lokis_loop_user_dashboard]');
+        //         return $content;
+        //     }
+        // }
         if (isset((get_option('lokis_setting'))['dashboard'])) {
             $dashboard = (get_option('lokis_setting'))['dashboard'];
-        }
 
-        if (!empty($dashboard)) {
-            if (get_the_ID() === (int) $dashboard) {
+            // Get the current language
+            $current_lang = function_exists('pll_current_language') ? pll_current_language() : '';
+
+            // Get the post ID for the current language
+            // $dashboard_post_id = pll_get_post($dashboard, $current_lang);
+            $dashboard_post_id = function_exists('pll_get_post') ? pll_get_post($dashboard, $current_lang) : '';
+
+            if (!empty($dashboard_post_id) && get_the_ID() === (int) $dashboard_post_id) {
+                $content .= do_shortcode('[lokis_loop_user_dashboard]');
+                return $content;
+            } else if (!empty($dashboard) && get_the_ID() === (int) $dashboard) {
                 $content .= do_shortcode('[lokis_loop_user_dashboard]');
                 return $content;
             }
         }
 
+
         /*Display Login Page*/
+        // if (isset((get_option('lokis_setting'))['login'])) {
+        //     $login = (get_option('lokis_setting'))['login'];
+        // }
+
+        // if (!empty($login)) {
+        //     if (get_the_ID() === (int) $login) {
+        //         $content .= do_shortcode('[lokis_loop_login]');
+        //         return $content;
+        //     }
+        // }
+
         if (isset((get_option('lokis_setting'))['login'])) {
             $login = (get_option('lokis_setting'))['login'];
-        }
 
-        if (!empty($login)) {
-            if (get_the_ID() === (int) $login) {
+            // Get the current language
+            $current_lang = function_exists('pll_current_language') ? pll_current_language() : '';
+
+            // Get the post ID for the current language
+            $login_post_id = function_exists('pll_get_post') ? pll_get_post($login, $current_lang) : '';
+
+            if (!empty($login_post_id) && get_the_ID() === (int) $login_post_id) {
+                $content .= do_shortcode('[lokis_loop_login]');
+                return $content;
+            } else if (!empty($login) && get_the_ID() === (int) $login) {
                 $content .= do_shortcode('[lokis_loop_login]');
                 return $content;
             }
         }
+
+
     }
     add_action('the_content', 'lokis_shortcode_display');
 }

@@ -67,16 +67,17 @@ if (!class_exists('lokis_loop_game_info')) {
             $redirect_uri = get_post_meta(get_the_ID(), 'lokis_loop_redirect_uri', true);
             ?>
 
+
             <div class="metabox-group">
-                URL of the Game:
+                <?php _e('URL of the Game:', 'lokis-loop'); ?>
                 <textarea type='text' class="widefat" name='lokis_loop_game_url'><?php echo $game_url; ?></textarea>
             </div>
             <div class="metabox-group">
-                Correct Answer:
+                <?php _e('Correct Answer:', 'lokis-loop'); ?>
                 <input type='text' class="widefat" name='lokis_loop_correct_answer' value='<?php echo $correct_answer; ?>' />
             </div>
             <div class="metabox-group">
-                Re-Direct URI:
+                <?php _e('Re-Direct URI:', 'lokis-loop'); ?>
                 <input type='text' class="widefat" name='lokis_loop_redirect_uri' value='<?php echo $redirect_uri; ?>' />
             </div>
             <?php
