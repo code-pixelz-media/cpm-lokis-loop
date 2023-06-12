@@ -16,10 +16,13 @@ if (isset($_GET['offlinegame'])) {
                         </h3>
                     </div>
                     <div class="lokisloop-offline-answer">
-                        <label for="lokis-answer">Answer:</label>
+                        <label for="lokis-answer">
+                            <?php _e('Answer:', 'lokis-loop') ?>
+                        </label>
                         <input type="text" id="lokis-answer" name="lokis-answer">
-                        <button type="submit" id="lokis-offline-submit-btn" class="button lokis-submit-btn">Check
-                            Answer</button>
+                        <button type="submit" id="lokis-offline-submit-btn" class="button lokis-submit-btn">
+                            <?php _e('Check Answer', 'lokis-loop') ?>
+                        </button>
                     </div>
                 </form>
                 <div id="lokis-feedback"></div>
@@ -52,10 +55,15 @@ if (isset($_GET['offlinegame'])) {
                             <input type="hidden" value="<?php echo get_the_ID(); ?>" id="loki-post-id">
                             <input type="hidden" value="<?php echo $session_id; ?>" id="loki-session-id">
                             <div class="lokisloop-answer">
-                                <label for="lokis-answer">Answer:</label>
+                                <label for="lokis-answer">
+                                    <?php
+                                    _e('Answer:', 'lokis-loop');
+                                    ?>
+                                </label>
                                 <input type="text" id="lokis-answer" name="lokis-answer">
-                                <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">Check
-                                    Answer</button>
+                                <button type="submit" id="lokis-submit-btn" class="button lokis-submit-btn">
+                                    <?php _e('Check Answer', 'lokis-loop') ?>
+                                </button>
                             </div>
                         </form>
                         <i id='lokis-fullscreen' class="fa-solid fa-expand"></i>
