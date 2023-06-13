@@ -26,7 +26,8 @@ function lokis_loop_register_form()
 
                 <div class="lokis-formquestion-item">
                     <label for="loki-name" class="lokisloop-label">
-                        <span class="lokis-formquestion-order">1. </span>Name <span class="lokis-req-field">*</span>
+                        <span class="lokis-formquestion-order">1. </span>
+                        <?php _e('Name', 'lokis-loop'); ?> <span class="lokis-req-field">*</span>
                     </label>
                     <input aria label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-name'
                         placeholder="Enter your name">
@@ -34,7 +35,8 @@ function lokis_loop_register_form()
 
                 <div class="lokis-formquestion-item">
                     <label for="loki-email" class="lokisloop-label">
-                        <span class="lokis-formquestion-order">2. </span>Email <span class="lokis-req-field">*</span>
+                        <span class="lokis-formquestion-order">2. </span>
+                        <?php _e('Email', 'lokis-loop'); ?> <span class="lokis-req-field">*</span>
                     </label>
                     <input aria label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-email'
                         placeholder="Enter your Email">
@@ -42,8 +44,8 @@ function lokis_loop_register_form()
 
                 <div class="lokis-formquestion-item">
                     <label for="loki-organization" class="lokisloop-label">
-                        <span class="lokis-formquestion-order">3. </span>Organization Name <span
-                            class="lokis-req-field">*</span>
+                        <span class="lokis-formquestion-order">3. </span>
+                        <?php _e('Organization Name ', 'lokis-loop'); ?><span class="lokis-req-field">*</span>
                     </label>
                     <input aria label="single line text" maxlength="4000" class="lokis-input form-control"
                         id='loki-organization' placeholder="Enter your organization's name">
@@ -51,56 +53,83 @@ function lokis_loop_register_form()
 
                 <div class="lokis-formquestion-item">
                     <label for="organizational_name" class="lokisloop-label"><span class="lokis-formquestion-order">
-                            4. </span>What best describes your organization <span class="lokis-req-field">*</span>
-                    </label>
-                    <div class="lokisloop-selective-box"> <input type="radio" id="library" name="loki_organization_type"
-                            value="Public-Library">
-                        <label for="library" class="lokisloop-label">Public library</label>
-                    </div>
-
-                    <div class="lokisloop-selective-box"> <input type="radio" id="university/college"
-                            name="loki_organization_type" value="University/College">
-                        <label for="university/college" class="lokisloop-label">University/College</label>
-                    </div>
-
-                    <div class="lokisloop-selective-box"> <input type="radio" id="school" name="loki_organization_type"
-                            value="K-12 School">
-                        <label for="school" class="lokisloop-label">K-12 school</label>
-                    </div>
-
-                    <div class="lokisloop-selective-box"> <input type="radio" id="museum" name="loki_organization_type"
-                            value="Museum">
-                        <label for="museum" class="lokisloop-label">Museum</label>
-                    </div>
-
-                    <div class="lokisloop-selective-box"> <input type="radio" id="non-profit" name="loki_organization_type"
-                            value="Other Organization">
-                        <label for="non-profit" class="lokisloop-label">Non-profit</label>
-                    </div>
-
-                    <div class="lokisloop-selective-box"> <input type="radio" id="other-organization"
-                            name="loki_organization_type" value="Non-profit">
-                        <label for="other-organization" class="lokisloop-label">Other Organization (non-library)</label>
-                    </div>
-                </div>
-                <div class="lokis-formquestion-item">
-                    <label for="loki-country" class="lokisloop-label"><span class="lokis-formquestion-order">5. </span>Country
-                        <span class="lokis-req-field">*</span></label>
-                    <select id="loki-country" class="lokis-input form-control">
-                        <option value=''>Select a Value</option>
-                        <option value="United States">United States</option>
-                        <option value="Canada">Canada</option>
-                    </select>
-                </div>
-                <div class="lokis-formquestion-item">
-                    <label for="loki-zipcode" class="lokisloop-label">
-                        <span class="lokis-formquestion-order">6. </span>Zipcode(US and Canada only)<span
+                            4. </span>
+                        <?php _e('What best describes your organization ', 'lokis-loop'); ?><span
                             class="lokis-req-field">*</span>
                     </label>
-                    <input aria label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-zipcode'
-                        placeholder="Enter your zipcode">
-                </div>
-                <button class="button" id="lokis-registration-button" value='Submit'>Submit</button>
+                    <div class="lokisloop-selective-box">
+                        <input type="radio" id="library" name="loki_organization_type" value="Public-Library">
+                        <label for="library" class="lokisloop-label">
+                            <?php _e('Public library', 'lokis-loop'); ?>
+                        </label>
+                    </div>
+
+                    <div class="lokisloop-selective-box">
+                        <input type="radio" id="university/college" name="loki_organization_type" value="University/College">
+                        <label for="university/college" class="lokisloop-label">
+                            <?php _e('University/College', 'lokis-loop'); ?>
+                        </label>
+                    </div>
+
+                    <div class="lokisloop-selective-box">
+                        <input type="radio" id="school" name="loki_organization_type" value="K-12 School">
+                        <label for="school" class="lokisloop-label">
+                            <?php _e('K-12 school', 'lokis-loop'); ?>
+                        </label>
+                    </div>
+
+                    <div class="lokisloop-selective-box">
+                        <input type="radio" id="museum" name="loki_organization_type" value="Museum">
+                        <label for="museum" class="lokisloop-label">
+                            <?php _e('Museum', 'lokis-loop'); ?>
+                        </label>
+                    </div>
+
+                    <div class="lokisloop-selective-box">
+                        <input type="radio" id="non-profit" name="loki_organization_type" value="Other Organization">
+                        <label for="non-profit" class="lokisloop-label">
+                            <?php _e('Non-profit', 'lokis-loop'); ?>
+                        </label>
+                    </div>
+
+                    <div class="lokisloop-selective-box">
+                        <input type="radio" id="other-organization" name="loki_organization_type" value="Non-profit">
+                        <label for="other-organization" class="lokisloop-label">
+                            <?php _e('Other Organization (non-library)', 'lokis-loop'); ?>
+                        </label>
+                    </div>
+
+                    <div class="lokis-formquestion-item">
+                        <label for="loki-country" class="lokisloop-label">
+                            <span class="lokis-formquestion-order">5. </span>
+                            <?php _e('Country', 'lokis-loop'); ?>
+                            <span class="lokis-req-field">*</span>
+                        </label>
+                        <select id="loki-country" class="lokis-input form-control">
+                            <option value=''>
+                                <?php _e('Select a Value', 'lokis-loop'); ?>
+                            </option>
+                            <option value="United States">
+                                <?php _e('United States', 'lokis-loop'); ?>
+                            </option>
+                            <option value="Canada">
+                                <?php _e('Canada', 'lokis-loop'); ?>
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="lokis-formquestion-item">
+                        <label for="loki-zipcode" class="lokisloop-label">
+                            <span class="lokis-formquestion-order">6. </span>
+                            <?php _e('Zipcode(US and Canada only)', 'lokis-loop'); ?><span class="lokis-req-field">*</span>
+                        </label>
+                        <input aria-label="single line text" maxlength="4000" class="lokis-input form-control" id='loki-zipcode'
+                            placeholder="<?php _e('Enter your zipcode', 'lokis-loop'); ?>">
+                    </div>
+
+                    <button class="button" id="lokis-registration-button" value='Submit'>
+                        <?php _e('Submit', 'lokis-loop'); ?>
+                    </button>
             </form>
         </div>
         <?php

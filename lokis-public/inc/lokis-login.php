@@ -25,6 +25,21 @@ function cpm_lokis_login_function()
 add_filter('login_redirect', 'cpm_login_redirect', 10, 3);
 
 
+// add_action('init', function () {
+//     pll_register_string('lokis-loop', 'Username', 'lokis-loop');
+//     pll_register_string('lokis-loop', 'Password', 'lokis-loop');
+//     pll_register_string('lokis-loop', 'Remember Me', 'lokis-loop');
+//     pll_register_string('lokis-loop', 'Log In', 'lokis-loop');
+//     pll_register_string('lokis-loop', 'Forgot Password?', 'lokis-loop');
+//     pll_register_string('lokis-loop', 'Register', 'lokis-loop');
+// });
+function translate_string($string)
+{
+    if (function_exists('pll__')) {
+        return pll__($string);
+    }
+    return __($string, 'lokis-loop');
+}
 /**
  * This function redirects users to the login page if they try to login without entering a username or
  * password.
@@ -65,14 +80,17 @@ function cpm_lokis_login_form()
     // wp_login_form();
     custom_login_error_message();
 
+    // Polylang functions are available
+
     wp_login_form(
         array(
             'redirect' => esc_url($_SERVER['REQUEST_URI']),
             // Redirect to the current page
-            'label_username' => __('Username', 'lokis-loop'),
-            'label_password' => __('Password', 'lokis-loop'),
-            'label_remember' => __('Remember Me', 'lokis-loop'),
-            'label_log_in' => __('Log In', 'lokis-loop'),
+            // 'label_username' => function_exists('pll__') ? pll__('Username') : __('Username', 'lokis-loop'),
+            'label_username' => translate_string('Username'),
+            'label_password' => function_exists('pll__') ? pll__('Password') : __('Password', 'lokis-loop'),
+            'label_remember' => function_exists('pll__') ? pll__('Remember Me') : __('Remember Me', 'lokis-loop'),
+            'label_log_in' => function_exists('pll__') ? pll__('Log In') : __('Log In', 'lokis-loop'),
             'id_username' => 'lokis-username',
             'id_password' => 'lokis-password',
             'id_remember' => 'lokis-rememberme',
@@ -85,6 +103,7 @@ function cpm_lokis_login_form()
     $register_page_id = (get_option('lokis_setting'))['register'];
     $lokis_register_page = get_permalink($register_page_id);
     echo '<div class="lokis-loginPage"><p class="lokis-forgot-password-link"><a href="' . esc_url(wp_lostpassword_url()) . '">' . __("Forgot Password?", "lokis-loop") . '</a></p> <p class="lokis-register-link"> <a href="' . esc_url($lokis_register_page) . '">' . __("Register", "lokis-loop") . '</a></p></div></div>';
+
 }
 
 
