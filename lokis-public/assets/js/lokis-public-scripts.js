@@ -240,11 +240,10 @@ jQuery("body").on("click", ".lokis-modal-close", function (e) {
 // code for view-player Modal-box
 jQuery(document).ready(function () {
   jQuery("body").on("click", "#lokisLoopModalBox", function (event) {
-    event.preventDefault(); // Prevent the default action
-    var game_id = jQuery(this).data("game-id"); // Get the URL from the data attribute
-    var session_id = jQuery(this).data("session-id"); // Get the URL from the data attribute
+    event.preventDefault(); 
+    var game_id = jQuery(this).data("game-id");
+    var session_id = jQuery(this).data("session-id");
 
-    // console.log(game_id);
     jQuery.ajax({
       url: gamesajax.ajaxurl,
       type: "POST",

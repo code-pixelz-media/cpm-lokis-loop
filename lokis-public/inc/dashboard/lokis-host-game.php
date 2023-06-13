@@ -20,7 +20,6 @@ if (is_user_logged_in()) {
                 <form method="POST" class="row g-3">
                     <input type="hidden" name="sessionToken" id="sessionToken" value="<?php echo $session_id ?>">
                     <div class="lokis-loop-host-choose-game">
-                        <!-- <label for="id_game" class="visually-hidden">Game</label> -->
                         <select class="form-select" aria-label="Game" id="id_game" name="game">
                             <?php
                             $args = [
@@ -56,7 +55,6 @@ if (is_user_logged_in()) {
                     </div>
                     <div class="lokis-loop-host-choose-time">
                         <div class="input-group">
-                            <!-- <label for="lokisLoop_expiration" class="visually-hidden">Expiration Time (hours)</label> -->
                             <input type="number" class="lokis-form-control" value="1" placeholder="Expiration Time (hours)"
                                 id="lokisLoop_expiration" name="expiration">
                             <span class="input-group-text">

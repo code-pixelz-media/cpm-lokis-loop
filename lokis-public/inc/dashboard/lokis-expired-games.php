@@ -87,31 +87,27 @@ if (is_user_logged_in()) {
                             //Set number of games per page
                             if (!empty($expired_games)) {
 
-                                $total_expired_pages = '0'; // or any other initial value you need
-                                $expired_paged = '0'; // or any other initial value you need
-                    
-                                $games_per_page = 3;
+                                $total_expired_pages = '0';
+                                $expired_paged = '0';
+
                                 //Calculate starting index for specific page
-                    
-                                $expired_paged = isset($_GET['expired-games']) ? abs((int) $_GET['expired-games']) : 1;
+                                $games_per_page = 3;
+
                                 // Calculate the offset for the expired page
-                    
-                                $expired_offset = ($expired_paged - 1) * $games_per_page;
+                                $expired_paged = isset($_GET['expired-games']) ? abs((int) $_GET['expired-games']) : 1;
+
                                 // Retrieve the total number of games
-                    
-                                $total_expired_games = count($expired_games);
+                                $expired_offset = ($expired_paged - 1) * $games_per_page;
+
                                 // Calculate the total number of pages
-                    
-                                $total_expired_pages = ceil($total_expired_games / $games_per_page);
+                                $total_expired_games = count($expired_games);
+
                                 // Retrieve the subset of games for the expired page
-                    
+                                $total_expired_pages = ceil($total_expired_games / $games_per_page);
                                 $expired_page_games = array_slice($expired_games, $expired_offset, $games_per_page);
 
                                 foreach ($expired_page_games as $index => $game) {
                                     // Perform actions with the retrieved data
-                    
-                                    // $sn = $expired_offset + $index + 1;
-                    
                                     $startedDateString = $game['started_at'];
                                     $expiredDateString = $game['expires_in'];
                                     $formattedStartedDate = date('F d, Y, g:i a', strtotime($startedDateString));

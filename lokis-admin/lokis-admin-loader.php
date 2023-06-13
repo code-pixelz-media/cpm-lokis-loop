@@ -219,7 +219,7 @@ if (!function_exists('loki_cookie_maker')) {
     add_action('wp_ajax_nopriv_loki_cookie_maker', 'loki_cookie_maker');
 }
 
-/* Add game stage url in cookies */
+/*Add game stage url in cookies */
 if (!function_exists('loki_url_cookie')) {
     function loki_url_cookie()
     {

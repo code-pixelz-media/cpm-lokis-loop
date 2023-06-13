@@ -23,10 +23,11 @@ if (!defined('ABSPATH')) {
 */
 
 
-
+/*Enqueue in the scripts*/
 function cpm_lokis_public_scripts()
 {
     $lokis_time = date('YmdHis', current_time('timestamp'));
+
     /* css for plugin  */
     wp_enqueue_style('cpm-lokis-public', plugin_dir_url(__FILE__) . 'assets/css/lokis-public-style.css', array(), $lokis_time, false, 'all');
 
@@ -72,10 +73,6 @@ if (!function_exists('lokis_check_answer')) {
 
         if ($answer == $correct_answer) {
             if ($redirect_uri == $lokis_thankyou_page) {
-                // global $wpdb;
-                // $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
-                // $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
-                // $wpdb->query($sql);
 
                 $response = array(
                     'status' => 'success',
@@ -117,11 +114,6 @@ if (!function_exists('lokis_offline_check_answer')) {
 
         if ($answer == $correct_answer) {
             if ($redirect_uri == $lokis_thankyou_page) {
-                // global $wpdb;
-                // $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
-                // $sql = "UPDATE $lokis_player_table_name SET completed = '1'  WHERE player_id = '$player_id' AND session_id = '$session_id'";
-                // $wpdb->query($sql);
-
                 $response = array(
                     'status' => 'success',
                     'redirect' => $redirect_uri,
@@ -199,6 +191,7 @@ if (!function_exists('loki_user_registration')) {
                 wp_send_json($response);
             }
 
+            //Check country and it's relevant postcode format
             if ($country == "United States") {
                 if (!preg_match('/^\d{5}(-\d{4})?$/', $zipcode)) {
                     $response = [
@@ -263,7 +256,7 @@ if (!function_exists('loki_user_registration')) {
     add_action('wp_ajax_nopriv_loki_user_registration', 'loki_user_registration');
 }
 
-/*displays shortcode on selected page*/
+/*Displays shortcode on selected page*/
 if (!function_exists('lokis_shortcode_display')) {
     function lokis_shortcode_display($content)
     {
@@ -400,7 +393,6 @@ if (!function_exists('lokis_endpoints')) {
                 add_rewrite_endpoint($endpoint, EP_PAGES);
             }
             flush_rewrite_rules();
-
         }
     }
     add_action('init', 'lokis_endpoints');
@@ -514,7 +506,7 @@ if (!function_exists('lokis_account_menu')) {
     }
 }
 
-/* view players modal box*/
+/*View players modal box*/
 if (!function_exists('lokis_loop_modal_box')) {
     function lokis_loop_modal_box()
     {
@@ -583,7 +575,7 @@ if (!function_exists('lokis_loop_modal_box')) {
     add_action('wp_ajax_lokis_loop_modal_box', 'lokis_loop_modal_box');
 }
 
-/*function to update user info from profile page*/
+/*Function to update user info from profile page*/
 if (!function_exists('lokis_profile_update')) {
     function lokis_profile_update()
     {
@@ -637,7 +629,7 @@ if (!function_exists('lokis_profile_update')) {
     add_action('wp_ajax_lokis_profile_update', 'lokis_profile_update');
 }
 
-/*function to delete data from game session table in  database*/
+/*Function to delete data from game session table in  database*/
 if (!function_exists('lokis_Delete_game_table_data')) {
     function lokis_Delete_game_table_data()
     {
@@ -664,10 +656,7 @@ if (!function_exists('lokis_Delete_game_table_data')) {
     }
 }
 
-/**
- * The function updates the expires_in value in the database and displays a success or error message
- * based on the result.
- */
+/*Updates the expires_in value in the database and displays a success or error message based on the result*/
 if (!function_exists('lokis_end_game_session')) {
     function lokis_end_game_session()
     {
@@ -724,7 +713,7 @@ if (!function_exists('lokis_pull_private_template')) {
     add_filter('template_include', 'lokis_pull_private_template');
 }
 
-// Lightbox function for cookies consent
+/*Lightbox function for cookies consent*/
 if (!function_exists('lokis_cookies_content_popup')) {
     function lokis_cookies_content_popup()
     {
@@ -745,14 +734,11 @@ if (!function_exists('lokis_cookies_content_popup')) {
     }
 }
 
-/**
- * The function saves a QR code image URL to a database table for a specific game session ID.
- */
+/*Function to save a QR code image URL to a database table for a specific game session ID.*/
 if (!function_exists('lokis_save_qr_code_callback')) {
     function lokis_save_qr_code_callback()
     {
         if (isset($_POST["qrImageUrl"])) {
-            // die("data base");
             global $wpdb;
             $qrImageUrl = $_POST["qrImageUrl"];
             $lokis_game_id = $_POST["lokis_game_id"];
@@ -771,19 +757,19 @@ if (!function_exists('lokis_save_qr_code_callback')) {
 add_action("wp_ajax_lokis_save_qr_code", "lokis_save_qr_code_callback");
 add_action("wp_ajax_nopriv_lokis_save_qr_code", "lokis_save_qr_code_callback");
 
-//Add players unique id in the player_count column in games_session table
+/*Add players unique id in the player_count column in games_session table*/
 if (!function_exists('loki_add_player_unique_id')) {
     function loki_add_player_unique_id()
     {
         global $wpdb;
 
-        $session_id = lokis_getSessionIDFromURL();
+        $lokis_session_id = lokis_getSessionIDFromURL();
         $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
 
         $existing_players_count = $wpdb->get_var(
             $wpdb->prepare(
                 "SELECT players_count FROM $lokis_game_sessions_table_name WHERE session_id = %s",
-                $session_id
+                $lokis_session_id
             )
         );
 
@@ -805,10 +791,9 @@ if (!function_exists('loki_add_player_unique_id')) {
             $wpdb->update(
                 $lokis_game_sessions_table_name,
                 array('players_count' => $updated_players_count),
-                array('session_id' => $session_id)
+                array('session_id' => $lokis_session_id)
             );
         }
     }
     add_action('wp_footer', 'loki_add_player_unique_id');
-    add_action('init', 'loki_add_player_unique_id');
 }
