@@ -120,9 +120,9 @@ if (is_user_logged_in()) {
 } else {
     ?>
 
-    <script>
-        window.location.href = '<?php echo wp_login_url(); ?>';
-    </script>
+    <!-- <script>
+        window.location.href = '<?php //echo wp_login_url(); ?>';
+    </script> -->
 
     <?php
 

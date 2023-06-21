@@ -141,12 +141,13 @@ function lokis_loop_user_dashboard()
         <?php
         return ob_get_clean();
 
-    } else {
+    } 
+    else {
         ?>
 
-        <script>
-            window.location.href = '<?php echo wp_login_url(); ?>';
-        </script>
+        <!-- <script>
+            window.location.href = '<?php // echo wp_login_url(); ?>';
+        </script> -->
         <?php
     }
 }

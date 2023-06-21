@@ -5,18 +5,18 @@ add_shortcode('lokis_loop_login', 'cpm_lokis_login_function');
 function cpm_lokis_login_function()
 {
     ob_start();
-    if (!is_user_logged_in()) {
+    // if (!is_user_logged_in()) {
         cpm_lokis_login_form();
-    } else {
-        $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
-        $lokis_dashboard_page = get_permalink($dashboard_page_id);
+    // } else {
+    //     $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
+    //     $lokis_dashboard_page = get_permalink($dashboard_page_id);
 
-        if (empty($lokis_dashboard_page)) {
-            $lokis_dashboard_page = site_url();
-            return $lokis_dashboard_page;
-        }
-        echo '<script>window.location.href = "' . $lokis_dashboard_page . '";</script>';
-    }
+    //     if (empty($lokis_dashboard_page)) {
+    //         $lokis_dashboard_page = site_url();
+    //         return $lokis_dashboard_page;
+    //     }
+    //     echo '<script>window.location.href = "' . $lokis_dashboard_page . '";</script>';
+    // }
     $output = ob_get_contents();
     ob_end_clean();
     return $output;

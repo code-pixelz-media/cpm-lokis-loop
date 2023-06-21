@@ -159,8 +159,8 @@ if (is_user_logged_in()) {
         <?php
 } else {
     ?>
-        <script>         window.location.href = '<?php echo wp_login_url(); ?>';
-        </script>
+        <!-- <script>         window.location.href = '<?php //echo wp_login_url(); ?>';
+        </script> -->
         <?php
 }
 get_footer();
