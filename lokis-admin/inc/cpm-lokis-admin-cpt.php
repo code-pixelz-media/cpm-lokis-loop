@@ -150,7 +150,7 @@ if (!class_exists('lokis_loop_game_info')) {
             // Output the checkbox
             echo '<label>';
             echo '<input type="checkbox" name="lokis_private_page_checkbox" value="1" ' . checked($checked, 1, false) . ' />';
-            echo 'Only to Admin and Host';
+            echo __("Only to Admin and Host", "lokis-loop");
             echo '</label>';
         }
 
