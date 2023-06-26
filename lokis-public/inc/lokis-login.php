@@ -6,7 +6,7 @@ function cpm_lokis_login_function()
 {
     ob_start();
     // if (!is_user_logged_in()) {
-        cpm_lokis_login_form();
+    cpm_lokis_login_form();
     // } else {
     //     $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
     //     $lokis_dashboard_page = get_permalink($dashboard_page_id);
@@ -102,7 +102,7 @@ function cpm_lokis_login_form()
     );
     $register_page_id = (get_option('lokis_setting'))['register'];
     $lokis_register_page = get_permalink($register_page_id);
-    echo '<div class="lokis-loginPage"><p class="lokis-forgot-password-link"><a href="' . esc_url(wp_lostpassword_url()) . '">' . __("Forgot Password?", "lokis-loop") . '</a></p> <p class="lokis-register-link"> <a href="' . esc_url($lokis_register_page) . '">' . __("Register", "lokis-loop") . '</a></p></div></div>';
+    echo '<div class="lokis-loginPage"><p class="lokis-forgot-password-link"><a href="' . esc_url(wp_lostpassword_url()) . '">' . __("Forgot Password?", "lokis-loop") . '</a></p></div></div>';
 
 }
 
