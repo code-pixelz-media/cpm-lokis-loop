@@ -48,46 +48,6 @@ jQuery(document).ready(function ($) {
   });
 });
 
-//sending ajax post to wordpress to check answer from given data coming from games post page (single-games.php)
-jQuery(document).ready(function ($) {
-  $("#lokis-offline-submit-btn").click(function (event) {
-    event.preventDefault();
-
-    //Pulls values from the form
-    var answer = $("#lokis-answer").val();
-    var post_id = $("#loki-post-id").val();
-
-    $.ajax({
-      type: "POST",
-      url: gamesajax.ajaxurl,
-      data: {
-        action: "lokis_offline_check_answer",
-        post_id: post_id,
-        answer: answer,
-      },
-      success: function (response) {
-        if (response.message == "correct") {
-          $("#lokis-feedback").html(
-            '<div class="lokis-loop-correct">Answer is correct</div>'
-          );
-          setTimeout(function () {
-            window.location.href = response.redirect;
-          }, 1000);
-        } else {
-          $("#lokis-feedback").html(
-            '<div class="lokis-loop-incorrect">Incorrect answer</div>'
-          );
-
-          // Fade out the error message after one second
-          setTimeout(function () {
-            $(".lokis-loop-incorrect").fadeOut(2000);
-          }, 1000);
-        }
-      },
-    });
-  });
-});
-
 //Form validation to check input and email format from registration form shortcode (cpm-lokis-loop-custom-shortcodes.php)
 jQuery(document).ready(function ($) {
   $("#lokis-registration-button").click(function (event) {
@@ -101,63 +61,111 @@ jQuery(document).ready(function ($) {
     var country_name = $("#loki-country").val();
     var zipcode = $("#loki-zipcode").val();
     var nonce = $("#loki_registration_nonce").val();
-    var errors = [];
+    var errors = 0;
+
+    var nameErrorDiv = $("#lokis-names .lokis-error");
+    var emailErrorDiv = $("#lokis-email .lokis-error");
+    var organizationErrorDiv = $("#lokis-organization .lokis-error");
+    var organizationTypeErrorDiv = $("#lokis-organization-type .lokis-error");
+    var countryErrorDiv = $("#lokis-country .lokis-error");
 
     //Clearing array if it has any values
-    if (errors.length > 0) {
-      errors = [];
+    if (errors > 0) {
+      errors = 0;
     }
 
+    nameErrorDiv.remove();
+    emailErrorDiv.remove();
+    organizationErrorDiv.remove();
+    organizationTypeErrorDiv.remove();
+    countryErrorDiv.remove();
+
     if (name == "") {
-      errors.push("Name is required.");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("Name is required.");
+      $("#lokis-names").append(errorMessage);
+      errors = errors + 1;
     }
 
     // Validate email format
     var email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email == "") {
-      errors.push("Email is required.");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("Email is required.");
+      $("#lokis-email").append(errorMessage);
+      errors = errors + 1;
     } else if (!email_pattern.test(email)) {
-      errors.push("Please enter a valid email address.");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("Please enter a valid email address.");
+      $("#lokis-email").append(errorMessage);
+      errors = errors + 1;
     }
 
     if (organization_name == "") {
-      errors.push("Organization name is required.");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("Organization name is required.");
+      $("#lokis-organization").append(errorMessage);
+      errors = errors + 1;
     }
 
     if (organization_type == undefined) {
-      errors.push("Please select your organization type.");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("Please select your organization type.");
+      $("#lokis-organization-type").append(errorMessage);
+      errors = errors + 1;
     }
 
     if (country_name == "") {
-      errors.push("Country is required.");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("Country is required.");
+      $("#lokis-country").append(errorMessage);
+      errors = errors + 1;
     }
 
-    if (zipcode == "") {
-      errors.push("Zipcode is required.");
-    }
+    if (errors > 0) {
+      var emailInput = $("#loki-email");
+      var nameInput = $("#loki-name");
+      var organizationInput = $("#loki-organization");
+      var organizationTypeInput = $("input[name=loki_organization_type]");
+      var countryInput = $("#loki-country");
 
-    if (errors.length > 0) {
-      //Clear div
-      $("#lokis-error-message").html("");
-      $("#lokis-feedback").html("");
-      // Display error messages
-      var error_message = "Please correct the following errors:<br><ul>";
-      for (var i = 0; i < errors.length; i++) {
-        error_message += "<li>" + errors[i] + "</li>";
-      }
-      error_message += "</ul>";
+      var nameErrorDiv = $("#lokis-names .lokis-error");
+      var emailErrorDiv = $("#lokis-email .lokis-error");
+      var organizationErrorDiv = $("#lokis-organization .lokis-error");
+      var organizationTypeErrorDiv = $("#lokis-organization-type .lokis-error");
+      var countryErrorDiv = $("#lokis-country .lokis-error");
 
-      $("#lokis-error-message").addClass("lokis-loop-error");
-      $("#lokis-error-message").css("height", "auto");
-      $("#lokis-error-message").html(error_message);
-      $("#lokis-error-message").show();
-      // Fade out the error message after one second
-      setTimeout(function () {
-        $("#lokis-error-message").fadeOut(2000);
-      }, 1000);
+      nameInput.on("input", function () {
+        // Clear error message div
+        nameErrorDiv.remove();
+      });
 
-      // Scroll to the top of the page
-      $("html, body").animate({ scrollTop: 0 }, "fast");
+      emailInput.on("input", function () {
+        // Clear error message div
+        emailErrorDiv.remove();
+      });
+
+      organizationInput.on("input", function () {
+        // Clear error message div
+        organizationErrorDiv.remove();
+      });
+
+      organizationTypeInput.on("change", function () {
+        // Clear error message div
+        organizationTypeErrorDiv.remove();
+      });
+
+      countryInput.on("change", function () {
+        // Clear error message div
+        countryErrorDiv.remove();
+      });
+
       return false;
     } else {
       event.preventDefault();
@@ -203,16 +211,25 @@ jQuery(document).ready(function ($) {
               "<div class='lokis-loop-error'>" + response.message + "</div>"
             );
 
-            // Fade out the error message after one second
-            setTimeout(function () {
-              $(".lokis-loop-error").fadeOut(2000);
-            }, 1000);
+            if (response.type == "name") {
+              $("#loki-name").on("input", function () {
+                // Clear error message div
+                $("#lokis-feedback .lokis-loop-error").remove();
+              });
+            } else if (response.type == "email") {
+              $("#loki-email").on("input", function () {
+                // Clear error message div
+                $("#lokis-feedback .lokis-loop-error").remove();
+              });
+            } else {
+              $("#loki-zipcode").on("input", function () {
+                // Clear error message div
+                $("#lokis-feedback .lokis-loop-error").remove();
+              });
+            }
           }
         },
       });
-
-      // Scroll to the top of the page
-      $("html, body").animate({ scrollTop: 0 }, "fast");
     }
   });
 });
@@ -240,7 +257,7 @@ jQuery("body").on("click", ".lokis-modal-close", function (e) {
 // code for view-player Modal-box
 jQuery(document).ready(function () {
   jQuery("body").on("click", "#lokisLoopModalBox", function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     var game_id = jQuery(this).data("game-id");
     var session_id = jQuery(this).data("session-id");
 
@@ -266,6 +283,14 @@ jQuery(document).ready(function ($) {
   $("#lokis-profile-update-button").click(function (event) {
     event.preventDefault();
 
+    var organizationErrorDiv = $("#lokis-organization .lokis-error");
+    var organizationTypeErrorDiv = $("#lokis-organization-type .lokis-error");
+    var passwordErrorDiv = $("#lokis-password .lokis-error");
+
+    organizationErrorDiv.remove();
+    organizationTypeErrorDiv.remove();
+    passwordErrorDiv.remove();
+
     //Pull data from the form
     var nonce = $("#loki_profile_nonce").val();
     var organization_name = $("#loki-organization").val();
@@ -284,35 +309,56 @@ jQuery(document).ready(function ($) {
 
     //Check if the new passwords matches
     if (new_password !== new_password_retype) {
-      profile_errors.push("Passwords do not match");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("The passwords do not match");
+      $("#lokis-password").append(errorMessage);
+      profile_errors = profile_errors + 1;
     }
 
     if (organization_name === "") {
-      profile_errors.push("organization name is empty");
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("organization name is empty");
+      $("#lokis-organization").append(errorMessage);
+      profile_errors = profile_errors + 1;
     }
 
-    if (organization_type === "") {
-      profile_errors.push("organization name is empty");
+    if (organization_type === undefined) {
+      var errorMessage = $("<div class='lokis-error'>")
+        .addClass("lokis-error")
+        .text("organization type is empty");
+      $("#lokis-organization-type").append(errorMessage);
+      profile_errors = profile_errors + 1;
     }
 
     if (profile_errors.length > 0) {
       //Clear div
-      $("#lokis-error-message").html("");
       $("#lokis-feedback").html("");
 
-      // Display error messages
-      var error_message = "The following errors are shown:<br><ul>";
-      for (var i = 0; i < profile_errors.length; i++) {
-        error_message += "<li>" + profile_errors[i] + "</li>";
-      }
-      error_message += "</ul>";
-      $("#lokis-error-message").addClass("lokis-loop-incorrect");
-      $("#lokis-error-message").css("height", "auto");
-      $("#lokis-error-message").html(error_message);
-      $("#lokis-error-message").show();
+      var organizationInput = $("#loki-organization");
+      var organizationTypeInput = $("input[name=loki_organization_type]");
+      var passwordInput = $("#loki-new-password");
 
-      // Scroll to the top of the page
-      $("html, body").animate({ scrollTop: 0 }, "fast");
+      var organizationErrorDiv = $("#lokis-organization .lokis-error");
+      var organizationTypeErrorDiv = $("#lokis-organization-type .lokis-error");
+      var passwordErrorDiv = $("#lokis-password .lokis-error");
+
+      organizationInput.on("input", function () {
+        // Clear error message div
+        organizationErrorDiv.remove();
+      });
+
+      organizationTypeInput.on("change", function () {
+        // Clear error message div
+        organizationTypeErrorDiv.remove();
+      });
+
+      passwordInput.on("input", function () {
+        // Clear error message div
+        passwordErrorDiv.remove();
+      });
+
       return false;
     } else {
       event.preventDefault();
@@ -337,6 +383,9 @@ jQuery(document).ready(function ($) {
               "<div class='lokis-loop-correct'>" + response.message + "</div>"
             );
             $("#lokis-feedback").show();
+            setTimeout(function () {
+              window.location.reload();
+            }, 1000);
           } else {
             //Clear error messages
             $("#lokis-error-message").html("");
@@ -373,6 +422,51 @@ jQuery(document).ready(function ($) {
     document.getElementById("loki-new-password").value = password.join("");
     document.getElementById("loki-new-password-retype").value =
       document.getElementById("loki-new-password").value;
+  });
+});
+
+// JavaScript code to show the popup when the page loads
+jQuery(document).ready(function ($) {
+  $(".lokis-cookie-accept").click(function () {
+    // Hide the cookie consent popup
+    var lokisCookieConsent = $(".lokis-cookie-consent");
+    if (lokisCookieConsent) {
+      lokisCookieConsent.css({ display: "none" });
+    }
+
+    var session_id = window.location.href.split("?game=")[1];
+
+    // Assign the session ID as the key and current URL as the value in the object
+    var urlObj = {};
+    urlObj[session_id] = window.location.href;
+
+    $.ajax({
+      type: "POST",
+      url: gamesajax.ajaxurl,
+      data: {
+        action: "loki_cookie_maker",
+        consent: "accept",
+        jsonserializedurl: JSON.stringify(urlObj),
+        lokis_session_id: session_id,
+      },
+    });
+  });
+
+  $(".lokis-cookie-reject").click(function () {
+    // Hide the cookie consent popup
+    var lokisCookieConsent = $(".lokis-cookie-consent");
+    if (lokisCookieConsent) {
+      lokisCookieConsent.css({ display: "none" });
+    }
+
+    $.ajax({
+      type: "POST",
+      url: gamesajax.ajaxurl,
+      data: {
+        action: "loki_cookie_maker",
+        consent: "reject",
+      },
+    });
   });
 });
 
@@ -430,15 +524,9 @@ jQuery(function ($) {
     };
 
     $.ajax({
-      url: gamesajax.ajaxurl, // Replace ajaxurl with the actual URL to your server-side script
+      url: gamesajax.ajaxurl,
       method: "POST",
       data: postData,
-      success: function (response) {
-        console.log("QR code image URL saved in the database");
-      },
-      error: function (xhr, status, error) {
-        console.error("Error saving QR code image URL in the database:", error);
-      },
     });
   });
 
@@ -470,67 +558,118 @@ jQuery(document).ready(function ($) {
   });
 });
 
+//Function to move forgot password link
+jQuery(document).ready(function ($) {
+  passwordDiv = $(".login-password label");
+  linkDiv = $(".lokis-loginPage");
+
+  if (linkDiv.length > 0) {
+    linkDiv.insertAfter(passwordDiv);
+  }
+});
+
+//Function to add lokis-user-dashboard class in body part when the page reaches user dashboard
+jQuery(document).ready(function ($) {
+  var currentUrl = window.location.href;
+
+  // Function to check if the current page is the user dashboard
+  function isUserDashboardPage(url) {
+    return url.indexOf("user-dashboard") !== -1;
+  }
+
+  // Check if the current page is the user dashboard and add the class to the body tag
+  if (isUserDashboardPage(currentUrl)) {
+    $("body").addClass("lokis-user-dashboard");
+  }
+});
+
+//Check whether the current page is a game stage and add the class to the body tag
+jQuery(document).ready(function ($) {
+  var currentUrl = window.location.href;
+
+  // Function to check if the current page is a games post type page
+  function isGamesPostTypePage(url) {
+    return url.indexOf("/games/") !== -1;
+  }
+
+  // Check if the current page is a games post type page and add the class to the body tag
+  if (isGamesPostTypePage(currentUrl)) {
+    $("body").addClass("lokis-games-stages");
+  }
+});
+
+//Function to add game session id at the end of game stage url
+jQuery(document).ready(function ($) {
+  $(document).on("click", "#lokis-start-game", function (event) {
+    // Get the URL of the current page
+    var url = window.location.href;
+
+    var expiryTime = new Date();
+    expiryTime.setTime(expiryTime.getTime() + 60000); // 1 minute in milliseconds
+
+    // Define the query variable name
+    var queryVarName = "game";
+    var altQuery = "offlinegame";
+
+    // Create a regex pattern to match the query variable and its value
+    var regexPattern = new RegExp("[?&]" + queryVarName + "=([^&#]*)");
+    var altRegexPattern = new RegExp("[?&]" + altQuery + "=([^&#]*)");
+
+    var isGameQueryVar = regexPattern.test(url);
+    var altGameVar = altRegexPattern.test(url);
+
+    if (isGameQueryVar) {
+      // Use the regex pattern to extract the query variable value
+      var matches = regexPattern.exec(url);
+
+      // Check if a match is found and retrieve the value
+      if (matches && matches.length > 1) {
+        var gameValue = matches[1];
+
+        event.preventDefault(); // Prevent the default link behavior
+
+        var href = $(this).attr("href"); // Get the href attribute of the clicked link
+        var modifiedHref = href + "?game=" + gameValue; // Append the desired text to the URL
+
+        document.cookie =
+          "lokis_passed=" +
+          "passed" +
+          "; path=/; expires=" +
+          expiryTime.toUTCString() +
+          ";";
+
+        // Redirect the user to the modified URL
+        window.location.href = modifiedHref;
+      }
+    } else if (altGameVar) {
+      // Use the regex pattern to extract the query variable value
+      var matches = altRegexPattern.exec(url);
+
+      // Check if a match is found and retrieve the value
+      if (matches && matches.length > 1) {
+        var gameValue = matches[1];
+
+        event.preventDefault(); // Prevent the default link behavior
+
+        var href = $(this).attr("href"); // Get the href attribute of the clicked link
+        var modifiedHref = href + "?offlinegame=" + gameValue; // Append the desired text to the URL
+
+        document.cookie =
+          "lokis_passed=" +
+          "passed" +
+          "; path=/; expires=" +
+          expiryTime.toUTCString() +
+          ";";
+
+        // Redirect the user to the modified URL
+        window.location.href = modifiedHref;
+      }
+    }
+  });
+});
+
 // Check if the query parameter exists
 if (location.search.includes("offlinegame")) {
   // Display the modal box
   document.getElementById("lokisOfflineModal").style.display = "block";
 }
-
-// JavaScript code to show the popup when the page loads
-jQuery(document).ready(function ($) {
-  $("#loki-cookie-accept").click(function (event) {
-    // Hide the cookie consent popup
-    var lokisCookieConsent = document.getElementById("lokisCookieConsent");
-    if (lokisCookieConsent) {
-      lokisCookieConsent.style.display = "none";
-    }
-
-    var session_id = window.location.href.split("?game=")[1];
-
-    // Assign the session ID as the key and current URL as the value in the object
-    var urlObj = {};
-    urlObj[session_id] = window.location.href;
-
-    $.ajax({
-      type: "POST",
-      url: gamesajax.ajaxurl,
-      data: {
-        action: "loki_cookie_maker",
-        consent: "accept",
-        jsonserializedurl: JSON.stringify(urlObj),
-        lokis_session_id: session_id
-      },
-      success: function (response) {
-        if (response.status == "success") {
-          console.log("cookie successfully made for " + session_id + " with user id:" + response.user_id);
-        } else {
-          console.log("error occurred");
-        }
-      },
-    });
-  });
-
-  $("#loki-cookie-reject").click(function (event) {
-    // Hide the cookie consent popup
-    var lokisCookieConsent = document.getElementById("lokisCookieConsent");
-    if (lokisCookieConsent) {
-      lokisCookieConsent.style.display = "none";
-    }
-
-    $.ajax({
-      type: "POST",
-      url: gamesajax.ajaxurl,
-      data: {
-        action: "loki_cookie_maker",
-        consent: "reject",
-      },
-      success: function (response) {
-        if (response.status == "reject") {
-          console.log("cookie rejected");
-        } else {
-          console.log("error occurred");
-        }
-      },
-    });
-  });
-});

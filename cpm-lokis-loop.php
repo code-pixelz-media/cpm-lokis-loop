@@ -1,25 +1,17 @@
 <?php
 
 /*
-
 Plugin Name: Lokis Loop
-
 Plugin URI: https://codepixelzmedia.com/
-
 Description: Integrates gDevelop iframes and lets people host games and play them.
-
 Version: 1.0.0
-
 Author: Codepixelzmedia
-
 Author URI: https://codepixelzmedia.com/
-
 Text Domain: lokis-loop
-
 */
 
+/* The code is used to prevent direct access to the plugin file. */
 if (!defined('ABSPATH')) {
-
     exit;
 }
 

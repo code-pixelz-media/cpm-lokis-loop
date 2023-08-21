@@ -1,5 +1,7 @@
 <?php
 
+/* The above code is checking if the constant 'ABSPATH' is not defined and if so, it exits the current
+script. */
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -88,6 +90,9 @@ if (!function_exists('lokis_getSessionIDFromURL')) {
         if ($query_params !== null) {
             parse_str($query_params, $params);
             $session_id = isset($params['game']) ? $params['game'] : '';
+            if ($session_id === '') {
+                $session_id = isset($params['offlinegames']) ? $params['offlinegames'] : '';
+            }
         } else {
             $session_id = '';
         }
@@ -126,9 +131,8 @@ if (!function_exists('lokis_redirect_after_expiration')) {
 if (!function_exists('lokis_check_session_id')) {
     function lokis_check_session_id()
     {
-        if (is_single() && get_post_type() === 'games') {
+        if (is_single() && get_post_type() === 'games' && get_post_type() === 'offlinegames') {
             global $wpdb;
-
             $session_id = lokis_getSessionIDFromURL(); // Retrieve session ID from the cookie
             $lokis_host_table_name = $wpdb->prefix . 'lokis_game_sessions';
             // Check if the session ID exists in the database
@@ -138,7 +142,8 @@ if (!function_exists('lokis_check_session_id')) {
                     $session_id
                 )
             );
-            if (isset($_GET['game'])) {
+            if (isset($_GET['game']) || isset($_GET['offlinegames'])) {
+
                 if ($existing_Sessionid_entry == 0) {
                     // Invalid session, handle accordingly
                     echo "<script>alert('Invalid session. Please contact the host.');</script>";
@@ -169,35 +174,32 @@ if (!function_exists('loki_cookie_maker')) {
             setcookie('loki_user_id', $lokis_cookie_value, time() + (86400 * 30), '/');
             setcookie('lokis_game_stage_url', serialize($lokis_url_array), time() + (86400 * 30), '/');
 
-            $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-
-            //Pull existing players
-            $existing_players_count = $wpdb->get_var(
-                $wpdb->prepare(
-                    "SELECT players_count FROM $lokis_game_sessions_table_name WHERE session_id = %s",
-                    $lokis_session_id
-                )
-            );
-
-            // Decode the existing players count from JSON
-            $players_count_array = !empty($existing_players_count) ? json_decode($existing_players_count, true) : [];
-
-            if ($lokis_cookie_value !== null && !in_array($lokis_cookie_value, $players_count_array)) {
-                // Add the unique ID to the players_count array
-                $players_count_array[] = $lokis_cookie_value;
-
-                // Remove empty values from the array
-                $players_count_array = array_filter($players_count_array);
-
-                // Update the players_count column with the updated array
-                $updated_players_count = !empty($players_count_array) ? json_encode($players_count_array) : '';
-
-                $wpdb->update(
-                    $lokis_game_sessions_table_name,
-                    array('players_count' => $updated_players_count),
-                    array('session_id' => $lokis_session_id)
+            if ($lokis_session_id) {
+                $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
+                //Pull existing players
+                $existing_players_count = $wpdb->get_var(
+                    $wpdb->prepare(
+                        "SELECT players_count FROM $lokis_game_sessions_table_name WHERE session_id = %s",
+                        $lokis_session_id
+                    )
                 );
-
+                // Decode the existing players count from JSON
+                $players_count_array = !empty($existing_players_count) ? json_decode($existing_players_count, true) : [];
+                if ($lokis_cookie_value !== null && !in_array($lokis_cookie_value, $players_count_array)) {
+                    // Add the unique ID to the players_count array
+                    $players_count_array[] = $lokis_cookie_value;
+                    // Remove empty values from the array
+                    $players_count_array = array_filter($players_count_array);
+                    // Update the players_count column with the updated array
+                    $updated_players_count = !empty($players_count_array) ? json_encode($players_count_array) : '';
+                    $wpdb->update(
+                        $lokis_game_sessions_table_name,
+                        array('players_count' => $updated_players_count),
+                        array('session_id' => $lokis_session_id)
+                    );
+                }
+            }
+            if ($lokis_cookie_value !== null) {
                 $response = array(
                     'status' => 'success',
                     'expiry_time' => time() + (86400 * 30),
@@ -261,35 +263,49 @@ if (!function_exists('loki_url_cookie')) {
             }
         }
     }
-    add_action('wp', 'loki_url_cookie', 100);
+    add_action('wp', 'loki_url_cookie', 150);
 }
 
-/*Redirect to game according to game url in cookies */
+/* Redirect user to the game they last played */
 if (!function_exists('lokis_cookie_redirect')) {
     function lokis_cookie_redirect()
     {
-        if (is_single() && get_post_type() === 'games') {
-            $currentURL = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $loki_checkbox = get_post_meta(get_the_ID(), "lokis_primary_game_checkbox", true);
+        if (!is_admin() && !defined('ELEMENTOR_VERSION')) {
+            if (get_post_type() === 'games' || $loki_checkbox == "1") {
+                if (is_singular()) {
+                    $currentProtocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://';
+                    $currentURL = $currentProtocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-            if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
-                if (isset($_COOKIE['lokis_game_stage_url'])) {
-                    $serializedURLs = $_COOKIE['lokis_game_stage_url'];
+                    if (!isset($_COOKIE['lokis_passed']) || empty($_COOKIE['lokis_passed'])) {
+                        if (isset($_COOKIE['lokis_game_stage_url'])) {
+                            $serializedURLs = $_COOKIE['lokis_game_stage_url'];
 
-                    // Unserialize the array of URLs
-                    $urls = $serializedURLs ? unserialize(stripslashes($serializedURLs)) : array();
-                    $session_id = lokis_getSessionIDFromURL();
+                            // Unserialize the array of URLs
+                            $urls = $serializedURLs ? unserialize(stripslashes($serializedURLs)) : array();
+                            $session_id = lokis_getSessionIDFromURL();
 
-                    // Check if the session ID exists in the array
-                    if (isset($urls[$session_id])) {
-                        //check current url against url with key of the session IS
-                        if ($currentURL !== $urls[$session_id]) {
-                            // Redirect to the URL of the matching key
-                            $redirectURL = $urls[$session_id];
-                            ?>
-                            <script>     window.location.href = '<?php echo $redirectURL; ?>';
-                            </script>
-                            <?php
-                            exit;
+                            // Check if the session ID exists in the array
+                            if (isset($urls[$session_id])) {
+                                // Check if the current URL matches the stored URL, excluding the protocol
+                                $storedURL = $urls[$session_id];
+                                $storedURLProtocol = strpos($storedURL, 'https://') === 0 ? 'https://' : 'http://';
+                                $currentURLProtocol = strpos($currentURL, 'https://') === 0 ? 'https://' : 'http://';
+
+                                $storedURLWithoutProtocol = str_replace(array('http://', 'https://'), '', $storedURL);
+                                $currentURLWithoutProtocol = str_replace(array('http://', 'https://'), '', $currentURL);
+
+                                if ($currentURLWithoutProtocol !== $storedURLWithoutProtocol) {
+                                    // Redirect to the URL of the matching key, including the current protocol
+                                    $redirectURL = $currentURLProtocol . $storedURLWithoutProtocol;
+                                    ?>
+                                    <script>
+                                        window.location.href = '<?php echo $redirectURL; ?>';
+                                    </script>
+                                    <?php
+                                    exit;
+                                }
+                            }
                         }
                     }
                 }
