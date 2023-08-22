@@ -1,161 +1,184 @@
 :root {
   --lokis-bg: #f0eae1;
+
   --lokis-primary: #f8f8ff;
+
   --lokis-color: #5a5a5a;
+
   --lokis-dashboard-border-color: #a1a1a1a1;
+
   --lokis-border: #eee;
+
   --lokis-white-color: #ffffff;
+
   --lokis-black-color: #000000;
+
   --lokis-gray-color: #a9a9bc;
+
   --lokis-requiredfield-color: #c12f32;
+
   --lokis-border-color: #d9d9d9;
+
   --lokisloop-incorrect-color: #842029;
+
   --lokisloop-incorrect-bg-color: #f8d7da;
+
   --lokisloop-incorrect-border-color: #f5c2c7;
+
   --lokisloop-correct-color: #0f5132;
+
   --lokisloop-correct-bg-color: #d1e7dd;
+
   --lokisloop-correct-border-color: #badbcc;
+
   --lokis-primarybtn-color: #0d6efd;
+
   --lokis-hostbg-color: #e9ecef;
+
   --lokis-hostbgbdr-color: #ced4da;
+
   --lokis-host-color: #212529;
+
   --lokis-btnbg-color: #75592d;
+
   --lokis-btnbg-active-color: #5b4623;
+
   --login-loginbackgroud-color: #e8f0fe;
+
+  --lokis-paragraphh-bgcolor: #f9f9f9;
 }
+
+/* CSS for edit button */
 
 .edit-button {
   background-color: var(--lokis-border) !important;
+
   color: var(--lokis-color) !important;
+
   padding: 5px 20px;
+
   border-radius: 8px;
+
   border-color: var(--lokis-border);
 }
-/* .......................................CSS FOR PAGINATION............................ */
+
+/* CSS FOR PAGINATION */
+
 .lokis-loop-pagination {
-  display: inline-block;
+  /* display: inline-block; */
+  display: flex;
+  align-items: center;
 }
+
 .lokis-loop-pagination a.page-numbers {
   color: var(--lokis-black-color);
+
   float: left;
+
   padding: 8px 16px;
+
   text-decoration: none;
+
   transition: background-color 0.5s;
+
   margin: 10px 4px;
+
   font-size: 20px;
 }
+
 .lokis-loop-pagination span.page-numbers.current {
   color: var(--lokis-black-color);
+
   float: left;
+
   padding: 8px 16px;
+
   text-decoration: none;
+
   transition: background-color 0.5s;
+
   border: 1px solid var(--lokis-border-color);
+
   margin: 10px 4px;
+
   font-size: 20px;
+
   background-color: var(--lokis-hostbgbdr-color);
 }
-.lokis-loop-pagination span.page-numbers.current:active {
-  color: var(--lokis-black-color);
+.lokis-loop-pagination span.page-numbers.dots{
   float: left;
   padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color 0.5s;
-  border: 1px solid var(--lokis-border-color);
-  background-color: var(--lokis-border-color);
   margin: 10px 4px;
-  font-size: 20px;
 }
-.lokis-loop-pagination span.page-numbers.dots {
-  color: var(--lokis-black-color);
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-  transition: background-color 0.5s;
-  margin: 10px 4px;
-  font-size: 20px;
-}
+
 .lokis-loop-pagination a.page-numbers:active {
   background-color: var(--lokis-btnbg-color);
+
   color: var(--lokis-white-color);
+
   border: 1px solid var(--lokis-btnbg-color);
 }
+
 .lokis-loop-pagination span.page-numbers.current:active,
 span.page-numbers.current:hover {
   border: 1px solid var(--lokis-btnbg-color);
+
   background-color: var(--lokis-btnbg-color);
+
   margin: 10px 4px;
+
   font-size: 20px;
 }
 
-/* ...........................................creating CSS for single-games.php........................................................ */
-
-@media only screen and (min-width: 822px) {
-  :root {
-    --responsive--aligndefault-width: min(
-      calc(100vw - 8 * var(--global--spacing-horizontal)),
-      610px
-    );
-
-    --responsive--alignwide-width: min(
-      calc(100vw - 8 * var(--global--spacing-horizontal)),
-      1240px
-    );
-  }
-}
-@media only screen and (max-width: 600px) {
-  .lokisloop-answer {
-    display: block !important;
-  }
-  .button#lokis-submit-btn,
-  .button#lokis-submit-btn:active,
-  .button#lokis-submit-btn:hover {
-    width: 100%;
-    margin: 20px auto !important;
-  }
-  .lokis-loop-incorrect,
-  .lokis-loop-correct {
-    width: 100% !important;
-  }
-  .lokisloop-profile-form #lokis-error-message {
-    margin-top: 20px;
-  }
-}
-
-/* for lokis-paragraph-content */
-
-.lokisloop-container .lokis-paragraph-content {
-  padding: 25px 100px 75px 100px;
-  text-align: center;
-  margin: auto;
-  padding: 5px;
-}
+/* creating CSS for single-games.php */
 
 /* for lokis-iframe-content */
 
 .iframe-container {
+  width: 75%;
+
   margin: auto;
-  height: 75%;
-  width: 90%;
+
+  padding: 20px;
 }
 
-.iframe-container .lokis-iframe {
-  margin: auto;
+#loki-game-iframe {
+  height: 70%;
+
   width: 100%;
-  height: 100%;
+
+  background-color: var(--lokis-white-color);
+
+  margin: auto;
 }
 
 /* for lokis post form */
 
-.lokisloop-container .lokis-post-form {
-  margin: auto;
-  text-align: center;
-  margin-top: 10px;
+.lokis-post-form {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+i#lokis-fullscreen {
+  margin-top: 30px;
+
+  font-size: 30px;
+}
+
+i#lokis-fullscreen:hover {
+  margin-top: 25px;
+
+  font-size: 35px;
+
+  color: var(--lokis-primarybtn-color);
 }
 
 .lokisloop-container .lokis-post-form .lokisloop-answer {
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 }
 
@@ -165,84 +188,169 @@ span.page-numbers.current:hover {
 
 .lokis-post-form form input#lokis-answer {
   cursor: pointer;
+
   padding: 0.625rem 1.25rem;
+
   font-weight: 600;
+
   font-size: 0.875rem;
+
   border: 1px solid var(--lokis-border-color);
+
   width: fit-content;
+
   outline: none;
 }
+
 .lokis-post-form .lokisloop-answer button#lokis-submit-btn {
-  margin: 20px 20px;
+  margin: 20px 15px;
+
   background-color: var(--login-loginbackgroud-color);
+
   border-color: var(--lokis-border-color);
+
   color: var(--lokis-color);
+
   padding: 10px 25px;
-  cursor: pointer;
+
   font-weight: 500;
+
   text-decoration: none;
+
   line-height: 1.5;
+
   outline: none;
 }
-.lokis-post-form .lokisloop-answer button#lokis-submit-btn:active,
+
+.lokis-post-form button#lokis-fullscreen {
+  border: none;
+
+  color: var(--lokis-white-color);
+
+  margin-left: 5px;
+
+  padding: 8px 0;
+
+  background: var(--lokis-primarybtn-color);
+
+  transition: all 0.2s ease;
+
+  width: 10%;
+
+  font-size: 25px;
+}
+
 button#lokis-submit-btn:hover {
   margin: 20px 50px;
-  background-color: var(--login-loginbackgroud-color);
+
+  background-color: var(--lokis-primarybtn-color);
+
   border-color: var(--lokis-border-color);
+
   color: var(--lokis-color);
+
   padding: 10px 25px;
+
   cursor: pointer;
+
   font-weight: 500;
+
   text-decoration: none;
+
   line-height: 0.875rem;
+
   outline: none;
 }
 
 /* For lokis game answer */
+
 div#lokis-feedback {
-  width: 100%;
-  max-width: 455px;
+  max-width: 78%;
+
   margin: 0 auto;
+
   padding-right: 20px;
 }
 
-div#lokis-error-message .lokis-loop-error,
+.lokis-loop-error,
 .lokis-loop-incorrect {
   color: var(--lokisloop-incorrect-color);
+
   background-color: var(--lokisloop-incorrect-bg-color);
+
   border-color: var(--lokisloop-incorrect-border-color);
+
   border-radius: 5px;
+
   height: 40px;
+
   display: flex;
+
   justify-content: center;
+
   flex-direction: column;
+
   align-items: center;
+
   width: 100%;
+
+  margin-top: 15px;
 }
 
-.lokis-loop-correct {
+.lokis-loop-error {
+  margin: 0;
+}
+
+.lokis-loop-correct,
+.lokis-loop-success {
   color: var(--lokisloop-correct-color);
+
   background-color: var(--lokisloop-correct-bg-color);
+
   border-color: var(--lokisloop-correct-border-color);
+
   border-radius: 5px;
+
   height: 40px;
+
   display: flex;
+
   justify-content: center;
+
   flex-direction: column;
+
   align-items: center;
+
   width: 100%;
+
+  margin-top: 15px;
 }
 
-/* ...........................End off CSS for single-games.php......................................................... */
-/* ......................creating CSS for game host application form................................................... */
+.lokis-loop-success {
+  margin-left: -84px;
+
+  padding: 12px;
+
+  margin-top: -3px;
+
+  width: max-content;
+}
+
+/* End off CSS for single-games.php */
+
+/* creating CSS for game host application form */
+
 .lokis-gamehost-application-container {
   background-color: var(--lokis-bg);
+
   margin: 10px;
+
   padding: 2px;
 }
 
 .lokis-gamehost-application-container .lokis-formquestion-item {
   padding: 1.25rem 1.25rem;
+
   position: relative;
 }
 
@@ -250,79 +358,132 @@ div#lokis-error-message .lokis-loop-error,
   .lokis-formquestion-item
   .lokis-formquestion-order {
   margin: 5px;
+
   padding: 1px;
+
   line-height: 1.25rem;
 }
+
 .lokis-gamehost-application-container form.lokis-gamehost-form {
   margin-left: 10px;
 }
+
 .lokis-gamehost-application-container
   .lokis-formquestion-item
   .lokisloop-selective-box {
   display: block;
+
   clear: both;
+
   margin-left: 10px;
 }
 
 .lokis-gamehost-application-container input#lokis-submit-button {
   margin-top: 2em;
+
   margin-left: 10px;
 }
 
 .lokis-gamehost-application-container .lokis-formquestion-item .form-control {
   margin-top: 10px;
+
   margin-left: 20px;
+
   margin-right: 20px;
+
   margin-bottom: 10px;
+
   border: 1px solid;
+
   background: var(--lokis-white-color);
+
   color: var(--lokis-gray-color);
+
   border-radius: 0.25rem;
+
   min-height: 2rem;
+
   font-size: 1rem;
+
   line-height: 1.25rem;
+
   width: 90%;
+
   border-width: 0px 0px 0.125rem;
+
   border-top-style: initial;
+
   border-top-color: initial;
+
   border-left-style: initial;
+
   border-left-color: initial;
+
   border-right-style: initial;
+
   border-right-color: initial;
+
   border-bottom-style: solid;
+
   border-bottom-color: transparent;
+
   outline: none;
+
   padding: 0.375rem 0.75rem;
+
   resize: none;
+
   user-select: text;
 }
+
 .lokis-formquestion-item .lokis-formquestion-order.lokis-req-field {
-  color: #c12f32;
+  color: var(--lokis-requiredfield-color);
 }
+
 .lokis-gamehost-application-container button.button:hover,
 .button:active,
 button:hover,
 button:active {
   display: inline-flex;
+
   flex-flow: row nowrap;
+
   align-items: center;
+
   justify-content: center;
+
   border: 0px;
+
   vertical-align: middle;
+
   margin: 20px;
+
   cursor: pointer;
+
   text-decoration-line: none;
+
   outline-style: none;
+
   width: fit-content;
-  background-color: #5b4623;
-  border-color: #5b4623;
+
+  background-color: var(--lokis-btnbg-active-color);
+
+  border-color: var(--lokis-btnbg-active-color);
+
   color: var(--lokis-white-color);
+
   border-radius: 0.25rem;
+
   padding: 0.625rem 1.25rem;
+
   min-width: 6rem;
+
   min-height: 2.5rem;
+
   line-height: 1.375rem;
+
   font-weight: 600;
+
   font-size: 0.875rem;
 }
 
@@ -330,50 +491,91 @@ button:active {
   button.button:not(:hover):not(:active):not(.has-background),
 button:not(:hover):not(:active):not(.has-background) {
   display: inline-flex;
+
   flex-flow: row nowrap;
+
   align-items: center;
+
   justify-content: center;
+
   border: 0px;
+
   vertical-align: middle;
+
   margin: 20px;
+
   cursor: pointer;
+
   text-decoration-line: none;
+
   outline-style: none;
+
   width: fit-content;
+
   background-color: var(--lokis-btnbg-color);
+
   border-color: var(--lokis-btnbg-color);
+
   color: var(--lokis-white-color);
+
   border-radius: 0.25rem;
+
   padding: 0.625rem 1.25rem;
+
   min-width: 6rem;
+
   min-height: 2.5rem;
+
   line-height: 1.375rem;
+
   font-weight: 600;
+
   font-size: 0.875rem;
 }
+
 .lokis-gamehost-application-container
   button.button:hover:not(:active):not(.has-background),
 button:not(:hover):active:not(.has-background) {
   display: inline-flex;
+
   flex-flow: row nowrap;
+
   align-items: center;
+
   justify-content: center;
+
   border: 0px;
+
   vertical-align: middle;
+
   margin: 20px;
+
   cursor: pointer;
+
   text-decoration-line: none;
+
   outline-style: none;
+
   width: fit-content;
+
   background-color: var(--lokis-btnbg-active-color);
+
   border-color: var(--lokis-btnbg-active-color);
+
   color: var(--lokis-white-color);
+
   border-radius: 0.25rem;
+
   padding: 0.625rem 1.25rem;
+
   min-width: 6rem;
+
   min-height: 2.5rem;
+
   line-height: 1.375rem;
+
   font-weight: 600;
+
   font-size: 0.875rem;
 }
 
@@ -383,40 +585,52 @@ button:not(:hover):active:not(.has-background) {
 
 .lokisloop-dashboard-container aside .lokis-logo a {
   margin: 1rem 0;
+
   display: block;
+
   padding: 0.5rem 1rem;
+
   text-align: center;
+
   font-size: 2.4rem;
+
   text-decoration: none;
 }
 
 .lokisloop-dashboard-container aside ul li {
   list-style-type: none;
+
   margin: 10px 0 10px 0;
+
   border-bottom: 1px solid var(--lokis-border);
-  padding-top: 15px;
+
   font-size: 18px;
 }
+
 .lokisloop-dashboard-container aside ul li a:focus {
   background: transparent !important;
+
   outline: none !important;
 }
 
 .lokisloop-dashboard-container .lokisloop-menu ul li .logout:hover {
   background-color: var(--lokis-hostbg-color);
 }
+
 li.lokis-active {
   background-color: var(--lokis-hostbg-color);
 }
+
 .lokisloop-hosted-game .lokisloop-container-wrapper,
 .lokisloop-completed-games-container {
   padding: 30px;
-  /* width: 100%; */
 }
 
 .lokisloop-dashboard-container {
   display: flex;
+
   margin: auto;
+
   max-width: var(--responsive--alignwide-width) !important;
 }
 
@@ -432,11 +646,15 @@ li.lokis-active {
 
 .lokisloop-dashboard-container .lokisloop-hosted-game {
   font-size: 16px;
+
   width: 75%;
+
   align-items: center;
 
   margin: 0;
+
   display: grid;
+
   border: 1px solid var(--lokis-border-color);
 }
 
@@ -444,33 +662,47 @@ li.lokis-active {
   text-align: center;
 }
 
-.lokisloop-dashboard-container .lokisloop-hosted-game h5,
+.lokisloop-dashboard-container h5,
+.lokisloop-hosted-game h5,
 .lokisloop-main-top h5 {
   text-align: center;
+
   margin: 20px 0;
+
   font-size: 26px;
+
   font-weight: 700;
 }
 
 .lokisloop-dashboard-container ul li a i.fa-regular {
   position: relative;
+
   width: 70px;
+
   height: 40px;
+
   font-size: 20px;
+
   text-align: center;
+
   margin-right: 5px;
 }
 
 .lokisloop-dashboard-container ul li a i.fa-solid {
   position: relative;
+
   width: 70px;
+
   height: 40px;
+
   font-size: 20px;
+
   text-align: center;
 }
 
 .lokisloop-dashboard-container aside img {
   max-width: 100%;
+
   padding: 3px;
 }
 
@@ -483,15 +715,25 @@ li.lokis-active {
   td
   button.button {
   background-color: var(--lokis-border-color);
+
   color: var(--lokis-color);
+
   padding: 8px 10px;
+
   text-align: center;
+
   text-decoration: none;
+
   display: inline-block;
+
   font-size: 12px;
+
   margin: 4px 2px;
+
   cursor: pointer;
+
   border-radius: 12px;
+
   border: 1px solid var(--lokis-border-color);
 }
 
@@ -525,9 +767,10 @@ li.lokis-active {
 .lokisloop-container-wrapper table tr th,
 .lokisloop-container-wrapper table tr td {
   border-color: var(--lokis-border-color);
+
   /* text-align: center; */
 
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
 
   border: 1px solid;
 }
@@ -543,19 +786,22 @@ li.lokis-active {
 
   border-right: 1px solid var(--lokis-border-color);
 }
+
 /* End of Hosted Game */
 
 /* CSS For user profile */
 
 .lokisloop-container {
-  background: #f9f9f9;
+  background: var(--lokis-paragraphh-bgcolor);
 
   padding: 20px;
 
   margin: 0 auto;
 
   position: relative;
+
   height: 75%;
+
   width: 75%;
 }
 
@@ -601,16 +847,20 @@ li.lokis-active {
   width: 100%;
 }
 
-.lokisloop-container .rightbox .profile input:focus {
+/* .lokisloop-container .rightbox .profile input:focus {
+
   outline: none;
-}
+
+} */
 
 .lokis-gamehost-profileform-container
   .lokisloop-profile-form
   .lokis-form-item
   .form_control {
   width: 30%;
+
   margin-top: 0;
+
   display: inline-block;
 }
 
@@ -626,29 +876,49 @@ li.lokis-active {
   .lokis-radio
   input[type="radio"] {
   padding: 2px;
+
   margin: 10px;
+
   border-top: 0;
+
   border-left: 0;
+
   width: 20px;
+
   box-shadow: none;
+
   border: none;
+
   height: 20px;
+
   border-right: 0;
+
   float: left;
+
   background-color: var(--lokis-bg);
 }
+
 .lokis-gamehost-profileform-container
   .lokisloop-profile-form
   input[type="radio"]:checked:after {
   opacity: 1;
+
   position: relative;
+
   content: "";
+
   display: block;
+
   left: 2px;
+
   top: 2px;
+
   width: 12px;
+
   height: 12px;
+
   border-radius: 50%;
+
   background: var(--lokis-black-color);
 }
 
@@ -656,7 +926,15 @@ li.lokis-active {
   .lokisloop-profile-form
   .lokis-radio
   input[type="radio"]:focus,
-.lokisloop-profile-form button.edit-button:focus {
+.lokisloop-profile-form button.edit-button:focus,
+.lokis-cookie-btn .lokis-cookie-reject:focus,
+.lokisloop-container .rightbox .profile input:focus,
+input#lokisLoop_expiration:focus,
+.lokisloop-hosted-game #id_game:focus,
+.login-submit input#lokis-submit:focus,
+.lokis-login-form-container input[type="text"]:focus,
+.lokis-login-form-container input[type="password"]:focus,
+.lokis-login-form-container input[type="checkbox"]:focus {
   outline: none;
 }
 
@@ -666,17 +944,21 @@ li.lokis-active {
   .form_control {
   width: calc(100% - 40px);
 }
+
 .lokis-form-item.lokis-radio {
   clear: both;
+
   display: inline-block;
 }
 
 .lokisloop-profile-form button#generate-password {
   float: right;
 }
+
 .lokisloop-profile-form button#lokis-profile-update-button {
   margin-top: 30px;
 }
+
 /* End of profile */
 
 /* Ended CSS for User Dashboard  */
@@ -685,7 +967,11 @@ li.lokis-active {
 
 /**
 
+
+
  * Modals ($modals)
+
+
 
  */
 
@@ -707,9 +993,6 @@ li.lokis-active {
   position: absolute;
 
   z-index: 10000;
-  /* 1 */
-
-  /* top: 0; */
 
   left: 0;
 
@@ -763,24 +1046,36 @@ li.lokis-active {
 
   margin-left: -16em;
 
-  background-color: #fff;
+  background-color: var(--lokis-white-color);
 
   box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
 }
 
 .lokis-modal-box.is-visible .lokis-modal-transition {
   transform: translateY(0);
+
   opacity: 1;
+
   overflow: hidden;
+
   color: var(--lokis-black-color);
+
   width: 32em;
+
   height: 300px;
+
   position: absolute;
+
   background: var(--lokis-white-color);
+
   top: -33%;
+
   left: 20%;
+
   right: 0;
+
   bottom: 0;
+
   margin: auto;
 }
 
@@ -792,7 +1087,7 @@ li.lokis-active {
 .lokis-modal-header {
   position: relative;
 
-  background-color: #fff;
+  background-color: var(--lokis-white-color);
 
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.06);
 
@@ -816,7 +1111,7 @@ li.lokis-active {
 }
 
 .lokis-modal-close:hover {
-  color: #0693e3;
+  color: var(--lokis-primarybtn-color);
 }
 
 .lokis-modal-heading {
@@ -840,8 +1135,10 @@ li.lokis-active {
 button.lokis-modal-close.lokis-modal-toggle {
   background-color: #ffffffe3;
 }
+
 .lokis-modal-game-status i.fa.fa-circle.lokis-game-status-incomplete {
   margin-left: 10px;
+
   margin-right: 5px;
 }
 
@@ -850,56 +1147,75 @@ button.lokis-modal-close.lokis-modal-toggle {
 .lokis-action-td,
 .lokis-table-url-wrapper {
   align-items: center;
+
   margin: 0 5px;
+
   justify-content: center;
 }
 
 .lokis-user-avatar img {
   border-radius: 50%;
+
   width: 60%;
 }
 
 .lokis-user-avatar {
   margin-right: 1em;
+
   padding-left: 2em;
 }
 
 .lokis-user-details-wrapper {
   display: flex;
+
   align-items: center;
 }
+
 .lokis-modal-game-status {
   margin-left: 30px;
 }
+
 .lokis-modal-game-status i.fa.fa-circle.lokis-game-status-active {
   margin: 10px 10px;
-  color: #008000;
+
+  color: var(--lokisloop-correct-color);
 }
+
 .lokis-modal-box .lokis-modal-wrapper .lokis-modal-header .lokis-modal-close {
   background-color: transparent;
+
   color: var(--lokis-color);
+
   margin-top: 5px;
+
   margin-right: -20px;
 }
 
-/* CSS for lokis host game .................................*/
+/* CSS for lokis host game */
 
 form.lokis-host-game.g-3.hosta-game {
   display: flex;
+
   align-items: center;
+
   margin-left: 50px;
+
   margin-top: 12rem;
 }
 
 input#sessionToken {
   display: flex;
+
   margin-top: 9rem;
 }
 
 .col-auto {
   flex: 0 0 auto;
+
   width: auto;
+
   padding-left: 10px;
+
   padding-right: 10px;
 }
 
@@ -909,40 +1225,67 @@ label {
 
 label.visually-hidden {
   position: absolute !important;
+
   width: 1px !important;
+
   height: 1px !important;
+
   padding: 0 !important;
+
   margin: -1px !important;
+
   overflow: hidden !important;
+
   clip: rect(0, 0, 0, 0) !important;
+
   white-space: nowrap !important;
+
   border: 0 !important;
 }
 
 .lokisloop-hosted-game #id_game {
   display: block;
+
   width: 100%;
+
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+
   font-size: 1rem;
+
   font-weight: 400;
+
   line-height: 1.5;
+
   color: #212529;
+
   background-color: var(--lokis-white-color);
+
   background-repeat: no-repeat;
+
   background-position: right 0.75rem center;
+
   background-size: 16px 12px;
+
   border: 1px solid var(--lokis-hostbgbdr-color);
+
   border-radius: 0.25rem;
+
   appearance: none;
+
   margin: 0px;
+
   text-align: center;
 }
 
 .lokisloop-dashboard-container .lokisloop-hosted-game .input-group {
   position: relative;
+
   display: flex;
+
   flex-wrap: wrap;
+
   align-items: stretch;
+
   width: 100%;
 }
 
@@ -951,101 +1294,144 @@ label.visually-hidden {
   .input-group
   .input-group-text {
   display: flex;
+
   align-items: center;
+
   padding: 0.375rem 0.75rem;
+
   font-size: 1rem;
+
   font-weight: 400;
+
   line-height: 1.5;
+
   color: var(--lokis-host-color);
+
   text-align: center;
+
   white-space: nowrap;
+
   background-color: var(--lokis-hostbg-color);
+
   border: 1px solid var(--lokis-hostbgbdr-color);
+
   position: relative;
+
   flex: 1 1 auto;
+
   width: 1%;
+
   min-width: 0;
+
   border-left: transparent;
+
   border-radius: 0 5px 5px 0;
 }
+
 .lokis-loop-host-start-game {
   width: fit-content;
 }
 
 button.btn.btn-primary.mb-3 {
   display: inline-block;
+
   font-weight: 400;
+
   margin: 0;
+
   width: 200px;
+
   line-height: 1.5;
+
   text-align: center;
+
   text-decoration: none;
+
   vertical-align: middle;
+
   user-select: none;
+
   border: 1px solid transparent;
+
   padding: 0.375rem 0.75rem;
+
   font-size: 1rem;
+
   border-radius: 0.25rem;
+
   color: var(--lokis-white-color) !important;
+
   background-color: var(--lokis-primarybtn-color) !important;
+
   border-color: var(--lokis-primarybtn-color) !important;
 }
+
 .lokis-error-credentials {
   color: var(--lokisloop-incorrect-color);
+
   background-color: var(--lokisloop-incorrect-bg-color);
+
   padding: 7px;
-  width: max-content;
+
+  max-width: 95%;
+
+  text-align: center;
 }
 
-/* CSS for lokis host game ends here .................................*/
+/* CSS for lokis host game ends here */
 
-/* Codes by Arpann====================================================================================================================
-
-===================================================================================================================================*/
-
-/*  CUrrent games css=============================================================== */
-h5 {
-  font-size: 24px;
-  font-weight: 700;
-}
+/*  CUrrent games css */
 
 .lokisloop-container-wrapper .lookisloop-games a.lokisloop-visit-url {
   cursor: pointer;
+
   color: var(--lokis-black-color);
+
   text-decoration: none;
 }
 
 /* -----current-games-copy-icon----- */
+
 .lookisloop-games td a.lokisloop-url-copy {
   margin-left: 10px;
+
   color: var(--lokis-black-color);
 }
+
 .lokisloop-container-wrapper
   .lokis-table-url-wrapper
   .a.lokisloop-visit-url.lokis-table-tooltip,
 .a.lokisloop-url-copy.lokis-table-tooltip {
   background-color: var(--lokis-border-color);
+
   padding: 10px 10px;
+
   text-align: center;
+
   display: inline-block;
+
   font-size: 16px;
+
   margin: 4px 2px;
+
   border-radius: 8px;
+
   border: 1px solid var(--lokis-border-color);
 }
-@media only screen and (max-width: 600px) {
-  .lokisloop-dashboard-container {
-    border: transparent;
-  }
-}
 
-/* lokis loop menus============== */
+/* lokis loop menus */
+
 .lokisloop-dashboard-container aside {
   width: 25%;
+
   background-color: transparent;
+
   border: none;
+
   border-right: 1px solid var(--lokis-dashboard-border-color);
+
   padding: 0 10px;
+
   position: relative;
 
   font-size: 16px;
@@ -1063,50 +1449,464 @@ h5 {
 }
 
 .lokisloop-dashboard-container ul li a {
-  padding: 5px;
+  padding-left: 5px;
+
+  padding-top: 15px;
+
+  display: block;
+
   cursor: pointer;
+
   color: var(--lokis-host-color);
+
   text-decoration: none !important;
 }
+
 .lokisloop-dashboard-container aside .lokis-logo a {
   display: none;
 }
 
-@media only screen and (min-width: 768px) {
-  .lokisloop-dashboard-container aside ul li {
-    width: revert;
-  }
+.lokisloop-dashboard-container aside .lokis-logo a {
+  font-size: 20px;
 }
 
-@media only screen and (max-width: 767px) {
-  .lokisloop-dashboard-menu .lokisloop-menu li a .nav-item {
-    display: none;
-  }
+/* personal info css */
 
-  .lokisloop-dashboard-container
-    .lokisloop-dashboard-menu
-    ul.lokisloop-menu
-    li {
-    text-align: center;
-  }
+.lokis-form-item {
+  display: flex;
 
-  .lokisloop-dashboard-container .lokisloop-hosted-game,
-  .lokisloop-completed-games-container {
-    width: auto;
-  }
-  .lokis-action-td-wrapper .lokis-action-td,
-  form {
-    display: grid;
+  margin: 10px;
+}
+
+.lokisloop-container
+  .lokis-gamehost-profileform-container
+  .lokisloop-profile-form
+  .lokis-radio
+  .lokisloop-selective-box {
+  display: flex;
+}
+
+.lokis-form-item .lokis-form-control {
+  background-color: transparent;
+
+  padding: 0 0 0 20px;
+}
+
+/* Host a game csss */
+
+.lokisloop-dashboard-container .lokis-host-game-title > h5 {
+  text-align: center;
+
+  margin: 20px 0;
+
+  font-size: 26px;
+
+  font-weight: 700;
+}
+
+.lokisloop-dashboard-container .lokisloop-hosted-game .input-group input {
+  padding: 5px !important;
+
+  border-radius: var(--form--border-radius);
+
+  color: var(--form--color-text);
+
+  line-height: var(--global--line-height-body);
+
+  max-width: 100%;
+
+  border: 1px solid var(--lokis-hostbgbdr-color);
+
+  width: 60%;
+}
+
+/* input#lokisLoop_expiration:focus,
+
+.lokisloop-hosted-game #id_game:focus {
+
+  outline: none;
+
+} */
+
+.lokisloop-dashboard-container .lokisloop-hosted-game form {
+  display: flex;
+
+  column-gap: 20px;
+
+  row-gap: 20px;
+
+  width: 100%;
+
+  justify-content: center;
+}
+
+.lokisloop-dashboard-container .lokis-loop-host-choose-game {
+  padding-left: 0;
+}
+
+.lokisloop-dashboard-container .lokis-loop-host-choose-game #id_game option {
+  text-align: left;
+}
+
+.lokisloop-dashboard-container .lokis-loop-host-choose-time input {
+  border-radius: 5px 0 0 5px;
+}
+
+.lokis-loop-alert {
+  margin-top: 10px;
+
+  margin-left: 44px;
+}
+
+/*  login form  */
+
+/* CSS for lokis login form */
+
+.lokis-login-form-container {
+  background: var(--lokis-white-color);
+
+  padding: 20px;
+
+  margin: 0 auto;
+
+  position: relative;
+
+  width: 30%;
+}
+
+.lokis-login-form-container h3 {
+  margin-bottom: 20px;
+
+  text-align: center;
+}
+
+.lokis-login-form-container p {
+  margin-bottom: 20px;
+}
+
+.lokis-login-form-container label {
+  width: 50%;
+
+  display: flex;
+}
+
+.lokis-login-form-container input {
+  width: 95%;
+
+  outline: none;
+
+  border: 1px solid var(--lokis-hostbgbdr-color) !important;
+
+  margin: 0 2px;
+
+  max-width: 100%;
+
+  padding: calc(0.5 * 20px);
+
+  line-height: 1.7;
+
+  border-radius: 0;
+
+  background-color: var(--login-loginbackgroud-color) !important;
+}
+
+.lokis-login-form-container .login-submit input#lokis-submit {
+  margin: 0 auto;
+
+  width: 96%;
+
+  background-color: var(--login-loginbackgroud-color);
+
+  border: 1px solid var(--lokis-hostbgbdr-color);
+
+  color: var(--lokis-color);
+}
+
+/* .login-submit input#lokis-submit:focus {
+
+  outline: none;
+
+} */
+
+.login-submit input#lokis-submit:hover {
+  background-color: var(--lokis-primarybtn-color) !important;
+
+  color: var(--lokis-white-color) !important;
+}
+
+/* .lokis-login-form-container input[type="text"]:focus,
+
+.lokis-login-form-container input[type="password"]:focus,
+
+.lokis-login-form-container input[type="checkbox"]:focus {
+
+  outline: none;
+
+} */
+
+.lokis-login-form-container p.login-remember label input {
+  margin-top: 5px;
+
+  position: relative;
+
+  margin-right: 10px;
+}
+
+input#lokis-rememberme {
+  appearance: checkbox;
+
+  display: inline-block;
+
+  width: 24px;
+}
+
+.login-remember input[type="checkbox"]:after {
+  border: none;
+}
+
+.lokis-loginPage {
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.lokis-loginPage p a {
+  text-decoration: none;
+}
+
+/*  login form ends here  */
+
+/* css for tooltip */
+
+.lokis-table-tooltip {
+  position: relative;
+}
+
+.lokis-table-tooltip:hover::after {
+  content: attr(data-tooltip);
+
+  position: absolute;
+
+  top: 120%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background-color: #333;
+
+  color: var(--lokis-white-color);
+
+  padding: 8px 12px;
+
+  border-radius: 4px;
+
+  font-size: 14px;
+
+  font-weight: bold;
+
+  opacity: 0;
+
+  transition: opacity 0.2s ease-in-out;
+
+  z-index: 1;
+
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+
+  width: max-content;
+}
+
+.lokis-table-tooltip:hover::after {
+  opacity: 1;
+}
+
+/* responsiveness for active games */
+
+/* end off css for active games */
+
+/*  css for qr image */
+
+.lokis-qr-code {
+  max-width: 40px;
+
+  max-height: 40px;
+}
+
+/* end of css for qr image */
+
+/*  css for offline games modal box */
+
+/* Styles for the offline modal box */
+
+.lokis-offline-modal-answer {
+  display: none;
+
+  position: fixed;
+
+  z-index: 1;
+
+  left: 0;
+
+  top: 0;
+
+  margin-top: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.lokis-offline-modal-content {
+  background-color: #fefefe;
+
+  margin: auto;
+
+  padding: 20px;
+
+  border: 1px solid #888;
+
+  width: 100%;
+
+  height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+/* CSS styles for cookie consent popup */
+
+.lokis-cookie-consent {
+  position: fixed;
+
+  bottom: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  background: #eee;
+
+  z-index: 1030;
+
+  color: #000;
+
+  font-size: 14px;
+
+  margin: 0;
+
+  display: flex;
+
+  justify-content: center;
+}
+
+.lokis-cookie-message {
+  margin-top: 25px;
+}
+
+.lokis-cookie-heading .fa-cookie-bite::before {
+  margin-right: 20px;
+
+  font-size: 32px;
+
+  font-style: normal;
+
+  font-variant: normal;
+
+  line-height: 1;
+
+  text-rendering: auto;
+
+  display: inline-block;
+
+  text-transform: none;
+}
+
+.lokis-cookie-buttons button#loki-cookie-accept {
+  color: var(--lokis-white-color);
+
+  background: var(--lokis-primarybtn-color);
+
+  border-radius: 5px;
+
+  padding: 7px 15px;
+
+  margin-left: 15px;
+}
+
+.lokis-cookie-buttons button#loki-cookie-reject {
+  background-color: transparent;
+
+  color: var(--lokis-primarybtn-color);
+}
+
+.lokis-cookie-buttons button#loki-cookie-reject:hover {
+  background-color: var(--lokis-primarybtn-color);
+
+  color: var(--lokis-white-color);
+
+  text-decoration: underline;
+}
+
+/* css for media query */
+
+@media only screen and (max-width: 482px) {
+  /* CSS for lokis login form */
+
+  .lokis-login-form-container,
+  .lokis-login-form-container label {
+    width: 100%;
   }
 }
 
 @media only screen and (max-width: 600px) {
+  /* creating CSS for single-games.php */
+
+  .lokisloop-answer {
+    display: block !important;
+  }
+
+  .button#lokis-submit-btn,
+  .button#lokis-submit-btn:active,
+  .button#lokis-submit-btn:hover {
+    width: 100%;
+
+    margin: 20px auto !important;
+  }
+
+  .lokis-loop-incorrect,
+  .lokis-loop-correct {
+    width: 100% !important;
+  }
+
+  .lokisloop-profile-form #lokis-error-message {
+    margin-top: 20px;
+  }
+
+  /* -----current-games-copy-icon----- */
+
+  .lokisloop-dashboard-container {
+    border: transparent;
+  }
+
+  /* lokis loop menus */
+
   .lokisloop-dashboard-container aside ul li {
     width: revert;
   }
+
   .lokis-action-td {
     display: grid;
   }
+
   .lokisloop-hosted-game {
     border: 0;
   }
@@ -1114,62 +1914,73 @@ h5 {
   .lokisloop-hosted-game caption {
     font-size: 1.3em;
   }
-  /* .lookisloop-games tbody tr {
-    display: none;
-  } */
+
   .lokisloop-hosted-game thead {
     border: none;
+
     clip: rect(0 0 0 0);
+
     height: 1px;
+
     margin: -1px;
+
     overflow: hidden;
+
     padding: 0;
+
     position: absolute;
+
     width: 1px;
   }
 
   .lokisloop-hosted-game tr {
     border-bottom: 3px solid var(--lokis-border-color);
+
     display: block;
+
     margin-bottom: 0.625em;
   }
 
   .lokisloop-hosted-game th {
     border-bottom: 1px solid var(--lokis-border-color);
+
     display: block;
+
     font-size: 0.8em;
+
     text-align: right;
   }
+
   td.lokis-action-td-wrapper {
     display: flex !important;
+
     justify-content: space-between;
+
     align-items: center;
   }
+
   .lokisloop-hosted-game td {
     border-bottom: 1px solid var(--lokis-border-color);
+
     display: block;
+
     font-size: 0.8em;
+
     text-align: right;
   }
+
   .lokisloop-hosted-game td::before {
     content: attr(data-label);
+
     float: left;
+
     font-weight: bold;
+
     text-transform: uppercase;
   }
-}
 
-.lokisloop-dashboard-container aside .lokis-logo a {
-  font-size: 20px;
-}
+  /* personal info css */
 
-/* personal info css================================================================== */
-.lokis-form-item {
-  display: flex;
-  margin: 10px;
-}
-
-@media only screen and (max-width: 600px) {
   .lokisloop-container
     .lokisloop-profile
     .lokisloop-profile-form
@@ -1187,6 +1998,15 @@ h5 {
     padding: 0;
   }
 
+  .lokis-gamehost-profileform-container
+    .lokisloop-profile-form
+    .lokis-radio
+    input[type="radio"]:after {
+    left: 4px;
+
+    top: 4px;
+  }
+
   .lokisloop-container
     .lokisloop-profile
     .lokisloop-profile-form
@@ -1199,27 +2019,53 @@ h5 {
   .lokisloop-profile-form .lokis-form-item .lokis-form-control {
     padding: 0;
   }
-}
-.lokisloop-container
-  .lokis-gamehost-profileform-container
-  .lokisloop-profile-form
-  .lokis-radio
-  .lokisloop-selective-box {
-  display: flex;
-}
-.lokis-form-item .lokis-form-control {
-  background-color: transparent;
-  padding: 0 0 0 20px;
+
+  /* css for active games  */
+
+  .lokisloop-completed-games-container .lookisloop-games table tr {
+    border-bottom: 3px solid #ddd;
+
+    display: block;
+
+    margin-bottom: 0.625em;
+  }
 }
 
 @media only screen and (max-width: 767px) {
+  /* lokis loop menus */
+
+  .lokisloop-dashboard-menu .lokisloop-menu li a .nav-item {
+    display: none;
+  }
+
+  .lokisloop-dashboard-container
+    .lokisloop-dashboard-menu
+    ul.lokisloop-menu
+    li {
+    text-align: center;
+  }
+
+  .lokisloop-dashboard-container .lokisloop-hosted-game,
+  .lokisloop-completed-games-container {
+    width: auto;
+  }
+
+  .lokis-action-td-wrapper .lokis-action-td,
+  form {
+    display: grid;
+  }
+
+  /* personal info css */
+
   .lokisloop-container .lokisloop-logo {
     float: none;
+
     text-align: center;
   }
 
   .lokisloop-profile .container .rightbox .profile h1 {
     text-align: center;
+
     margin-top: 0;
   }
 
@@ -1233,6 +2079,7 @@ h5 {
     .lokisloop-profile-form
     .edit-button {
     font-size: 14px;
+
     margin: auto;
   }
 
@@ -1246,56 +2093,9 @@ h5 {
     .form_control {
     font-size: 14px;
   }
-}
 
-/* Host a game csss========================================================================================= */
+  /* Host a game csss */
 
-.lokisloop-dashboard-container .lokis-host-game-title > h5 {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 26px;
-  font-weight: 700;
-}
-.lokisloop-dashboard-container .lokisloop-hosted-game .input-group input {
-  padding: 5px !important;
-  border-radius: var(--form--border-radius);
-  color: var(--form--color-text);
-  line-height: var(--global--line-height-body);
-  max-width: 100%;
-  border: 1px solid #ced4da;
-  width: 60%;
-}
-
-.lokisloop-dashboard-container .lokisloop-hosted-game form {
-  display: flex;
-  column-gap: 20px;
-  row-gap: 20px;
-  width: 100%;
-  justify-content: center;
-}
-.lokisloop-dashboard-container .lokis-loop-host-choose-game {
-  padding-left: 0;
-}
-
-.lokisloop-dashboard-container .lokis-loop-host-choose-game #id_game option {
-  text-align: left;
-}
-
-.lokisloop-dashboard-container .lokis-loop-host-choose-time .input {
-  border-radius: 5px 0 0 5px;
-}
-
-.lokisloop-dashboard-container .lokisloop-hosted-game .lokis-loop-correct,
-.lokisloop-dashboard-container .lokisloop-hosted-game .lokis-loop-incorrect {
-  margin-top: 15px;
-  text-align: center;
-}
-.lokis-loop-alert {
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
-@media only screen and (max-width: 767px) {
   .lokisloop-dashboard-container .lokisloop-hosted-game form {
     display: grid;
   }
@@ -1303,140 +2103,99 @@ h5 {
   .lokisloop-dashboard-container .lokis-loop-host-start-game {
     text-align: center;
   }
+  .lokis-loop-pagination span.page-numbers.current,
+  .lokis-loop-pagination a.page-numbers{
+    font-size: 16px;
+  }
 }
 
 @media only screen and (min-width: 768px) {
+  /* lokis loop menus */
+
+  .lokisloop-dashboard-container aside ul li {
+    width: revert;
+  }
+
+  /* Host a game csss */
+
   .lokisloop-dashboard-container .lokis-loop-host-choose-game {
     width: 30%;
   }
+
+  /* CSS for lokis login form */
+
+  .lokis-login-form-container,
+  .lokis-login-form-container label {
+    width: 100%;
+  }
 }
 
-/*  arpan css code ends here  */
+@media only screen and (min-width: 822px) {
+  :root {
+    --responsive--aligndefault-width: min(
+      calc(100vw - 8 * var(--global--spacing-horizontal)),
+      610px
+    );
 
-/*  login form  */
-/* CSS for lokis login form */
-.lokis-login-form-container {
-  background: var(--lokis-white-color);
-  padding: 20px;
-  margin: 0 auto;
-  position: relative;
-  width: 30%;
+    --responsive--alignwide-width: min(
+      calc(100vw - 8 * var(--global--spacing-horizontal)),
+      1240px
+    );
+  }
 }
 
-.lokis-login-form-container h3 {
-  margin-bottom: 20px;
-  text-align: center;
-}
+/* suman */
 
-.lokis-login-form-container p {
-  margin-bottom: 20px;
+#lokis-qr-popup {
+  display: none;
 }
-
-.lokis-login-form-container label {
-  width: 50%;
-  display: flex;
-}
-
-.lokis-login-form-container input {
-  width: 95%;
-  outline: none;
-  border: 1px solid var(--lokis-hostbgbdr-color) !important;
-  margin: 0 2px;
-  max-width: 100%;
-  padding: calc(0.5 * 20px);
-  line-height: 1.7;
-  border-radius: 0;
-  background-color: var(--login-loginbackgroud-color) !important;
-}
-.lokis-login-form-container .login-submit input#lokis-submit {
-  margin: 0 auto;
+.lokis-qr-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  background-color: var(--login-loginbackgroud-color);
-  border: 1px solid var(--lokis-hostbgbdr-color);
-  color: var(--lokis-color);
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  display: none;
+  pointer-events: auto;
 }
-
-.lokis-login-form-container input[type="text"]:focus,
-.lokis-login-form-container input[type="password"]:focus,
-.lokis-login-form-container input[type="checkbox"]:focus {
-  outline: none;
-}
-.lokis-login-form-container p.login-remember label input {
-  margin-top: 5px;
-  position: relative;
-  margin-right: 10px;
-}
-input#lokis-rememberme {
-  appearance: checkbox;
-  display: inline-block;
-  width: 24px;
-}
-
-.lokis-loginPage {
-  display: flex;
-  justify-content: space-between;
-}
-
-.lokis-loginPage p a {
-  text-decoration: none;
-}
-@media only screen and (max-width: 768px) {
-  .lokis-login-form-container,
-  .lokis-login-form-container label {
-    width: 100%;
-  }
-}
-@media only screen and (max-width: 482px) {
-  .lokis-login-form-container,
-  .lokis-login-form-container label {
-    width: 100%;
-  }
-}
-
-/*  login form ends here  */
-
-/* css for tooltip */
-
-.lokis-table-tooltip {
-  position: relative;
-}
-
-.lokis-table-tooltip:hover::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  top: 120%;
+.lokis-qr-img-popup {
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
+  transform: translate(-50%, -50%);
+  z-index: 10001;
+  background-color: #fff;
+  padding: 20px;
+  width: 650px;
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 10px;
+}
+
+/* .popup-open {
+  overflow: hidden;
+} */
+.lokis-popupshown {
+  height: 100vh;
+  overflow: hidden;
+}
+#lokis-popup-close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: rgb(158, 151, 151);
+  border: none;
+  width: 30px;
+  height: 30px;
   color: #fff;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-  z-index: 1;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-  width: max-content;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.lokis-table-tooltip:hover::after {
-  opacity: 1;
-}
-
-/* CSS for active games............................................ */
-
-@media screen and (max-width: 600px) {
-  .lokisloop-completed-games-container .lookisloop-games table tr {
-    border-bottom: 3px solid #ddd;
-    display: block;
-    margin-bottom: 0.625em;
-  }
-}
-
-/*  css for qr image */
-
-.lokis-qr-code {
-  max-width: 40px;
-  max-height: 40px;
+.lokis-qr-popup-image-code {
+  height: 300px;
+  width: 300px;
 }

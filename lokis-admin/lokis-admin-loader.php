@@ -1,5 +1,7 @@
 <?php
 
+/* The above code is checking if the constant 'ABSPATH' is not defined and if so, it exits the current
+script. */
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -88,6 +90,9 @@ if (!function_exists('lokis_getSessionIDFromURL')) {
         if ($query_params !== null) {
             parse_str($query_params, $params);
             $session_id = isset($params['game']) ? $params['game'] : '';
+            if ($session_id === '') {
+                $session_id = isset($params['offlinegames']) ? $params['offlinegames'] : '';
+            }
         } else {
             $session_id = '';
         }
@@ -103,8 +108,6 @@ if (!function_exists('lokis_redirect_after_expiration')) {
         // Check if the session has expired
         $lokis_host_table_name = $wpdb->prefix . 'lokis_game_sessions';
         $current_time = date('Y-m-d H:i:s');
-        $dashboard_page_id = (get_option('lokis_setting'))['dashboard'];
-        $lokis_dashboard_page = get_permalink($dashboard_page_id);
         $session_id = lokis_getSessionIDFromURL();
         $results = $wpdb->get_results("SELECT expires_in FROM $lokis_host_table_name WHERE session_id = '{$session_id}'");
 
@@ -112,145 +115,42 @@ if (!function_exists('lokis_redirect_after_expiration')) {
             foreach ($results as $row) {
                 $expiration_time = $row->expires_in;
                 if ($current_time >= $expiration_time) {
-                    if (empty($lokis_dashboard_page)) {
-                        // Redirect to the home page
-                        wp_redirect(site_url());
-                        exit;
-                    } else {
-                        // Redirect to the dashboard page
-                        echo "<script>window.location.href = '{$lokis_dashboard_page}';</script>";
-                        exit();
-                    }
+                    // Redirect to the dashboard page
+                    echo "<script>alert('Session expired. Please contact the host.');</script>";
+                    echo "<script>window.location.href = '" . site_url() . "';</script>";
+                    exit();
+
                 }
             }
         }
     }
     add_action('wp_head', 'lokis_redirect_after_expiration', 10);
 }
-/*Stores session ID of game*/
-if (!function_exists('lokis_store_session_id')) {
-    function lokis_store_session_id()
+
+/*Check session ID of game*/
+if (!function_exists('lokis_check_session_id')) {
+    function lokis_check_session_id()
     {
-        if (is_user_logged_in() && is_single()) {
+        if (is_single() && get_post_type() === 'games' && get_post_type() === 'offlinegames') {
             global $wpdb;
+            $session_id = lokis_getSessionIDFromURL(); // Retrieve session ID from the cookie
+            $lokis_host_table_name = $wpdb->prefix . 'lokis_game_sessions';
+            // Check if the session ID exists in the database
+            $existing_Sessionid_entry = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT COUNT(*) FROM $lokis_host_table_name WHERE session_id = %s",
+                    $session_id
+                )
+            );
+            if (isset($_GET['game']) || isset($_GET['offlinegames'])) {
 
-            if (get_post_type() === 'games') {
-                $allowed_roles = array('player', 'host');
-                $user = wp_get_current_user();
-                if (in_array($user->roles[0], $allowed_roles)) {
-
-                    $lokis_query_url = $_SERVER['QUERY_STRING'];
-                    $lokis_front_url = get_permalink(get_the_ID());
-                    $lokis_single_page_url = $lokis_front_url . '?' . $lokis_query_url;
-
-                    $session_id = lokis_getSessionIDFromURL();
-                    $player_id = get_current_user_id();
-                    $post_id = get_the_ID();
-                    // Insert the session ID into your custom table
-                    $lokis_player_table_name = $wpdb->prefix . 'lokis_player_sessions';
-
-                    $lokis_game_sessions_table_name = $wpdb->prefix . 'lokis_game_sessions';
-
-                    $existing_Sessionid_entry = $wpdb->get_var(
-                        $wpdb->prepare(
-                            "SELECT COUNT(*) FROM $lokis_game_sessions_table_name WHERE session_id = %s",
-                            $session_id
-                        )
-                    );
-
-                    $existing_entry = $wpdb->get_var(
-
-                        $wpdb->prepare(
-                            "SELECT COUNT(*) FROM $lokis_player_table_name WHERE player_id = %d AND session_id = %s",
-                            $player_id,
-                            $session_id
-                        )
-                    );
-
-                    if ($existing_Sessionid_entry == 0) {
-                        // error message 
-                        echo "<script>alert('Invalid session. Please contact the host.');</script>";
-                        echo "<script>window.location.href = '" . site_url() . "';</script>";
-                    } else {
-
-                        if ($existing_entry == 0) {
-
-                            $wpdb->insert(
-                                $lokis_player_table_name,
-                                [
-                                    'player_id' => $player_id,
-                                    'session_id' => $session_id,
-                                    'step' => $post_id,
-                                    'game_url' => $lokis_single_page_url
-                                ],
-                                [
-                                    '%d',
-                                    '%s',
-                                    '%d',
-                                    '%s'
-                                ]
-                            );
-                        } else {
-                            $sql = "UPDATE $lokis_player_table_name SET step = '$post_id' , game_url = '$lokis_single_page_url'   WHERE player_id = '$player_id' AND session_id = '$session_id' ";
-                            $wpdb->query($sql);
-                        }
-                    }
+                if ($existing_Sessionid_entry == 0) {
+                    // Invalid session, handle accordingly
+                    echo "<script>alert('Invalid session. Please contact the host.');</script>";
+                    echo "<script>window.location.href = '" . site_url() . "';</script>";
                 }
             }
         }
     }
-    add_action('wp_head', 'lokis_store_session_id', 20);
-}
-
-// // Add the "read private pages" capability to the host role
-
-// if (!function_exists('lokis_add_host_role')) {
-//     function lokis_add_host_role()
-//     {
-//         $host = get_role('host');
-//         $host->add_cap('read_private_pages');
-//     }
-//     add_action('init', 'lokis_add_host_role');
-// }
-
-/*Adds metabox to change page visibility according to user*/
-if (!function_exists('lokis_add_page_metabox')) {
-    // Add the metabox to the "Add New Page" screen
-    function lokis_add_page_metabox()
-    {
-        add_meta_box("custom_checkbox_metabox", "Page Visibility", "lokis_render_checkbox_metabox", "page", "side", "core");
-    }
-    add_action("add_meta_boxes_page", "lokis_add_page_metabox");
-}
-
-/*Adds metabox to change page visibility according to the user*/
-if (!function_exists('lokis_render_checkbox_metabox')) {
-    // Render the metabox HTML
-    function lokis_render_checkbox_metabox($post)
-    {
-        // Retrieve the current value of the meta field
-        $checked = get_post_meta($post->ID, "lokis_private_page_checkbox", true);
-
-        // Output the checkbox
-        echo '<label>';
-        echo '<input type="checkbox" name="lokis_private_page_checkbox" value="1" ' . checked($checked, 1, false) . ' />';
-        echo 'Only to Admin and Host';
-        echo '</label>';
-    }
-}
-
-/*Function to save the data from the metabox*/
-if (!function_exists('lokis_save_page_checkbox')) {
-    // Save the checkbox value when the page is saved
-    function lokis_save_page_checkbox($post_id)
-    {
-        // Update the meta field with the new value
-        if (isset($_POST['lokis_private_page_checkbox'])) {
-            $value = 1;
-        } else {
-            $value = 0;
-        }
-        update_post_meta($post_id, "lokis_private_page_checkbox", $value);
-    }
-    add_action("save_post_page", "lokis_save_page_checkbox");
+    add_action('wp_head', 'lokis_check_session_id', 20);
 }
