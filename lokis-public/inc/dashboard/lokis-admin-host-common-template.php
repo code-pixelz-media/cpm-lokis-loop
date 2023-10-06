@@ -1,41 +1,37 @@
 <?php
 if (is_user_logged_in()) {
 
-    get_header(); ?>
+    get_header();
 
-    <div class="lokisloop-dashboard-container">
-
-
-        <aside>
-            <div class="lokis-logo">
-                <a id="home-page" class="nav-link " href="/">Loki's Loop</a>
-            </div>
-
-            <?php lokis_account_menu(); ?>
-
-        </aside>
-
-        <div class="lokisloop-container">
-            <h3>
-                <?php echo get_the_title(); ?>
-            </h3>
-            <?php echo get_the_content(); ?>
-
-        </div>
-
-    </div>
-
-    <?php get_footer(); 
-
-    } else {
     ?>
+    <main id="content" class="site-main post-21 page type-page status-publish hentry">
+        <div class="lokis-user-dashboard-section">
+            <div class="lokisloop-dashboard-container">
+                <aside>
+                    <?php lokis_account_menu(); ?>
+                </aside>
 
-    <script>
-        window.location.href = '<?php echo wp_login_url(); ?>';
-
-    </script>
+                <div class="lokisloop-container">
+                    <h5>
+                        <?php echo esc_html(get_the_title()); ?>
+                    </h5>
+                    <div class="lokis-loop-container-content">
+                        <?php
+                        the_content();
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <?php
-
+    get_footer();
+} else {
+    ?>
+    <script>
+        window.location.href = '<?php echo esc_url(wp_login_url()); ?>';
+    </script>
+    <?php
 }
 ?>
