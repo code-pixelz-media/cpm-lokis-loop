@@ -105,7 +105,7 @@
 
   background-color: var(--lokis-hostbgbdr-color);
 }
-.lokis-loop-pagination span.page-numbers.dots{
+.lokis-loop-pagination span.page-numbers.dots {
   float: left;
   padding: 8px 16px;
   margin: 10px 4px;
@@ -1554,8 +1554,6 @@ button.btn.btn-primary.mb-3 {
 
 .lokis-loop-alert {
   margin-top: 10px;
-
-  margin-left: 44px;
 }
 
 /*  login form  */
@@ -2104,7 +2102,7 @@ input#lokis-rememberme {
     text-align: center;
   }
   .lokis-loop-pagination span.page-numbers.current,
-  .lokis-loop-pagination a.page-numbers{
+  .lokis-loop-pagination a.page-numbers {
     font-size: 16px;
   }
 }
@@ -2119,7 +2117,7 @@ input#lokis-rememberme {
   /* Host a game csss */
 
   .lokisloop-dashboard-container .lokis-loop-host-choose-game {
-    width: 30%;
+    width: 40%;
   }
 
   /* CSS for lokis login form */
@@ -2144,9 +2142,16 @@ input#lokis-rememberme {
   }
 }
 
-/* suman */
+/* sw */
 
-#lokis-qr-popup {
+#lokisStartGameButton[disabled] {
+  cursor: not-allowed;
+}
+
+.lokis-loop-host-game-content-wrapper {
+  padding-top: 10%;
+}
+/* #lokis-qr-popup {
   display: none;
 }
 .lokis-qr-popup-overlay {
@@ -2173,12 +2178,12 @@ input#lokis-rememberme {
   overflow-y: auto;
   overflow-x: hidden;
   border-radius: 10px;
-}
+} */
 
 /* .popup-open {
   overflow: hidden;
 } */
-.lokis-popupshown {
+/* .lokis-popupshown {
   height: 100vh;
   overflow: hidden;
 }
@@ -2198,4 +2203,4 @@ input#lokis-rememberme {
 .lokis-qr-popup-image-code {
   height: 300px;
   width: 300px;
-}
+} */

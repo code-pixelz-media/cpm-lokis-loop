@@ -34,7 +34,8 @@ function lokis_loop_user_dashboard()
                                                         <?php _e('Name:', 'lokis-loop'); ?>
                                                     </label>
                                                     <p aria label="single line text" maxlength="4000" class="lokis-form-control"
-                                                        id='loki-name'><?php echo get_user_meta($user_id, 'loki_fullname', true); ?>
+                                                        id='loki-name'>
+                                                        <?php echo get_user_meta($user_id, 'loki_fullname', true); ?>
 
                                                     </p>
                                                 </div>

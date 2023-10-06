@@ -145,6 +145,15 @@ if (is_user_logged_in()) {
                                 }
                                 echo '<tbody></table></div>';
                                 ?>
+                                <?php
+                                $expiredGameContent = get_option('lokis-expired-games', '');
+                                if (!empty($expiredGameContent)) {
+                                    echo '<div class="lokisloop-content-container-wrapper">';
+                                    // echo '<div class="lokis-loop-container-content">';
+                                    echo $expiredGameContent;
+                                    echo '</div>';
+                                }
+                                ?>
                     </div>
                 </div>
             </div>

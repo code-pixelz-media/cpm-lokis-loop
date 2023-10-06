@@ -39,12 +39,12 @@ if (!class_exists('lokis_loop_game_info')) {
                 'supports' => array(
                     'title',
                     'editor',
-                    'comments',
+                    // 'comments',
                     'revisions',
-                    'trackbacks',
+                    // 'trackbacks',
                     'author',
-                    'excerpt',
-                    'page-attributes',
+                    // 'excerpt',
+                    // 'page-attributes',
                     'thumbnail',
                     'custom-fields',
                     'post-formats'
@@ -269,7 +269,7 @@ if (!function_exists('render_lokis_meta_group')) {
             <input type="text" class="widefat lokis-puzzle-metafield" name="lokis_btn_url"
                 value="<?php echo esc_attr($btn_url_value); ?>">
         </div>
-<?php
+        <?php
     }
 }
 

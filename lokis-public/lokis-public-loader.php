@@ -52,11 +52,19 @@ if (!function_exists('lokis_check_answer')) {
         $correct_answer = strtolower(get_post_meta($post_id, 'lokis_loop_correct_answer', true));
         $redirect_uri = get_post_meta($post_id, 'lokis_loop_redirect_uri', true);
         if ($answer == $correct_answer) {
-            $response = array(
-                'status' => 'success',
-                'redirect' => $redirect_uri . '/?game=' . $session_id,
-                'message' => 'correct'
-            );
+            if ($session_id) {
+                $response = array(
+                    'status' => 'success',
+                    'redirect' => $redirect_uri . '/?game=' . $session_id,
+                    'message' => 'correct'
+                );
+            } else {
+                $response = array(
+                    'status' => 'success',
+                    'redirect' => $redirect_uri,
+                    'message' => 'correct'
+                );
+            }
 
         } else {
             $response = array(
@@ -217,19 +225,19 @@ if (!function_exists('lokis_endpoints')) {
         //if (current_user_can('host')) {
 
         /*Host Game Endpoint*/
-        $lokis_endpoints_page_name = __('Host a Game', 'lokis-loop');
+        $lokis_endpoints_page_name = __('Host an Online Game', 'lokis-loop');
         array_push($lokis_endpoints, 'host-game');
         array_push($lokis_endpoint_name, $lokis_endpoints_page_name);
         array_push($lokis_account_icons, 'fa-regular fa-chart-bar');
 
         /*Current Games Endpoint*/
-        $lokis_endpoints_page_name = __('Current Games', 'lokis-loop');
+        $lokis_endpoints_page_name = __('Current Online Games', 'lokis-loop');
         array_push($lokis_endpoints, 'current-games');
         array_push($lokis_endpoint_name, $lokis_endpoints_page_name);
         array_push($lokis_account_icons, 'fa-solid fa-list-check');
 
         /*Expired Games Endpoint*/
-        $lokis_endpoints_page_name = __('Expired Games', 'lokis-loop');
+        $lokis_endpoints_page_name = __('Expired Online Games', 'lokis-loop');
         array_push($lokis_endpoints, 'expired-games');
         array_push($lokis_endpoint_name, $lokis_endpoints_page_name);
         array_push($lokis_account_icons, 'fa-solid fa-triangle-exclamation');
@@ -303,53 +311,100 @@ if (!function_exists('lokis_account_menu')) {
             $dashboard = (get_option('lokis_setting'))['dashboard'];
         }
 
-        echo '
-         <div class="lokisloop-dashboard-menu">
-                <ul class="lokisloop-menu">
-                    <li><a href="' . get_permalink($dashboard) . '"> <i class="fa-regular fa-user"></i>
-                    <span class="nav-item">' . __('Profile', 'lokis-loop') . '</span>
-                        </a>
-                    </li>';
+        // Create an empty multidimensional array to store the menu items
+        $menu_items = array();
+
+        // Add the profile menu item as the first element
+        $menu_items[] = array(
+            'name' => __('Profile', 'lokis-loop'),
+            'url' => get_permalink($dashboard),
+            'icon' => 'fa-regular fa-user'
+        );
+
+        // Loop through endpoints and add them to the menu items array
         $length = count($lokis_endpoint_name);
         for ($index = 0; $index < $length; $index++) {
             $link_name = $lokis_endpoint_name[$index];
             $link_url = $lokis_url[$index];
             $link_icon = $lokis_account_icons[$index];
-            ?>
-            <li><a href="<?php echo $link_url; ?>">
-                    <i class="<?php echo $link_icon; ?>"></i>
-                    <span class="nav-item">
-                        <?php echo $link_name; ?>
-                    </span>
-                </a>
-            </li>
-        <?php }
-        ;
 
+            // Create an associative array for each menu item
+            $menu_item = array(
+                'name' => $link_name,
+                'url' => $link_url,
+                'icon' => $link_icon
+            );
+
+            // Append the menu item array to the multidimensional array
+            $menu_items[] = $menu_item;
+        }
+
+        // Check if user can view private pages
         if (current_user_can('host') || current_user_can('administrator')) {
-
+            // Retrieve private pages
             $private_pages = new WP_Query(
                 array(
                     'meta_key' => 'lokis_private_page_checkbox',
                     'meta_value' => '1',
                     'post_type' => 'page',
                     'post_status' => 'publish',
-                    'posts_per_page' => -1
+                    'posts_per_page' => -1,
+                    'order' => 'ASC'
                 )
             );
+
+            // Loop through private pages and add them to the menu items array
             foreach ($private_pages->posts as $post) {
                 $link_name = get_the_title($post->ID);
                 $link_url = get_permalink($post->ID);
-                echo '<li><a href="' . $link_url . '">';
-                echo '<i class="fa-regular fa-file-lines"></i>';
-                echo '<span class="nav-item">' . $link_name . '</span>';
-                echo '</a></li>';
+                $link_icon = 'fa-regular fa-file-lines';
+
+                // Create an associative array for each menu item
+                $menu_item = array(
+                    'name' => $link_name,
+                    'url' => $link_url,
+                    'icon' => $link_icon
+                );
+
+                // Append the menu item array to the multidimensional array
+                $menu_items[] = $menu_item;
             }
         }
+
+        // Output the menu items
+        echo '
+         <div class="lokisloop-dashboard-menu">
+                <ul class="lokisloop-menu">';
+
+        $order = [0, 5, 1, 2, 3, 6, 4]; // Specify the desired order of the menu items
+
+        // Loop through all items in the $order array
+        $remaining_items = array_diff(range(0, count($menu_items) - 1), $order); // Get the indices of the remaining items
+
+        // Loop through the specified order for the first 3 items
+        foreach ($order as $index) {
+            $menu_item = $menu_items[$index];
+            echo '<li><a href="' . $menu_item['url'] . '">';
+            echo '<i class="' . $menu_item['icon'] . '"></i>';
+            echo '<span class="nav-item">' . $menu_item['name'] . '</span>';
+            echo '</a></li>';
+        }
+
+        // Loop through the remaining items
+        foreach ($remaining_items as $index) {
+            $menu_item = $menu_items[$index];
+            echo '<li><a href="' . $menu_item['url'] . '">';
+            echo '<i class="' . $menu_item['icon'] . '"></i>';
+            echo '<span class="nav-item">' . $menu_item['name'] . '</span>';
+            echo '</a></li>';
+        }
+
+
         echo '</ul>
             </div>';
     }
 }
+
 
 
 
@@ -564,6 +619,173 @@ if (!function_exists('lokis_hide_page_for_non_logged_in_users')) {
 }
 
 
+
+
+//Function to change reset password email content type
+if (!function_exists("lokis_password_reset_content_type")) {
+    function lokis_password_reset_content_type($content_type)
+    {
+        return 'text/plain; charset=UTF-8';
+    }
+    add_filter('wp_mail_content_type', 'lokis_password_reset_content_type');
+}
+
+//Function to change reset password email from email
+if (!function_exists("lokis_password_reset_from_mail")) {
+    function lokis_password_reset_from_email($from_email)
+    {
+        return 'noreply-lokisloop@uw.edu';
+    }
+    add_filter('wp_mail_from', 'lokis_password_reset_from_email');
+    add_filter('wp_mail_from_name', function ($from_name) {
+        return 'Loki’s Loop';
+    });
+}
+
+//Function to change reset password email title
+if (!function_exists("lokis_password_reset_title")) {
+    function lokis_password_reset_title($title)
+    {
+        $title = "lokisloop.org: Password Reset";
+        return $title;
+    }
+    add_filter('retrieve_password_title', 'lokis_password_reset_title');
+
+}
+
+
+/*Function to register user*/
+if (!function_exists('loki_user_registration')) {
+    function loki_user_registration()
+    {
+        /*Pulling data from registration form*/
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $organization_name = $_POST['organization_name'];
+        $organization_type = $_POST['organization_type'];
+        $country = $_POST['country_name'];
+        $zipcode = $_POST['zipcode'];
+
+        if (wp_verify_nonce($_POST['nonce'], -1)) {
+            /* Check if the email address is unique */
+            if (email_exists($email)) {
+                $response = [
+                    'status' => 'error',
+                    'type' => 'email',
+                    'message' => 'The email address ' . $email . ' already exists.'
+                ];
+                wp_send_json($response);
+            }
+
+            /* Check if the email address meets formatting requirements */
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $response = [
+                    'status' => 'error',
+                    'type' => 'email',
+                    'message' => 'The email address ' . $email . ' is not valid.'
+                ];
+                wp_send_json($response);
+            }
+
+            //Check country and it's relevant postcode format
+            if ($zipcode) {
+                if ($country == "United States") {
+                    if (!preg_match('/^\d{5}(-\d{4})?$/', $zipcode)) {
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'The zipcode is not a valid US zipcode.'
+                        ];
+                        wp_send_json($response);
+                    }
+                } elseif ($country == 'Canada') {
+                    if (!preg_match('/^[A-Z]\d[A-Z] ?\d[A-Z]\d$/', $zipcode)) {
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'The zipcode is not a valid Canada zipcode.'
+                        ];
+                        wp_send_json($response);
+                    }
+                }
+            }
+
+            /*Creating new user*/
+            $user_id = wp_create_user($email, wp_generate_password(), $email);
+
+            /*Check for errors when creating new user*/
+            if (empty($user_id)) {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Sorry, user cannot be created.',
+                ];
+                wp_send_json($response);
+            } else {
+
+                // Generate the password reset key for the user.
+                $user = get_userdata($user_id);
+                $reset_key = get_password_reset_key($user);
+
+                // // Get the password reset URL.
+                $reset_url = network_site_url("wp-login.php?action=rp&key=$reset_key&login=" . rawurlencode($email), 'login');
+
+                //Email Header
+                $headers = array(
+                    'From:  noreply-lokisloop@uw.edu' . "\r\n",
+                    'Content-Type: text/plain; charset=UTF-8',
+                );
+
+
+                //Email Subject
+                $lokis_subject = "lokisloop.org: Complete account set up";
+
+                //Email Body
+                $lokis_message = "Welcome to Loki’s Loop!\n\n";
+                $lokis_message .= "Your account is almost ready. The last step you need to complete is to set up a password for your new account.\n\n";
+                $lokis_message .= "Please click the following link to complete setting up your account:\n";
+                $lokis_message .= $reset_url . "\n\n";
+                $lokis_message .= "If you have any questions or require assistance, please contact lokisloop@uw.edu\n\n";
+                $lokis_message .= "Thank you,\n\n";
+                $lokis_message .= "Loki’s Loop";
+
+
+                wp_mail($email, $lokis_subject, $lokis_message, $headers);
+
+
+                /*Adding data to user meta*/
+                update_user_meta($user_id, 'loki_fullname', $name);
+                update_user_meta($user_id, 'loki_organization', $organization_name);
+                update_user_meta($user_id, 'loki_organization_type', $organization_type);
+                update_user_meta($user_id, 'loki_country', $country);
+                update_user_meta($user_id, 'loki_zipcode', $zipcode);
+
+                /*Pulling user data of new user*/
+                $user = new WP_User($user_id);
+
+                /* Remove role */
+                $user->remove_role('subscriber');
+
+                /* Add role */
+                // $user->add_role($role);
+                $user->add_role('host');
+
+                $response = [
+                    'status' => 'success',
+                    'message' => 'User has been created. An email has been sent to set the password',
+                ];
+                wp_send_json($response);
+            }
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'ACCESS DENIED',
+            ];
+            wp_send_json($response);
+        }
+    }
+    add_action('wp_ajax_loki_user_registration', 'loki_user_registration');
+    add_action('wp_ajax_nopriv_loki_user_registration', 'loki_user_registration');
+}
+
+
 /*Function to send activation confirmation email*/
 if (!function_exists('loki_send_activation_confirmation_email')) {
     function loki_send_activation_confirmation_email($user)
@@ -600,38 +822,6 @@ if (!function_exists('loki_send_activation_confirmation_email')) {
     add_action('password_reset', 'loki_send_activation_confirmation_email', 10, 2);
 }
 
-//Function to change reset password email content type
-if (!function_exists("lokis_password_reset_content_type")) {
-    function lokis_password_reset_content_type($content_type)
-    {
-        return 'text/plain; charset=UTF-8';
-    }
-    add_filter('wp_mail_content_type', 'lokis_password_reset_content_type');
-}
-
-//Function to change reset password email from email
-if (!function_exists("lokis_password_reset_from_mail")) {
-    function lokis_password_reset_from_email($from_email)
-    {
-        return 'noreply-lokisloop@uw.edu';
-    }
-    add_filter('wp_mail_from', 'lokis_password_reset_from_email');
-    add_filter('wp_mail_from_name', function ($from_name) {
-        return 'Loki’s Loop';
-    });
-}
-
-//Function to change reset password email title
-if (!function_exists("lokis_password_reset_title")) {
-    function lokis_password_reset_title($title)
-    {
-        $title = "lokisloop.org: Password Reset";
-        return $title;
-    }
-    add_filter('retrieve_password_title', 'lokis_password_reset_title');
-
-}
-
 //Function to change reset password email message
 if (!function_exists("lokis_password_reset_message")) {
     function lokis_password_reset_message($message, $key, $user_login, $user_data)
@@ -652,70 +842,3 @@ if (!function_exists("lokis_password_reset_message")) {
     }
     add_filter('retrieve_password_message', 'lokis_password_reset_message', 10, 4);
 }
-
-//Function to redirect to login page
-if (!function_exists('lokis_language_page_redirect')) {
-    function lokis_language_page_redirect()
-    {
-        ?>
-        <script>
-            jQuery(document).ready(function ($) {
-                var currentUrl = window.location.href;
-                var languagePageUrl = "<?php echo esc_url(home_url('/languages/')); ?>";
-                var languageRedirect = "0";
-
-                // Function to check if the current page is a languages post type page
-                function isLanguagePage(url) {
-                    return url.indexOf("/languages/") !== -1;
-                }
-
-                function isLoginPage(url) {
-                    return url.indexOf("/game-host-login/") !== -1;
-                }
-
-                // Check if the current page is a languages post type page and perform action
-                if (isLanguagePage(currentUrl)) {
-                    // Add CSS to set display to none for the entire HTML
-                    $("html").css("display", "none");
-                    if (!$("body").hasClass("logged-in")) {
-
-                        languageRedirect = 1;
-                        sessionStorage.setItem('languageRedirect', languageRedirect);
-                        var dynamicRedirectUrl = "<?php echo esc_url(home_url('/game-host-login/')); ?>";
-                        window.location.href = dynamicRedirectUrl;
-                    }
-                    else {
-                        $("html").css("display", "block");
-                    }
-                }
-
-                if (isLoginPage(currentUrl)) {
-                    languageRedirect = sessionStorage.getItem('languageRedirect');
-                    if (languageRedirect == "1") {
-                        var dynamicRedirect = "<?php echo esc_url(home_url('/languages')); ?>";
-
-                        var newContent = `<input type="hidden" name="lokis-redirect" id="lokis-redirect" class="redirect" 
-                        value="${dynamicRedirect}">`;
-
-                        // Append the new content after the element with class 'login-password'
-                        $('.login-password').after(newContent);
-
-                        sessionStorage.setItem('languageRedirect', "0");
-                    }
-                }
-            });
-        </script>
-        <?php
-    }
-    add_action('wp_head', 'lokis_language_page_redirect');
-}
-
-function lokis_login_language_redirect($redirect_to, $requested_redirect_to, $user)
-{
-    if (isset($_POST['lokis-redirect'])) {
-        $redirect_url = esc_url($_POST['lokis-redirect']);
-        return $redirect_url;
-    }
-    return $redirect_to; // Fall back to default redirection
-}
-add_filter('login_redirect', 'lokis_login_language_redirect', 10, 3);

@@ -1,4 +1,5 @@
 <?php
+
 get_header();
 
 if (is_user_logged_in()) {
@@ -22,6 +23,10 @@ if (is_user_logged_in()) {
                             <input type="hidden" name="sessionToken" id="sessionToken" value="<?php echo $session_id ?>">
                             <div class="lokis-loop-host-choose-game">
                                 <select class="form-select" aria-label="Game" id="id_game" name="game">
+                                    <option value="-1">
+                                        <?php _e("Choose a Game", "lokis-loop"); ?>
+                                    </option>
+
                                     <?php
 
                                     $args_pages = array(
@@ -85,7 +90,7 @@ if (is_user_logged_in()) {
                             </div>
                             <div class="lokis-loop-host-choose-time">
                                 <div class="input-group">
-                                    <input type="number" class="lokis-form-control" value="1"
+                                    <input type="number" class="lokis-form-control" value="1" min="1"
                                         placeholder="Expiration Time (hours)" id="lokisLoop_expiration" name="expiration">
                                     <span class="input-group-text">
                                         <?php _e("hour(s)", "lokis-loop"); ?>
@@ -93,7 +98,7 @@ if (is_user_logged_in()) {
                                 </div>
                             </div>
                             <div class="lokis-loop-host-start-game">
-                                <button type="submit" class="btn btn-primary mb-3">
+                                <button type="submit" class="btn btn-primary mb-3" id="lokisStartGameButton" disabled>
                                     <?php _e("Start Game Session", "lokis-loop"); ?>
                                 </button>
                             </div>
@@ -132,10 +137,18 @@ if (is_user_logged_in()) {
                                 echo '<div class="lokis-loop-alert" role="alert"><p class="lokis-loop-alert-title">' . __("Game Session created successfully", "lokis-loop") . '</p> <p>' . __(
                                     "URL:",
                                     "lokis-loop"
-                                ) . '<a href="' . $game_url . '">' . $game_url . '</p></a></div>';
+                                ) . '<a href="' . $game_url . '" target="_blank">' . $game_url . '</p></a></div>';
                             } else {
                                 echo '<div class="lokis-loop-incorrect" role="alert">' . __("Session ID already exists.", "lokis-loop") . '</div>';
                             }
+                        }
+
+
+                        $hostGameContent = get_option('lokis-host-a-game', '');
+                        if (!empty($hostGameContent)) {
+                            echo '<div class="lokisloop-content-container-wrapper">';
+                            echo $hostGameContent;
+                            echo '</div>';
                         }
                         ?>
                     </div>

@@ -494,16 +494,16 @@ jQuery(document).ready(function ($) {
     const iframe = document.getElementById("loki-game-iframe");
 
     if (iframe.requestFullscreen) {
-      iframe.requestFullscreen().then(() => {});
+      iframe.requestFullscreen().then(() => { });
     } else if (iframe.mozRequestFullScreen) {
       // Firefox
       iframe.mozRequestFullScreen();
     } else if (iframe.webkitRequestFullscreen) {
       // Chrome, Safari, Opera
-      iframe.webkitRequestFullscreen().then(() => {});
+      iframe.webkitRequestFullscreen().then(() => { });
     } else if (iframe.msRequestFullscreen) {
       // IE/Edge
-      iframe.msRequestFullscreen().then(() => {});
+      iframe.msRequestFullscreen().then(() => { });
     }
   });
 });
@@ -596,13 +596,29 @@ jQuery(document).ready(function ($) {
 
         var href = $(this).attr("href"); // Get the href attribute of the clicked link
         var modifiedHref = href + "?offlinegame=" + gameValue; // Append the desired text to the URL
-        
+
         // Redirect the user to the modified URL
         window.location.href = modifiedHref;
       }
     }
   });
 });
+
+
+jQuery(document).ready(function ($) {
+  const gameSelect = $("#id_game");
+  const startGameButton = $("#lokisStartGameButton");
+
+  gameSelect.on("change", function () {
+    if (gameSelect.val() !== "-1") {
+      startGameButton.prop("disabled", false);
+    } else {
+      startGameButton.prop("disabled", true);
+    }
+  });
+});
+
+
 
 // Check if the query parameter exists
 if (location.search.includes("offlinegame")) {

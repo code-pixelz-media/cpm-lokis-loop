@@ -5,7 +5,7 @@ if (is_user_logged_in()) {
 
     /* The above code is written in PHP and it is used to extract the value of the "post_id" parameter from
     the current URL. */
-    
+
     $url = $_SERVER['REQUEST_URI'];
     $query_params = parse_url($url, PHP_URL_QUERY);
     if ($query_params !== null) {
@@ -201,44 +201,44 @@ if (is_user_logged_in()) {
                                             <?php
                                         }
                                         ?>
-                            </tbody>
-                        </table>
-                        <div class="lokis-loop-pagination">
+                                    </tbody>
+                                </table>
+                                <div class="lokis-loop-pagination">
+                                    <?php
+                                    $pagination_args = array(
+                                        'base' => esc_url_raw(add_query_arg('current-games', '%#%')),
+                                        'format' => '',
+                                        'prev_text' => '&laquo;',
+                                        'next_text' => '&raquo;',
+                                        'total' => $total_pages,
+                                        'current' => $paged,
+                                        'mid_size' => 2,
+                                    );
+                                    echo paginate_links($pagination_args);
+                                    ?>
+                                </div>
+                                <?php
+                                if ($gm_merge_delete_message) {
+                                    echo $gm_merge_delete_message;
+                                }
+                                ?>
+                            </div>
                             <?php
-                            $pagination_args = array(
-                                'base' => esc_url_raw(add_query_arg('current-games', '%#%')),
-                                'format' => '',
-                                'prev_text' => '&laquo;',
-                                'next_text' => '&raquo;',
-                                'total' => $total_pages,
-                                'current' => $paged,
-                                'mid_size' => 2,
-                            );
-                            echo paginate_links($pagination_args);
-                            ?>
-                        </div>
-                        <?php
-                        if ($gm_merge_delete_message) {
-                            echo $gm_merge_delete_message;
-                        }
-                        ?>
-                    </div>
-                    <?php
                                     } else {
                                         ?>
-                        <tr>
-                            <td colspan="6">
-                                <p class="lokis-user-empty-games">
-                                    <?php esc_html(_e('No currently active games session found. Please start a new game session.', 'lokis-loop')); ?>
-                                </p>
-                            </td>
-                        </tr>
-                        <?php
+                            <tr>
+                                <td colspan="6">
+                                    <p class="lokis-user-empty-games">
+                                        <?php esc_html(_e('No currently active games session found. Please start a new game session.', 'lokis-loop')); ?>
+                                    </p>
+                                </td>
+                            </tr>
+                            <?php
                                     }
                                     ?>
-                    </tbody>
-                    </table>
-                    <?php
+                        </tbody>
+                        </table>
+                        <?php
                                 } else {
                                     ?>
                         <tr>
@@ -253,6 +253,15 @@ if (is_user_logged_in()) {
                                 ?>
                     </tbody>
                     </table>
+                    <?php
+                    $CurrentGameContent = get_option('lokis-current-games', '');
+                    if (!empty($CurrentGameContent)) {
+                        echo '<div class="lokisloop-content-container-wrapper">';
+                        // echo '<div class="lokis-loop-container-content">';
+                        echo $CurrentGameContent;
+                        echo '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>

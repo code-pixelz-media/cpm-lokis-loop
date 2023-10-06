@@ -154,3 +154,41 @@ if (!function_exists('lokis_check_session_id')) {
     }
     add_action('wp_head', 'lokis_check_session_id', 20);
 }
+
+// Hook into the category form
+add_action('edit_category_form_fields', 'add_category_fields');
+add_action('add_category_form_fields', 'add_category_fields');
+
+// Define a function to display the editor
+function add_category_fields($tag)
+{
+    $t_id = $tag->term_id;
+    $category_meta = get_option("category_$t_id");
+    $content = $category_meta['extra_field'] ?? '';
+
+    wp_editor(
+        htmlspecialchars_decode($content),
+        'extra_field',
+        array(
+            'media_buttons' => false,
+            'quicktags' => true,
+            'tinymce' => array(
+                'plugins' => 'wordpress'
+            )
+        )
+    );
+}
+
+// Save the data
+add_action('edited_category', 'save_category_fields', 10, 2);
+add_action('created_category', 'save_category_fields', 10, 2);
+
+function save_category_fields($term_id)
+{
+    if (isset($_POST['extra_field'])) {
+        $t_id = $term_id;
+        $category_meta = get_option("category_$t_id");
+        $category_meta['extra_field'] = esc_attr($_POST['extra_field']);
+        update_option("category_$t_id", $category_meta);
+    }
+}
